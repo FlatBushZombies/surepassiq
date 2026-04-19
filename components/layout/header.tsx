@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { categories } from "@/constants";
 import { cn } from "@/lib/utils";
-import { SurepassWordmark } from "@/components/brand/surepass-wordmark";
+import Image from "next/image";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,7 +28,7 @@ export function Header() {
           className="flex shrink-0 items-center"
           aria-label="Surepass IQ home"
         >
-          <SurepassWordmark className="text-xl" />
+          <Image src="/logo.png" alt="Surepass IQ" width={48} height={48} />
         </Link>
 
         {/* Categories Dropdown - Desktop */}

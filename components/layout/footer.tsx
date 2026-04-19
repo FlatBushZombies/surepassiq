@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SurepassWordmark } from "@/components/brand/surepass-wordmark";
+import Image from "next/image";
 
 const footerLinks = {
   company: [
@@ -121,7 +121,7 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between gap-4 border-t border-muted-foreground/20 pt-8 md:flex-row">
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center gap-2" aria-label="Surepass IQ home">
-              <SurepassWordmark className="text-lg text-background" />
+              <Image src="/logo.png" alt="Surepass IQ" width={48} height={48} />
             </Link>
           </div>
           
