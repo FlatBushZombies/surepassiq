@@ -7,8 +7,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'StudyTech - Educational Solutions | Online Courses & Learning',
-  description: 'Build practical skills with high-quality courses from one trusted institution. Learn at your own pace with StudyTech.',
+  title: 'Surepass IQ — Online Courses & Learning',
+  description: 'Build practical skills with high-quality courses from one trusted institution. Learn at your own pace with Surepass IQ.',
   icons: {
     icon: [
       {

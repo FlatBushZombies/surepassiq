@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { categories } from "@/constants";
 import { cn } from "@/lib/utils";
+import { SurepassWordmark } from "@/components/brand/surepass-wordmark";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,11 +23,12 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-card shadow-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 lg:px-6">
         {/* Logo */}
-        <Link href="/" className="flex shrink-0 items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-            <span className="text-lg font-bold text-primary-foreground">S</span>
-          </div>
-          <span className="hidden text-xl font-bold text-foreground sm:block">StudyTech</span>
+        <Link
+          href="/"
+          className="flex shrink-0 items-center"
+          aria-label="Surepass IQ home"
+        >
+          <SurepassWordmark className="text-xl" />
         </Link>
 
         {/* Categories Dropdown - Desktop */}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SurepassWordmark } from "@/components/brand/surepass-wordmark";
 
 const footerLinks = {
   company: [
@@ -13,7 +14,7 @@ const footerLinks = {
     { label: "Affiliates", href: "/affiliates" },
     { label: "Partners", href: "/partners" },
     { label: "Investors", href: "/investors" },
-    { label: "StudyTech Business", href: "/business" },
+    { label: "Surepass IQ for Business", href: "/business" },
   ],
   institution: [
     { label: "Academic Calendar", href: "/academic-calendar" },
@@ -119,16 +120,13 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="flex flex-col items-center justify-between gap-4 border-t border-muted-foreground/20 pt-8 md:flex-row">
           <div className="flex items-center gap-4">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                <span className="text-base font-bold text-primary-foreground">S</span>
-              </div>
-              <span className="text-lg font-bold text-background">StudyTech</span>
+            <Link href="/" className="flex items-center gap-2" aria-label="Surepass IQ home">
+              <SurepassWordmark className="text-lg text-background" />
             </Link>
           </div>
           
           <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-muted">
-            <span>© 2025 StudyTech, Inc.</span>
+            <span>© 2026 Surepass IQ</span>
             <Link href="/terms" className="hover:text-background">Terms</Link>
             <Link href="/privacy" className="hover:text-background">Privacy Policy</Link>
             <Link href="/cookies" className="hover:text-background">Cookie Settings</Link>

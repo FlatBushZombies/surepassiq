@@ -19,7 +19,7 @@ export function CTASection() {
             
             <h2 className="mx-auto mb-4 max-w-2xl text-3xl font-bold text-primary-foreground md:text-4xl lg:text-5xl">
               <span className="text-balance">
-                Unlock your potential with StudyTech
+                Unlock your potential with Surepass IQ
               </span>
             </h2>
             
@@ -45,7 +45,7 @@ export function CTASection() {
                 size="lg"
                 className="rounded-xl border-primary-foreground/30 bg-transparent px-8 text-base font-semibold text-primary-foreground hover:bg-primary-foreground/10"
               >
-                <Link href="/business">StudyTech for Business</Link>
+                <Link href="/business">Surepass IQ for Business</Link>
               </Button>
             </div>
           </div>
