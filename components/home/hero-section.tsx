@@ -22,8 +22,10 @@ const highlights = [
 export function HeroSection() {
   const [currentImage, setCurrentImage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const timer = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % heroImages.length);
     }, 5000);
@@ -31,7 +33,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-secondary">
+    <section className="relative overflow-hidden bg-foreground">
       {/* Background Images */}
       <div className="absolute inset-0">
         {heroImages.map((img, index) => (
@@ -46,75 +48,119 @@ export function HeroSection() {
             priority={index === 0}
           />
         ))}
-        <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
+        {/* Layered gradients for depth and contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/92 via-foreground/75 to-foreground/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
+        {/* Subtle vignette */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,transparent_50%,hsl(var(--foreground)/0.3)_100%)]" />
       </div>
 
       {/* Content */}
-      <div className="relative mx-auto max-w-7xl px-4 py-16 md:py-24 lg:px-6 lg:py-32">
-        <div className="max-w-2xl">
-          {/* Badge */}
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
-            <Play className="h-4 w-4 fill-current" />
+      <div className="relative mx-auto max-w-7xl px-4 py-20 md:py-28 lg:px-6 lg:py-36">
+        <div className="max-w-xl">
+
+          {/* Badge — entry animation first element */}
+          <div
+            className={`mb-7 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-sm transition-all duration-700 ${
+              mounted ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+            }`}
+            style={{ transitionDelay: "100ms" }}
+          >
+            <Play className="h-3.5 w-3.5 fill-current" />
             New courses added weekly
           </div>
 
-          {/* Heading */}
-          <h1 className="mb-4 text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl">
-            <span className="text-balance">Learn without limits</span>
+          {/* Heading — staggered reveal */}
+          <h1
+            className={`mb-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-background md:text-5xl lg:text-[3.75rem] transition-all duration-700 ${
+              mounted ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+            }`}
+            style={{ transitionDelay: "200ms" }}
+          >
+            Learn without{" "}
+            <span className="text-primary">limits</span>
           </h1>
 
           {/* Subheading */}
-          <p className="mb-8 max-w-lg text-lg text-muted-foreground md:text-xl">
+          <p
+            className={`mb-9 text-base leading-relaxed text-background/60 md:text-lg transition-all duration-700 ${
+              mounted ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+            }`}
+            style={{ transitionDelay: "300ms" }}
+          >
             Build practical skills with expertly designed programs from our institution.
           </p>
 
-          {/* Search Bar */}
-          <div className="mb-8 flex max-w-xl flex-col gap-3 sm:flex-row">
+          {/* Search — grouped as a single unit */}
+          <div
+            className={`mb-8 flex max-w-lg flex-col gap-3 sm:flex-row transition-all duration-700 ${
+              mounted ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+            }`}
+            style={{ transitionDelay: "400ms" }}
+          >
             <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+              <Search className="absolute left-4 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-muted-foreground/70" />
               <Input
                 type="search"
                 placeholder="What do you want to learn?"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-12 w-full rounded-xl border-border bg-card pl-12 pr-4 text-base shadow-sm focus-visible:ring-primary"
+                className="h-12 w-full rounded-xl border-border/60 bg-background/95 pl-12 pr-4 text-sm shadow-md backdrop-blur-sm focus-visible:border-primary/40 focus-visible:ring-1 focus-visible:ring-primary/30 transition-all"
               />
             </div>
-            <Button size="lg" className="h-12 rounded-xl px-8 text-base font-semibold shadow-md">
+            <Button
+              size="lg"
+              className="h-12 shrink-0 rounded-xl px-7 text-sm font-semibold shadow-md"
+            >
               Search
             </Button>
           </div>
 
-          {/* Highlights */}
-          <div className="flex flex-wrap items-center gap-4">
-            {highlights.map((highlight) => (
-              <div key={highlight} className="flex items-center gap-2 text-sm text-muted-foreground">
-                <CheckCircle2 className="h-4 w-4 text-primary" />
-                <span>{highlight}</span>
-              </div>
-            ))}
-          </div>
+          {/* Highlights + CTA — visually separated */}
+          <div
+            className={`flex flex-col gap-5 transition-all duration-700 ${
+              mounted ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+            }`}
+            style={{ transitionDelay: "500ms" }}
+          >
+            {/* Highlights row */}
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+              {highlights.map((highlight) => (
+                <div
+                  key={highlight}
+                  className="flex items-center gap-1.5 text-sm text-background/60"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-primary" />
+                  <span>{highlight}</span>
+                </div>
+              ))}
+            </div>
 
-          {/* CTA Links */}
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Button asChild variant="outline" size="lg" className="rounded-xl">
-              <Link href="/categories">Browse categories</Link>
-            </Button>
+            {/* CTA */}
+            <div>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="rounded-xl border-background/20 bg-background/5 text-background/80 backdrop-blur-sm hover:border-background/40 hover:bg-background/10 hover:text-background transition-colors"
+              >
+                <Link href="/categories">Browse categories</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Image Indicators */}
-      <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-2">
+      {/* Image Indicators — anchored left to align with content */}
+      <div className="absolute bottom-8 left-4 flex gap-2 lg:left-6">
         {heroImages.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentImage(index)}
-            className={`h-2 rounded-full transition-all ${
+            className={`h-1.5 rounded-full transition-all duration-300 ${
               index === currentImage
-                ? "w-8 bg-primary"
-                : "w-2 bg-primary/30 hover:bg-primary/50"
+                ? "w-8 bg-background/80"
+                : "w-1.5 bg-background/25 hover:bg-background/40"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
