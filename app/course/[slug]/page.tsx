@@ -200,14 +200,14 @@ export default async function CoursePage({ params }: PageProps) {
                     {/* Buttons */}
                     <div className="mb-4 flex flex-col gap-2">
                       <Button size="lg" className="w-full text-base font-semibold">
-                        Add to cart
+                        Enroll now
                       </Button>
                       <Button
                         variant="outline"
                         size="lg"
                         className="w-full text-base font-semibold"
                       >
-                        Buy now
+                        Start preview
                       </Button>
                     </div>
 

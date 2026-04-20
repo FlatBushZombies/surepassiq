@@ -17,9 +17,17 @@ export default function CategoriesPage() {
               All Categories
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              Explore our comprehensive collection of courses across all categories. 
+              Explore our comprehensive collection of courses across all categories.
               Find the perfect course to advance your skills and career.
             </p>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:justify-center">
+              <Link href="/login" className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
+                Enroll now
+              </Link>
+              <Link href="/categories" className="rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-secondary">
+                Browse categories
+              </Link>
+            </div>
           </div>
         </section>
 

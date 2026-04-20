@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useUser, UserButton } from "@clerk/nextjs";
 import { categories } from "@/constants";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -18,6 +19,7 @@ import Image from "next/image";
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const { user } = useUser();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-card shadow-sm">
@@ -89,12 +91,18 @@ export function Header() {
 
         {/* Auth Buttons */}
         <div className="hidden items-center gap-2 lg:flex">
-          <Button variant="outline" asChild>
-            <Link href="/login">Log in</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/signup">Sign up</Link>
-          </Button>
+          {!user ? (
+            <>
+              <Button variant="outline" asChild>
+                <Link href="/login">Log in</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/signup">Sign up</Link>
+              </Button>
+            </>
+          ) : (
+            <UserButton />
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -157,13 +165,15 @@ export function Header() {
               View all categories
             </Link>
           </div>
-          <Link
-            href="/my-learning"
-            className="rounded-md px-3 py-2 text-sm hover:bg-secondary"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            My Learning
-          </Link>
+          {user && (
+            <Link
+              href="/my-learning"
+              className="rounded-md px-3 py-2 text-sm hover:bg-secondary"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              My Learning
+            </Link>
+          )}
           <Link
             href="/wishlist"
             className="rounded-md px-3 py-2 text-sm hover:bg-secondary"
@@ -172,12 +182,18 @@ export function Header() {
             Wishlist
           </Link>
           <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
-            <Button variant="outline" asChild className="w-full">
-              <Link href="/login">Log in</Link>
-            </Button>
-            <Button asChild className="w-full">
-              <Link href="/signup">Sign up</Link>
-            </Button>
+            {!user ? (
+              <>
+                <Button variant="outline" asChild className="w-full">
+                  <Link href="/login">Log in</Link>
+                </Button>
+                <Button asChild className="w-full">
+                  <Link href="/signup">Sign up</Link>
+                </Button>
+              </>
+            ) : (
+              <UserButton />
+            )}
           </div>
         </nav>
       </div>
