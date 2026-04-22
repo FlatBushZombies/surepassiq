@@ -73,9 +73,506 @@ const achievements = [
   },
 ];
 
+/* ─────────────────────────────────────────────
+   Inline premium styles injected once
+───────────────────────────────────────────── */
+const PremiumStyles = () => (
+  <style>{`
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap');
+
+    :root {
+      --ink:       #0e0e12;
+      --ink-soft:  #1a1a24;
+      --ink-muted: #2a2a38;
+      --surface:   #14141c;
+      --surface-2: #1e1e2a;
+      --surface-3: #252534;
+      --border:    rgba(255,255,255,0.07);
+      --border-hi: rgba(255,255,255,0.13);
+      --gold:      #c9a84c;
+      --gold-dim:  #8c6e2f;
+      --gold-glow: rgba(201,168,76,0.15);
+      --cream:     #f0ead8;
+      --cream-dim: #9e9886;
+      --white:     #ffffff;
+      --success:   #4caf82;
+      --font-disp: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    .pml-root * { box-sizing: border-box; }
+    .pml-root { background: var(--ink); font-family: var(--font-body); color: var(--cream); }
+
+    /* ── Hero banner ── */
+    .pml-hero {
+      position: relative;
+      padding: 56px 0 48px;
+      overflow: hidden;
+    }
+    .pml-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,168,76,0.08) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 60% at 10% 0%, rgba(201,168,76,0.05) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .pml-hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .pml-hero h1 {
+      font-family: var(--font-disp);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -.01em;
+      color: var(--cream);
+      margin: 0 0 10px;
+    }
+    .pml-hero h1 em { font-style: italic; color: var(--gold); }
+    .pml-hero-sub {
+      font-size: .875rem;
+      color: var(--cream-dim);
+      font-weight: 300;
+    }
+
+    /* ── Divider line ── */
+    .pml-rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ── Layout wrapper ── */
+    .pml-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    @media(min-width:1024px){ .pml-container { padding: 0 40px; } }
+
+    /* ── Profile card ── */
+    .pml-profile-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1fr;
+    }
+    @media(min-width:900px){
+      .pml-profile-grid { grid-template-columns: 1fr 340px; }
+    }
+
+    .pml-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .pml-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-hi), transparent);
+    }
+
+    .pml-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-disp);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+
+    .pml-profile-label {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .pml-profile-name {
+      font-family: var(--font-disp);
+      font-size: 1.65rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin: 0 0 4px;
+    }
+    .pml-profile-email { font-size: .8rem; color: var(--cream-dim); }
+
+    .pml-stat-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .pml-stat-box {
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 18px;
+    }
+    .pml-stat-label { font-size: .7rem; color: var(--cream-dim); margin-bottom: 8px; }
+    .pml-stat-value {
+      font-family: var(--font-disp);
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    /* ── Milestone card ── */
+    .pml-milestone-card {
+      background: linear-gradient(145deg, var(--surface-2) 0%, var(--ink-muted) 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .pml-milestone-card::before {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: var(--gold-glow);
+      filter: blur(40px);
+    }
+    .pml-milestone-label {
+      font-size: 9px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .pml-milestone-title {
+      font-family: var(--font-disp);
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1.3;
+      margin: 0 0 12px;
+    }
+    .pml-milestone-body {
+      font-size: .8rem;
+      color: var(--cream-dim);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .pml-btn-pair { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* ── Premium button ── */
+    .pml-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-body);
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      padding: 9px 18px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      transition: all .2s ease;
+      text-decoration: none;
+    }
+    .pml-btn-primary {
+      background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+      color: var(--ink);
+    }
+    .pml-btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .pml-btn-ghost {
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid var(--border-hi);
+    }
+    .pml-btn-ghost:hover { background: var(--surface-3); }
+
+    /* ── Progress overview section ── */
+    .pml-section { padding: 48px 0; }
+    .pml-section-title {
+      font-family: var(--font-disp);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin: 0 0 24px;
+    }
+    .pml-section-title span { color: var(--gold); font-style: italic; }
+
+    /* ── Achievements section ── */
+    .pml-ach-section {
+      padding: 48px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Tab bar ── */
+    .pml-tabbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .pml-tabs {
+      display: flex;
+      gap: 2px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px;
+    }
+    .pml-tab {
+      font-family: var(--font-body);
+      font-size: .78rem;
+      font-weight: 500;
+      padding: 7px 18px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      color: var(--cream-dim);
+      background: transparent;
+      transition: all .18s;
+    }
+    .pml-tab:hover { color: var(--cream); }
+    .pml-tab-active {
+      background: var(--surface-3);
+      color: var(--gold);
+      box-shadow: 0 0 0 1px var(--border-hi);
+    }
+
+    .pml-search-wrap {
+      display: flex; gap: 8px; align-items: center;
+    }
+    .pml-search-field {
+      position: relative;
+    }
+    .pml-search-field svg {
+      position: absolute;
+      left: 12px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--cream-dim);
+      pointer-events: none;
+    }
+    .pml-search-input {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 8px 16px 8px 36px;
+      font-family: var(--font-body);
+      font-size: .8rem;
+      color: var(--cream);
+      width: 220px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .pml-search-input::placeholder { color: var(--cream-dim); }
+    .pml-search-input:focus { border-color: var(--gold-dim); }
+    .pml-filter-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--cream-dim);
+      transition: all .2s;
+    }
+    .pml-filter-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+    /* ── Course grid ── */
+    .pml-course-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1fr;
+    }
+    @media(min-width:640px){ .pml-course-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(min-width:1024px){ .pml-course-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    /* ── Course card ── */
+    .pml-course-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .pml-course-card:hover {
+      border-color: var(--border-hi);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.4), 0 0 0 0 transparent;
+    }
+    .pml-course-thumb {
+      position: relative;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+    }
+    .pml-course-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s; }
+    .pml-course-card:hover .pml-course-thumb img { transform: scale(1.04); }
+
+    .pml-thumb-overlay {
+      position: absolute; inset: 0;
+      background: rgba(14,14,18,0);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transition: all .25s;
+    }
+    .pml-course-card:hover .pml-thumb-overlay {
+      background: rgba(14,14,18,.45);
+      opacity: 1;
+    }
+    .pml-play-btn {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: var(--ink);
+      border: 1.5px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      transition: transform .2s;
+      text-decoration: none;
+    }
+    .pml-play-btn:hover { transform: scale(1.12); }
+
+    .pml-badge-completed {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+      color: var(--ink);
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    .pml-course-body { padding: 18px 18px 16px; }
+    .pml-progress-meta {
+      display: flex; justify-content: space-between;
+      font-size: .7rem;
+      color: var(--cream-dim);
+      margin-bottom: 7px;
+    }
+    .pml-progress-track {
+      height: 3px;
+      background: var(--surface-3);
+      border-radius: 100px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .pml-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+      border-radius: 100px;
+      transition: width .4s ease;
+    }
+
+    .pml-course-title {
+      font-family: var(--font-disp);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--cream);
+      line-height: 1.35;
+      margin: 0 0 5px;
+      text-decoration: none;
+      display: block;
+      transition: color .15s;
+    }
+    .pml-course-title:hover { color: var(--gold); }
+    .pml-course-instructor { font-size: .73rem; color: var(--cream-dim); margin-bottom: 14px; }
+
+    .pml-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .pml-continue-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: .75rem;
+      font-weight: 500;
+      padding: 7px 14px;
+      border-radius: 100px;
+      background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+      color: var(--ink);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: filter .2s, transform .15s;
+    }
+    .pml-continue-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+    .pml-more-btn {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: transparent;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--cream-dim);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .pml-more-btn:hover { border-color: var(--border-hi); color: var(--cream); }
+
+    /* ── Empty state ── */
+    .pml-empty {
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .pml-empty-title {
+      font-family: var(--font-disp);
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+    .pml-empty-sub { font-size: .875rem; color: var(--cream-dim); margin-bottom: 28px; }
+
+    /* ── Sign-in gate ── */
+    .pml-gate {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 60vh;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .pml-gate-title {
+      font-family: var(--font-disp);
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 14px;
+    }
+    .pml-gate-sub { font-size: .875rem; color: var(--cream-dim); margin-bottom: 28px; }
+
+    /* ── Thin decorative line ── */
+    .pml-deco-line {
+      width: 48px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 20px;
+    }
+  `}</style>
+);
+
+/* ─────────────────────────────────────────────
+   Inline ProgressOverview wrapper (preserves component)
+───────────────────────────────────────────── */
+/* ─────────────────────────────────────────────
+   Main page
+───────────────────────────────────────────── */
 export default function MyLearningPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState<"all" | "in-progress" | "completed">("all");
+  const [activeTab, setActiveTab] = useState("all");
   const { user } = useUser();
 
   const filteredCourses = enrolledCourses.filter((course) => {
@@ -86,90 +583,95 @@ export default function MyLearningPage() {
   });
 
   const totalCourses = enrolledCourses.length;
-  const completedCourses = enrolledCourses.filter((course) => course.progress === 100).length;
+  const completedCourses = enrolledCourses.filter((c) => c.progress === 100).length;
   const totalHours = 87;
   const currentStreak = 7;
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="pml-root flex min-h-screen flex-col">
+      <PremiumStyles />
       <Header />
 
       <main className="flex-1">
         {user ? (
           <>
-            <section className="bg-secondary py-8 md:py-12">
-              <div className="mx-auto max-w-7xl px-4 lg:px-6">
-                <h1 className="mb-2 text-3xl font-bold text-foreground md:text-4xl">
-                  My learning
-                </h1>
-                <p className="text-muted-foreground">
-                  Continue where you left off and track your progress.
-                </p>
+            {/* ── HERO ── */}
+            <section className="pml-hero">
+              <div className="pml-container">
+                <p className="pml-hero-eyebrow">Dashboard</p>
+                <h1>My <em>learning</em></h1>
+                <p className="pml-hero-sub">Continue where you left off and track your progress.</p>
               </div>
             </section>
 
-            <section className="py-8 md:py-10">
-              <div className="mx-auto max-w-7xl px-4 lg:px-6">
-                <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-                  <div className="rounded-[2rem] border border-border bg-card p-6">
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-secondary text-xl font-semibold text-foreground">
+            <hr className="pml-rule" />
+
+            {/* ── PROFILE + MILESTONE ── */}
+            <section className="pml-section">
+              <div className="pml-container">
+                <div className="pml-profile-grid">
+
+                  {/* Profile card */}
+                  <div className="pml-card">
+                    <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+                      <div className="pml-avatar">
                         {user.firstName?.[0] ?? user.fullName?.[0] ?? "U"}
                       </div>
-                      <div className="space-y-2">
-                        <p className="text-sm uppercase tracking-[0.24em] text-muted-foreground">
-                          Learner profile
-                        </p>
-                        <h2 className="text-2xl font-semibold text-foreground">
+                      <div>
+                        <p className="pml-profile-label">Learner profile</p>
+                        <h2 className="pml-profile-name">
                           {user.firstName
                             ? `${user.firstName} ${user.lastName ?? ""}`.trim()
                             : user.fullName || "Learning member"}
                         </h2>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="pml-profile-email">
                           {user.primaryEmailAddress?.emailAddress ?? "No email available"}
                         </p>
                       </div>
                     </div>
 
-                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                      <div className="rounded-3xl bg-secondary p-4">
-                        <p className="text-sm text-muted-foreground">Enrolled courses</p>
-                        <p className="mt-2 text-2xl font-semibold text-foreground">
-                          {totalCourses}
-                        </p>
+                    <div className="pml-stat-pair">
+                      <div className="pml-stat-box">
+                        <p className="pml-stat-label">Enrolled courses</p>
+                        <p className="pml-stat-value">{totalCourses}</p>
                       </div>
-                      <div className="rounded-3xl bg-secondary p-4">
-                        <p className="text-sm text-muted-foreground">Unlocked achievements</p>
-                        <p className="mt-2 text-2xl font-semibold text-foreground">
-                          {achievements.filter((achievement) => achievement.unlocked).length}
+                      <div className="pml-stat-box">
+                        <p className="pml-stat-label">Unlocked achievements</p>
+                        <p className="pml-stat-value">
+                          {achievements.filter((a) => a.unlocked).length}
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="rounded-[2rem] border border-border bg-card p-6">
-                    <p className="text-sm text-muted-foreground">Next milestone</p>
-                    <h3 className="mt-2 text-2xl font-semibold text-foreground">
-                      Complete another course this month
-                    </h3>
-                    <p className="mt-4 text-sm text-muted-foreground">
-                      Keep your momentum going and unlock new achievements by diving into a course.
-                    </p>
-                    <div className="mt-6 flex flex-wrap gap-3">
-                      <Button asChild size="sm">
-                        <Link href="/my-learning">View progress</Link>
-                      </Button>
-                      <Button variant="outline" size="sm" asChild>
-                        <Link href="/categories">Browse courses</Link>
-                      </Button>
+                  {/* Milestone card */}
+                  <div className="pml-milestone-card">
+                    <div>
+                      <p className="pml-milestone-label">Next milestone</p>
+                      <h3 className="pml-milestone-title">
+                        Complete another course this month
+                      </h3>
+                      <p className="pml-milestone-body">
+                        Keep your momentum going and unlock new achievements by diving into a course.
+                      </p>
+                    </div>
+                    <div className="pml-btn-pair">
+                      <Link href="/my-learning" className="pml-btn pml-btn-primary">
+                        View progress
+                      </Link>
+                      <Link href="/categories" className="pml-btn pml-btn-ghost">
+                        Browse courses
+                      </Link>
                     </div>
                   </div>
+
                 </div>
               </div>
             </section>
 
-            <section className="py-8 md:py-12">
-              <div className="mx-auto max-w-7xl px-4 lg:px-6">
+            {/* ── PROGRESS OVERVIEW ── */}
+            <section className="pml-section" style={{ paddingTop: 0 }}>
+              <div className="pml-container">
                 <ProgressOverview
                   totalCourses={totalCourses}
                   completedCourses={completedCourses}
@@ -179,16 +681,18 @@ export default function MyLearningPage() {
               </div>
             </section>
 
-            <section className="py-8 md:py-12 bg-secondary/50">
-              <div className="mx-auto max-w-7xl px-4 lg:px-6">
+            {/* ── ACHIEVEMENTS ── */}
+            <section className="pml-ach-section">
+              <div className="pml-container">
                 <Achievements achievements={achievements} />
               </div>
             </section>
 
-            <section className="border-b border-border bg-card">
-              <div className="mx-auto max-w-7xl px-4 lg:px-6">
-                <div className="flex flex-wrap items-center justify-between gap-4 py-4">
-                  <div className="flex items-center gap-1 rounded-lg bg-secondary p-1">
+            {/* ── TAB BAR ── */}
+            <section style={{ background: "var(--surface)", borderBottom: "1px solid var(--border)" }}>
+              <div className="pml-container">
+                <div className="pml-tabbar">
+                  <div className="pml-tabs">
                     {[
                       { id: "all", label: "All courses" },
                       { id: "in-progress", label: "In Progress" },
@@ -196,100 +700,88 @@ export default function MyLearningPage() {
                     ].map((tab) => (
                       <button
                         key={tab.id}
-                        onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                        className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-                          activeTab === tab.id
-                            ? "bg-card text-card-foreground shadow-sm"
-                            : "text-muted-foreground hover:text-foreground"
-                        }`}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`pml-tab${activeTab === tab.id ? " pml-tab-active" : ""}`}
                       >
                         {tab.label}
                       </button>
                     ))}
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                      <Input
+                  <div className="pml-search-wrap">
+                    <div className="pml-search-field">
+                      <Search size={14} />
+                      <input
                         type="search"
                         placeholder="Search my courses"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-64 pl-10"
+                        className="pml-search-input"
                       />
                     </div>
-                    <Button variant="outline" size="icon">
-                      <Filter className="h-4 w-4" />
-                    </Button>
+                    <button className="pml-filter-btn">
+                      <Filter size={14} />
+                    </button>
                   </div>
                 </div>
               </div>
             </section>
 
-            <section className="py-8 md:py-12">
-              <div className="mx-auto max-w-7xl px-4 lg:px-6">
+            {/* ── COURSE GRID ── */}
+            <section className="pml-section">
+              <div className="pml-container">
                 {filteredCourses.length > 0 ? (
-                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="pml-course-grid">
                     {filteredCourses.map((course) => (
-                      <article
-                        key={course.id}
-                        className="group overflow-hidden rounded-lg border border-border bg-card transition-shadow hover:shadow-lg"
-                      >
-                        <div className="relative aspect-video">
+                      <article key={course.id} className="pml-course-card">
+
+                        {/* Thumbnail */}
+                        <div className="pml-course-thumb">
                           <Image
                             src={course.image}
                             alt={course.title}
                             fill
                             className="object-cover"
                           />
-                          <div className="absolute inset-0 flex items-center justify-center bg-foreground/0 opacity-0 transition-all group-hover:bg-foreground/30 group-hover:opacity-100">
-                            <Link
-                              href={`/course/${course.slug}`}
-                              className="flex h-14 w-14 items-center justify-center rounded-full bg-card text-card-foreground shadow-lg transition-transform hover:scale-110"
-                            >
-                              <Play className="h-5 w-5 fill-current" />
+                          <div className="pml-thumb-overlay">
+                            <Link href={`/course/${course.slug}`} className="pml-play-btn">
+                              <Play size={18} style={{ marginLeft: 2 }} />
                             </Link>
                           </div>
                           {course.progress === 100 && (
-                            <div className="absolute right-2 top-2 rounded bg-primary px-2 py-1 text-xs font-medium text-primary-foreground">
-                              Completed
-                            </div>
+                            <span className="pml-badge-completed">Completed</span>
                           )}
                         </div>
 
-                        <div className="p-4">
-                          <div className="mb-3">
-                            <div className="mb-1 flex items-center justify-between text-xs">
-                              <span className="text-muted-foreground">{course.progress}% complete</span>
-                              <span className="text-muted-foreground">{course.lastAccessed}</span>
-                            </div>
-                            <Progress value={course.progress} className="h-1.5" />
+                        {/* Body */}
+                        <div className="pml-course-body">
+                          <div className="pml-progress-meta">
+                            <span>{course.progress}% complete</span>
+                            <span>{course.lastAccessed}</span>
+                          </div>
+                          <div className="pml-progress-track">
+                            <div
+                              className="pml-progress-fill"
+                              style={{ width: `${course.progress}%` }}
+                            />
                           </div>
 
-                          <Link href={`/course/${course.slug}`}>
-                            <h3 className="mb-1 line-clamp-2 font-semibold text-card-foreground hover:text-primary">
-                              {course.title}
-                            </h3>
+                          <Link href={`/course/${course.slug}`} className="pml-course-title">
+                            {course.title}
                           </Link>
+                          <p className="pml-course-instructor">{course.instructor.name}</p>
 
-                          <p className="mb-3 text-xs text-muted-foreground">
-                            {course.instructor.name}
-                          </p>
-
-                          <div className="flex items-center justify-between">
-                            <Button asChild size="sm" className="gap-2">
-                              <Link href={`/course/${course.slug}`}>
-                                <Play className="h-3.5 w-3.5" />
-                                {course.progress === 100 ? "Review" : "Continue"}
-                              </Link>
-                            </Button>
+                          <div className="pml-card-footer">
+                            <Link href={`/course/${course.slug}`} className="pml-continue-btn">
+                              <Play size={11} style={{ fill: "currentColor" }} />
+                              {course.progress === 100 ? "Review" : "Continue"}
+                            </Link>
 
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="h-8 w-8">
-                                  <MoreVertical className="h-4 w-4" />
-                                </Button>
+                                <button className="pml-more-btn">
+                                  <MoreVertical size={14} />
+                                </button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
                                 <DropdownMenuItem>
@@ -304,39 +796,42 @@ export default function MyLearningPage() {
                             </DropdownMenu>
                           </div>
                         </div>
+
                       </article>
                     ))}
                   </div>
                 ) : (
-                  <div className="py-16 text-center">
-                    <p className="mb-4 text-xl font-semibold text-foreground">No courses found</p>
-                    <p className="mb-6 text-muted-foreground">
+                  <div className="pml-empty">
+                    <div className="pml-deco-line" />
+                    <h2 className="pml-empty-title">No courses found</h2>
+                    <p className="pml-empty-sub">
                       {searchQuery
                         ? "Try a different search term"
                         : "Start learning by enrolling in a course"}
                     </p>
-                    <Button asChild>
-                      <Link href="/">Browse courses</Link>
-                    </Button>
+                    <Link href="/" className="pml-btn pml-btn-primary">
+                      Browse courses
+                    </Link>
                   </div>
                 )}
               </div>
             </section>
           </>
         ) : (
-          <section className="flex min-h-[60vh] items-center justify-center">
-            <div className="text-center">
-              <h1 className="mb-4 text-3xl font-bold text-foreground">
+          <div className="pml-gate">
+            <div>
+              <div className="pml-deco-line" />
+              <h1 className="pml-gate-title">
                 Sign in to view your learning progress
               </h1>
-              <p className="mb-6 text-muted-foreground">
+              <p className="pml-gate-sub">
                 Track your courses, achievements, and overall progress.
               </p>
-              <Button asChild>
-                <Link href="/login">Sign in</Link>
-              </Button>
+              <Link href="/login" className="pml-btn pml-btn-primary">
+                Sign in
+              </Link>
             </div>
-          </section>
+          </div>
         )}
       </main>
 
