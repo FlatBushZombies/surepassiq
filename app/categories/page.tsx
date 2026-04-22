@@ -1,92 +1,85 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { categories } from "@/constants";
+import { Header } from "@/components/layout/header";
+import { CourseGrid } from "@/components/courses/course-grid";
+import { CatalogToolbar } from "@/components/courses/catalog-toolbar";
+import { categories, courses } from "@/constants";
+import { filterCourses, getFirstValue, sortCourses } from "@/lib/catalog";
 
-export default function CategoriesPage() {
+interface CategoriesPageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function CategoriesPage(props: CategoriesPageProps) {
+  const searchParams = await props.searchParams;
+  const filteredCourses = sortCourses(
+    filterCourses(courses, {
+      query: getFirstValue(searchParams.query),
+      level: getFirstValue(searchParams.level),
+      category: getFirstValue(searchParams.category),
+      sort: (getFirstValue(searchParams.sort) as Parameters<typeof sortCourses>[1]) ?? "popular",
+    }),
+    (getFirstValue(searchParams.sort) as Parameters<typeof sortCourses>[1]) ?? "popular",
+  );
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
 
       <main className="flex-1">
-        {/* Page Header */}
-        <section className="bg-secondary py-12 md:py-16">
-          <div className="mx-auto max-w-7xl px-4 text-center lg:px-6">
-            <h1 className="mb-4 text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">
-              All Categories
-            </h1>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              Explore our comprehensive collection of courses across all categories.
-              Find the perfect course to advance your skills and career.
+        <section className="border-b border-border bg-muted/20">
+          <div className="mx-auto max-w-7xl px-4 py-12 lg:px-6 lg:py-16">
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary/70">
+              Catalog
             </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:justify-center">
-              <Link href="/login" className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
-                Enroll now
-              </Link>
-              <Link href="/categories" className="rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-secondary">
-                Browse categories
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Categories Grid */}
-        <section className="py-12 md:py-16">
-          <div className="mx-auto max-w-7xl px-4 lg:px-6">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <h1 className="mt-3 text-4xl font-bold text-foreground">All categories</h1>
+            <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
+              Explore guided courses, working assessments, learner tools, and
+              skill-building pathways across our full catalog.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
               {categories.map((category) => (
                 <Link
                   key={category.id}
                   href={`/categories/${category.slug}`}
-                  className="group overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary hover:shadow-lg hover:shadow-primary/10"
+                  className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium transition hover:border-primary/40 hover:text-primary"
                 >
-                  <div className="p-6">
-                    <div className="mb-4 flex items-center gap-4">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-secondary text-3xl">
-                        {category.icon}
-                      </div>
-                      <div>
-                        <h2 className="text-xl font-semibold text-card-foreground group-hover:text-primary">
-                          {category.name}
-                        </h2>
-                        <p className="text-sm text-muted-foreground">
-                          {category.coursesCount.toLocaleString()} courses
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Subcategories */}
-                    <div className="mb-4">
-                      <p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                        Popular topics
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {category.subcategories.slice(0, 3).map((sub) => (
-                          <span
-                            key={sub}
-                            className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground"
-                          >
-                            {sub}
-                          </span>
-                        ))}
-                        {category.subcategories.length > 3 && (
-                          <span className="rounded-full bg-secondary px-3 py-1 text-xs text-muted-foreground">
-                            +{category.subcategories.length - 3} more
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-1 text-sm font-medium text-primary">
-                      Explore courses
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </div>
-                  </div>
+                  {category.name} ({category.coursesCount})
                 </Link>
               ))}
             </div>
           </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl space-y-8 px-4 py-8 lg:px-6 lg:py-10">
+          <CatalogToolbar
+            categories={categories.map((category) => ({
+              label: category.name,
+              value: category.slug,
+            }))}
+          />
+
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-sm font-medium text-foreground">
+                {filteredCourses.length} course{filteredCourses.length === 1 ? "" : "s"} found
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Use search and filters to narrow the catalog by topic, level, and popularity.
+              </p>
+            </div>
+          </div>
+
+          {filteredCourses.length > 0 ? (
+            <CourseGrid courses={filteredCourses} />
+          ) : (
+            <div className="rounded-2xl border border-dashed border-border p-10 text-center">
+              <p className="text-lg font-semibold text-foreground">No courses matched your filters</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Try broadening your search or resetting the selected filters.
+              </p>
+            </div>
+          )}
         </section>
       </main>
 

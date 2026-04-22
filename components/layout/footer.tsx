@@ -1,7 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
 const footerLinks = {
   company: [
@@ -34,28 +34,26 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-foreground text-background">
       <div className="mx-auto max-w-7xl px-4 py-12 lg:px-6">
-
-        {/* Top CTA Section */}
         <div className="mb-12 flex flex-col items-start justify-between gap-6 border-b border-background/10 pb-12 lg:flex-row lg:items-center">
           <div className="max-w-sm">
             <h3 className="mb-1.5 text-lg font-semibold tracking-tight text-background">
               Learn with one trusted institution
             </h3>
-            <p className="text-sm leading-relaxed text-background/50">
-              Study with curated programs designed and delivered by our academic team.
+            <p className="text-sm leading-relaxed text-background/60">
+              Study with structured lessons, assessments, certificates, and a learner
+              dashboard designed for practical growth.
             </p>
           </div>
           <Button
             variant="outline"
             size="sm"
-            className="shrink-0 rounded-lg border-background/20 bg-transparent text-background/80 hover:border-background/50 hover:bg-background/5 hover:text-background transition-colors"
+            className="shrink-0 rounded-lg border-background/20 bg-transparent text-background/80 hover:border-background/50 hover:bg-background/5 hover:text-background"
             asChild
           >
             <Link href="/categories">Browse courses</Link>
           </Button>
         </div>
 
-        {/* Links Grid */}
         <div className="mb-12 grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4">
           {[
             { title: "Company", links: footerLinks.company },
@@ -83,9 +81,7 @@ export function Footer() {
           ))}
         </div>
 
-        {/* Bottom Bar */}
         <div className="flex flex-col items-start justify-between gap-4 border-t border-background/10 pt-8 md:flex-row md:items-center">
-          {/* Logo */}
           <Link
             href="/"
             className="flex items-center opacity-80 transition-opacity hover:opacity-100"
@@ -94,19 +90,23 @@ export function Footer() {
             <Image src="/footer.png" alt="Surepass IQ" width={40} height={40} />
           </Link>
 
-          {/* Legal Links */}
           <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs text-background/40">
             <span>© 2026 Surepass IQ</span>
-            <Link href="/terms" className="hover:text-background/70 transition-colors">Terms</Link>
-            <Link href="/privacy" className="hover:text-background/70 transition-colors">Privacy Policy</Link>
-            <Link href="/cookies" className="hover:text-background/70 transition-colors">Cookie Settings</Link>
+            <Link href="/terms" className="transition-colors hover:text-background/70">
+              Terms
+            </Link>
+            <Link href="/privacy" className="transition-colors hover:text-background/70">
+              Privacy Policy
+            </Link>
+            <Link href="/cookies" className="transition-colors hover:text-background/70">
+              Cookie Settings
+            </Link>
           </div>
 
-          {/* Language Selector */}
           <Button
             variant="ghost"
             size="sm"
-            className="gap-2 rounded-lg text-xs text-background/40 hover:bg-background/5 hover:text-background/70 transition-colors"
+            className="gap-2 rounded-lg text-xs text-background/40 hover:bg-background/5 hover:text-background/70"
           >
             <Globe className="h-3.5 w-3.5" />
             English

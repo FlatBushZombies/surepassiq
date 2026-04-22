@@ -1,6 +1,7 @@
 -- Surepass IQ — profiles + enrollment on signup (using Clerk)
 
 create extension if not exists "uuid-ossp";
+create extension if not exists pgcrypto;
 
 -- Profiles mirror Clerk users
 create table if not exists public.profiles (

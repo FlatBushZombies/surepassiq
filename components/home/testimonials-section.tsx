@@ -22,7 +22,7 @@ export function TestimonialsSection() {
 
         {/* Grid */}
         <div className="grid gap-4 md:grid-cols-3">
-          {testimonials.map((testimonial, index) => (
+          {testimonials.map((testimonial) => (
             <article
               key={testimonial.id}
               className="group relative flex flex-col overflow-hidden rounded-xl border border-border/60 bg-card p-6 shadow-sm transition-all duration-200 hover:border-border hover:shadow-[0_4px_20px_-4px_hsl(var(--foreground)/0.08)]"

@@ -1,14 +1,14 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { MyLearningDashboard } from "@/components/learning/my-learning-dashboard";
+import { WishlistPage } from "@/components/learning/wishlist-page";
 
-export default function MyLearningPage() {
+export default function WishlistRoutePage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1 bg-muted/20">
         <div className="mx-auto max-w-7xl px-4 py-10 lg:px-6 lg:py-12">
-          <MyLearningDashboard />
+          <WishlistPage />
         </div>
       </main>
       <Footer />
