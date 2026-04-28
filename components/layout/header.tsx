@@ -96,11 +96,11 @@ export function Header() {
         {/* Search Bar - Desktop */}
         <div className="hidden flex-1 lg:block">
           <form className="relative">
-            <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               type="search"
               placeholder="Search for anything"
-              className="h-12 w-full rounded-full border-border bg-muted/40 pl-11 pr-6 text-sm placeholder:text-muted-foreground focus-visible:border-foreground focus-visible:bg-background focus-visible:ring-0"
+              className="h-11 w-full rounded-xl border border-border bg-muted/40 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus-visible:border-foreground focus-visible:bg-background focus-visible:ring-0"
             />
           </form>
         </div>
@@ -219,7 +219,7 @@ export function Header() {
           <Input
             type="search"
             placeholder="Search for anything"
-            className="h-10 w-full rounded-full border-border bg-muted/40 pl-10 pr-4 text-sm"
+            className="h-10 w-full rounded-xl border border-border bg-muted/40 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus-visible:border-foreground focus-visible:bg-background focus-visible:ring-0"
           />
         </form>
       </div>
