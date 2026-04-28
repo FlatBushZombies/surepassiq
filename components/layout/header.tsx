@@ -9,143 +9,151 @@ import {
   ChevronDown,
   Heart,
   Menu,
+  Search,
+  ShoppingCart,
   X,
 } from "lucide-react";
-import { useUser, UserButton } from "@clerk/nextjs";
 import { categories, navLinks } from "@/constants";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CatalogSearchForm } from "@/components/search/catalog-search-form";
-import { useLearner } from "@/components/learning/learner-provider";
+import { Input } from "@/components/ui/input";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user } = useUser();
-  const { unreadNotificationsCount, state } = useLearner();
-
-  const wishlistCount = state.wishlistedCourseSlugs.length;
+  const [isExploreOpen, setIsExploreOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/95 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 lg:px-6">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background shadow-sm">
+      <div className="mx-auto flex h-[72px] max-w-[1340px] items-center gap-2 px-4 lg:gap-6 lg:px-6">
+        {/* Logo */}
         <Link
           href="/"
-          className="flex shrink-0 items-center transition-opacity hover:opacity-80"
-          aria-label="Surepass IQ home"
+          className="flex shrink-0 items-center"
+          aria-label="SurePassIQ home"
         >
-          <Image src="/logo.png" alt="Surepass IQ" width={48} height={48} />
+          <span className="text-xl font-bold tracking-tight text-foreground">
+            SurePassIQ
+          </span>
         </Link>
 
-        <div className="hidden lg:block">
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <details className="group">
-                <summary className="flex cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-muted-foreground transition hover:text-foreground">
-                  Explore
-                  <ChevronDown className="h-3.5 w-3.5 transition group-open:rotate-180" />
-                </summary>
-                <div className="absolute left-0 top-full mt-3 w-64 rounded-2xl border border-border bg-card p-2 shadow-xl">
-                  {categories.map((category) => (
-                    <Link
-                      key={category.id}
-                      href={`/categories/${category.slug}`}
-                      className="flex items-center justify-between rounded-xl px-3 py-2 text-sm text-card-foreground transition hover:bg-muted"
-                    >
-                      <span>{category.name}</span>
-                      <span className="text-xs text-muted-foreground">
-                        {category.coursesCount}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              </details>
-            </div>
-
-            <nav className="flex items-center gap-3">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm font-medium text-muted-foreground transition hover:text-foreground"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
+        {/* Categories Dropdown - Desktop */}
+        <div
+          className="relative hidden lg:block"
+          onMouseEnter={() => setIsExploreOpen(true)}
+          onMouseLeave={() => setIsExploreOpen(false)}
+        >
+          <button className="flex items-center gap-1 px-3 py-2 text-sm font-normal text-foreground transition hover:text-primary">
+            Categories
+            <ChevronDown className={cn("h-4 w-4 transition-transform", isExploreOpen && "rotate-180")} />
+          </button>
+          <div
+            className={cn(
+              "absolute left-0 top-full w-64 rounded-sm border border-border bg-background py-2 shadow-lg transition-all",
+              isExploreOpen ? "visible opacity-100" : "invisible opacity-0"
+            )}
+          >
+            {categories.map((category) => (
+              <Link
+                key={category.id}
+                href={`/categories/${category.slug}`}
+                className="flex items-center justify-between px-4 py-2.5 text-sm text-foreground transition hover:bg-muted"
+              >
+                <span>{category.name}</span>
+                <span className="text-xs text-muted-foreground">
+                  {category.coursesCount}
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
 
-        <div className="hidden max-w-xl flex-1 md:block">
-          <CatalogSearchForm
-            compact
-            placeholder="Search courses, skills, or instructors"
-            className="flex items-center gap-2"
-            inputClassName="pl-10"
-          />
+        {/* Search Bar - Desktop */}
+        <div className="hidden flex-1 lg:block">
+          <form className="relative">
+            <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="Search for anything"
+              className="h-12 w-full rounded-full border-border bg-muted/40 pl-11 pr-6 text-sm placeholder:text-muted-foreground focus-visible:border-foreground focus-visible:bg-background focus-visible:ring-0"
+            />
+          </form>
         </div>
 
+        {/* Nav Links - Desktop */}
+        <nav className="hidden items-center lg:flex">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`px-3 py-2 text-sm font-normal transition hover:text-primary ${
+                link.href === "/business"
+                  ? "text-muted-foreground"
+                  : "text-foreground"
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <Link
+            href="/business"
+            className="px-3 py-2 text-sm font-normal text-muted-foreground transition hover:text-primary"
+          >
+            Business
+          </Link>
+        </nav>
+
+        {/* Right Actions - Desktop */}
         <div className="hidden items-center gap-1 lg:flex">
-          <Button variant="ghost" size="icon" asChild>
+          <Button variant="ghost" size="icon" className="h-10 w-10" asChild>
             <Link href="/my-learning" aria-label="My learning">
-              <BookOpen className="h-4.5 w-4.5" />
+              <BookOpen className="h-5 w-5" />
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" className="relative" asChild>
+          <Button variant="ghost" size="icon" className="relative h-10 w-10" asChild>
             <Link href="/wishlist" aria-label="Wishlist">
-              <Heart className="h-4.5 w-4.5" />
-              {wishlistCount > 0 && (
-                <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold leading-none text-primary-foreground">
-                  {wishlistCount}
-                </span>
-              )}
+              <Heart className="h-5 w-5" />
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" className="relative" asChild>
+          <Button variant="ghost" size="icon" className="relative h-10 w-10" asChild>
+            <Link href="/cart" aria-label="Shopping cart">
+              <ShoppingCart className="h-5 w-5" />
+            </Link>
+          </Button>
+          <Button variant="ghost" size="icon" className="relative h-10 w-10" asChild>
             <Link href="/notifications" aria-label="Notifications">
-              <Bell className="h-4.5 w-4.5" />
-              {unreadNotificationsCount > 0 && (
-                <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold leading-none text-primary-foreground">
-                  {unreadNotificationsCount}
-                </span>
-              )}
+              <Bell className="h-5 w-5" />
             </Link>
           </Button>
         </div>
 
+        {/* Auth Buttons - Desktop */}
         <div className="hidden items-center gap-2 lg:flex">
-          {!user ? (
-            <>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-sm font-medium text-muted-foreground hover:text-foreground"
-                asChild
-              >
-                <Link href="/login">Log in</Link>
-              </Button>
-              <Button size="sm" className="rounded-lg text-sm font-medium" asChild>
-                <Link href="/signup">Sign up</Link>
-              </Button>
-            </>
-          ) : (
-            <UserButton />
-          )}
+          <Button
+            variant="outline"
+            className="h-10 rounded-sm border-foreground px-4 text-sm font-bold text-foreground hover:bg-muted"
+            asChild
+          >
+            <Link href="/login">Log in</Link>
+          </Button>
+          <Button
+            className="h-10 rounded-sm bg-foreground px-4 text-sm font-bold text-background hover:bg-foreground/90"
+            asChild
+          >
+            <Link href="/signup">Sign up</Link>
+          </Button>
         </div>
 
-        <div className="flex items-center gap-1 lg:hidden">
-          <Button variant="ghost" size="icon" className="relative" asChild>
-            <Link href="/notifications" aria-label="Notifications">
-              <Bell className="h-4.5 w-4.5" />
-              {unreadNotificationsCount > 0 && (
-                <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold leading-none text-primary-foreground">
-                  {unreadNotificationsCount}
-                </span>
-              )}
+        {/* Mobile Actions */}
+        <div className="ml-auto flex items-center gap-1 lg:hidden">
+          <Button variant="ghost" size="icon" className="h-10 w-10" asChild>
+            <Link href="/cart" aria-label="Shopping cart">
+              <ShoppingCart className="h-5 w-5" />
             </Link>
           </Button>
           <Button
             variant="ghost"
             size="icon"
+            className="h-10 w-10"
             onClick={() => setIsMenuOpen((current) => !current)}
           >
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -153,31 +161,36 @@ export function Header() {
         </div>
       </div>
 
-      <div className="border-t border-border/60 px-4 py-2 md:hidden">
-        <CatalogSearchForm
-          compact
-          placeholder="Search courses, skills, or instructors"
-          className="flex items-center gap-2"
-        />
+      {/* Mobile Search */}
+      <div className="border-t border-border px-4 py-3 lg:hidden">
+        <form className="relative">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            type="search"
+            placeholder="Search for anything"
+            className="h-10 w-full rounded-full border-border bg-muted/40 pl-10 pr-4 text-sm"
+          />
+        </form>
       </div>
 
+      {/* Mobile Menu */}
       <div
         className={cn(
-          "absolute left-0 right-0 top-full z-50 border-b border-border/60 bg-background/98 backdrop-blur-md shadow-lg transition-all duration-300 lg:hidden",
-          isMenuOpen ? "max-h-[85vh] overflow-y-auto" : "max-h-0 overflow-hidden border-b-0",
+          "absolute left-0 right-0 top-full z-50 border-b border-border bg-background shadow-lg transition-all duration-200 lg:hidden",
+          isMenuOpen ? "max-h-[80vh] overflow-y-auto" : "max-h-0 overflow-hidden border-b-0"
         )}
       >
-        <nav className="flex flex-col gap-2 p-3">
-          <div className="rounded-2xl border border-border bg-card p-3">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Browse categories
+        <nav className="flex flex-col p-4">
+          <div className="mb-4 border-b border-border pb-4">
+            <p className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+              Categories
             </p>
             <div className="space-y-1">
               {categories.map((category) => (
                 <Link
                   key={category.id}
                   href={`/categories/${category.slug}`}
-                  className="flex items-center justify-between rounded-lg px-3 py-2 text-sm transition hover:bg-muted"
+                  className="flex items-center justify-between py-2 text-sm text-foreground transition hover:text-primary"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <span>{category.name}</span>
@@ -189,45 +202,51 @@ export function Header() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-border bg-card p-3">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Quick links
-            </p>
-            <div className="space-y-1">
-              {[...navLinks, { label: "Notifications", href: "/notifications" }].map(
-                (link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="block rounded-lg px-3 py-2 text-sm transition hover:bg-muted"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
-                ),
-              )}
-            </div>
+          <div className="mb-4 space-y-1 border-b border-border pb-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="block py-2 text-sm font-medium text-foreground transition hover:text-primary"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href="/business"
+              className="block py-2 text-sm font-medium text-muted-foreground transition hover:text-primary"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Business
+            </Link>
+            <Link
+              href="/my-learning"
+              className="block py-2 text-sm font-medium text-foreground transition hover:text-primary"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              My learning
+            </Link>
+            <Link
+              href="/wishlist"
+              className="block py-2 text-sm font-medium text-foreground transition hover:text-primary"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Wishlist
+            </Link>
           </div>
 
-          <div className="mt-1 rounded-2xl border border-border bg-card p-3">
-            {!user ? (
-              <div className="flex flex-col gap-2">
-                <Button variant="outline" size="sm" asChild>
-                  <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                    Log in
-                  </Link>
-                </Button>
-                <Button size="sm" asChild>
-                  <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
-                    Sign up
-                  </Link>
-                </Button>
-              </div>
-            ) : (
-              <div className="px-1">
-                <UserButton />
-              </div>
-            )}
+          <div className="flex flex-col gap-2">
+            <Button variant="outline" className="h-10 w-full rounded-sm border-foreground font-bold" asChild>
+              <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                Log in
+              </Link>
+            </Button>
+            <Button className="h-10 w-full rounded-sm bg-foreground font-bold text-background" asChild>
+              <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
+                Sign up
+              </Link>
+            </Button>
           </div>
         </nav>
       </div>
