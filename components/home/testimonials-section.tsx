@@ -11,7 +11,7 @@ export function TestimonialsSection() {
           <h2 className="text-2xl font-bold text-foreground">
             What our learners say
           </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-sm text-white">
             Stories from learners building brighter futures across Zimbabwe
           </p>
         </div>
