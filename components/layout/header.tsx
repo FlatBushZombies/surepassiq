@@ -31,9 +31,14 @@ export function Header() {
           className="flex shrink-0 items-center"
           aria-label="SurePassIQ home"
         >
-          <span className="text-xl font-bold tracking-tight text-foreground">
-            SurePassIQ
-          </span>
+          <Image
+            src="/logo.png"
+            alt="SurePassIQ"
+            width={120}
+            height={40}
+            priority
+            className="h-10 w-auto object-contain"
+          />
         </Link>
 
         {/* Categories Dropdown - Desktop */}

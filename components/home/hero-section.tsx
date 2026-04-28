@@ -31,7 +31,8 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-foreground">
+    <section className="relative min-h-[600px] overflow-hidden bg-foreground lg:min-h-[540px]">
+      {/* Background Images */}
       <div className="absolute inset-0">
         {heroImages.map((image, index) => (
           <Image
@@ -45,93 +46,86 @@ export function HeroSection() {
             }`}
           />
         ))}
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/92 via-foreground/75 to-foreground/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,transparent_50%,hsl(var(--foreground)/0.3)_100%)]" />
+        <div className="absolute inset-0 bg-foreground/80 lg:bg-gradient-to-r lg:from-foreground lg:via-foreground/90 lg:to-transparent" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 py-20 md:py-28 lg:px-6 lg:py-36">
-        <div className="max-w-2xl">
-          <div
-            className="mb-7 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-sm transition-all duration-700"
-            style={{ transitionDelay: "100ms" }}
-          >
-            <Play className="h-3.5 w-3.5 fill-current" />
+      {/* Content */}
+      <div className="relative mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
+        <div className="max-w-xl">
+          {/* Badge */}
+          <div className="mb-5 inline-flex items-center gap-2 rounded-sm bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground">
+            <Play className="h-3 w-3 fill-current" />
             Guided learning with assessments, notes, and certificates
           </div>
 
-          <h1
-            className="mb-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-background transition-all duration-700 md:text-5xl lg:text-[3.75rem]"
-            style={{ transitionDelay: "200ms" }}
-          >
+          {/* Heading */}
+          <h1 className="mb-4 text-3xl font-bold leading-tight text-background md:text-4xl lg:text-5xl">
             Learn practical skills and prove
             <span className="text-primary"> what you know</span>
           </h1>
 
-          <p
-            className="mb-9 max-w-xl text-base leading-relaxed text-background/70 transition-all duration-700 md:text-lg"
-            style={{ transitionDelay: "300ms" }}
-          >
+          {/* Description */}
+          <p className="mb-6 text-base leading-relaxed text-background/70 lg:text-lg">
             Explore focused programs in AI, data, design, business, and workplace
             skills. Track lesson progress, pass assessments, and grow through one
             clear learning platform.
           </p>
 
-          <div
-            className="mb-8 max-w-xl transition-all duration-700"
-            style={{ transitionDelay: "400ms" }}
-          >
+          {/* Search Form */}
+          <div className="mb-6">
             <CatalogSearchForm
               placeholder="Search by course, skill, or instructor"
               buttonLabel="Find courses"
-              className="flex flex-col gap-3 sm:flex-row"
-              inputClassName="h-12 rounded-xl border-border/60 bg-background/95 pl-10 pr-4 text-sm shadow-md backdrop-blur-sm"
-              buttonClassName="h-12 rounded-xl px-7 text-sm font-semibold shadow-md"
+              className="flex flex-col gap-2 sm:flex-row"
+              inputClassName="h-12 rounded-sm border-0 bg-background pl-10 pr-4 text-sm shadow-none focus:ring-0"
+              buttonClassName="h-12 rounded-sm px-6 text-sm font-semibold"
             />
           </div>
 
-          <div
-            className="flex flex-col gap-5 transition-all duration-700"
-            style={{ transitionDelay: "500ms" }}
-          >
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-              {highlights.map((highlight) => (
-                <div
-                  key={highlight}
-                  className="flex items-center gap-1.5 text-sm text-background/70"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-primary" />
-                  <span>{highlight}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="rounded-xl border-background/20 bg-background/5 text-background/80 backdrop-blur-sm hover:border-background/40 hover:bg-background/10 hover:text-background"
+          {/* Highlights */}
+          <div className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2">
+            {highlights.map((highlight) => (
+              <div
+                key={highlight}
+                className="flex items-center gap-1.5 text-sm text-background/70"
               >
-                <Link href="/categories">Browse categories</Link>
-              </Button>
-              <Button asChild size="lg" className="rounded-xl px-6">
-                <Link href="/my-learning">Open learner dashboard</Link>
-              </Button>
-            </div>
+                <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
+                <span>{highlight}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-wrap gap-3">
+            <Button
+              asChild
+              size="lg"
+              className="h-11 rounded-sm px-6 text-sm font-semibold"
+            >
+              <Link href="/my-learning">Open learner dashboard</Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="h-11 rounded-sm border-background/30 bg-transparent px-6 text-sm font-semibold text-background hover:bg-background/10 hover:text-background"
+            >
+              <Link href="/categories">Browse categories</Link>
+            </Button>
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-4 flex gap-2 lg:left-6">
+      {/* Image Indicators */}
+      <div className="absolute bottom-6 left-4 flex gap-1.5 lg:left-6">
         {heroImages.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentImage(index)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
+            className={`h-1 rounded-full transition-all duration-300 ${
               index === currentImage
-                ? "w-8 bg-background/80"
-                : "w-1.5 bg-background/25 hover:bg-background/40"
+                ? "w-6 bg-background"
+                : "w-1 bg-background/40 hover:bg-background/60"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
