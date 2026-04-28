@@ -23,35 +23,41 @@ export default async function CategoriesPage(props: CategoriesPageProps) {
   );
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-background">
       <Header />
 
       <main className="flex-1">
-        <section className="border-b border-border bg-muted/20">
-          <div className="mx-auto max-w-7xl px-4 py-12 lg:px-6 lg:py-16">
-            <p className="text-xs font-semibold uppercase tracking-wider text-primary/70">
+        {/* Hero Section - Clean, minimal Udemy style */}
+        <section className="border-b border-border bg-background">
+          <div className="mx-auto max-w-7xl px-4 py-8 lg:px-6 lg:py-10">
+            <p className="text-xs font-bold uppercase tracking-wide text-primary">
               Catalog
             </p>
-            <h1 className="mt-3 text-4xl font-bold text-foreground">All categories</h1>
-            <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
+            <h1 className="mt-2 text-2xl font-bold text-foreground lg:text-3xl">
+              All categories
+            </h1>
+            <p className="mt-2 max-w-2xl text-sm text-muted-foreground lg:text-base">
               Explore guided courses, working assessments, learner tools, and
               skill-building pathways across our full catalog.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+
+            {/* Category Pills - Udemy style horizontal scroll */}
+            <div className="mt-6 flex flex-wrap gap-2">
               {categories.map((category) => (
                 <Link
                   key={category.id}
                   href={`/categories/${category.slug}`}
-                  className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium transition hover:border-primary/40 hover:text-primary"
+                  className="rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
                 >
-                  {category.name} ({category.coursesCount})
+                  {category.name}
                 </Link>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl space-y-8 px-4 py-8 lg:px-6 lg:py-10">
+        {/* Catalog Section */}
+        <section className="mx-auto max-w-7xl px-4 py-6 lg:px-6 lg:py-8">
           <CatalogToolbar
             categories={categories.map((category) => ({
               label: category.name,
@@ -59,27 +65,28 @@ export default async function CategoriesPage(props: CategoriesPageProps) {
             }))}
           />
 
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="text-sm font-medium text-foreground">
-                {filteredCourses.length} course{filteredCourses.length === 1 ? "" : "s"} found
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Use search and filters to narrow the catalog by topic, level, and popularity.
-              </p>
-            </div>
+          {/* Results Info */}
+          <div className="mt-6 border-b border-border pb-4">
+            <p className="text-sm font-bold text-foreground">
+              {filteredCourses.length} result{filteredCourses.length === 1 ? "" : "s"}
+            </p>
           </div>
 
-          {filteredCourses.length > 0 ? (
-            <CourseGrid courses={filteredCourses} />
-          ) : (
-            <div className="rounded-2xl border border-dashed border-border p-10 text-center">
-              <p className="text-lg font-semibold text-foreground">No courses matched your filters</p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Try broadening your search or resetting the selected filters.
-              </p>
-            </div>
-          )}
+          {/* Course Grid or Empty State */}
+          <div className="mt-6">
+            {filteredCourses.length > 0 ? (
+              <CourseGrid courses={filteredCourses} />
+            ) : (
+              <div className="border border-border bg-muted/20 p-8 text-center">
+                <p className="text-base font-bold text-foreground">
+                  No courses matched your filters
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Try broadening your search or resetting the selected filters.
+                </p>
+              </div>
+            )}
+          </div>
         </section>
       </main>
 
