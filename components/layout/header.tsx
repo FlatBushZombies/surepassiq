@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useClerk, useUser } from "@clerk/nextjs";
 import {
   Bell,
   BookOpen,
@@ -15,12 +16,32 @@ import {
 } from "lucide-react";
 import { categories, navLinks } from "@/constants";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isExploreOpen, setIsExploreOpen] = useState(false);
+  const { isLoaded, isSignedIn, user } = useUser();
+  const { signOut } = useClerk();
+
+  const showAuthButtons = isLoaded && !isSignedIn;
+  const showProfileActions = isLoaded && isSignedIn;
+  const userInitials =
+    user?.firstName?.charAt(0).toUpperCase() ||
+    user?.fullName?.charAt(0).toUpperCase() ||
+    "U";
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background shadow-sm">
@@ -120,33 +141,58 @@ export function Header() {
             </Link>
           </Button>
           <Button variant="ghost" size="icon" className="relative h-10 w-10" asChild>
-            <Link href="/cart" aria-label="Shopping cart">
-              <ShoppingCart className="h-5 w-5" />
-            </Link>
-          </Button>
-          <Button variant="ghost" size="icon" className="relative h-10 w-10" asChild>
             <Link href="/notifications" aria-label="Notifications">
               <Bell className="h-5 w-5" />
             </Link>
           </Button>
+          {showProfileActions ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-10 w-10 rounded-full"
+                  aria-label="Open profile menu"
+                >
+                  <Avatar className="h-10 w-10">
+                    {user?.imageUrl ? (
+                      <AvatarImage
+                        src={user.imageUrl}
+                        alt={user.fullName ?? "Profile"}
+                      />
+                    ) : (
+                      <AvatarFallback>{userInitials}</AvatarFallback>
+                    )}
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onSelect={handleSignOut} variant="destructive">
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : null}
         </div>
 
         {/* Auth Buttons - Desktop */}
-        <div className="hidden items-center gap-2 lg:flex">
-          <Button
-            variant="outline"
-            className="h-10 rounded-sm border-foreground px-4 text-sm font-bold text-foreground hover:bg-muted"
-            asChild
-          >
-            <Link href="/login">Log in</Link>
-          </Button>
-          <Button
-            className="h-10 rounded-sm bg-foreground px-4 text-sm font-bold text-background hover:bg-foreground/90"
-            asChild
-          >
-            <Link href="/signup">Sign up</Link>
-          </Button>
-        </div>
+        {showAuthButtons ? (
+          <div className="hidden items-center gap-2 lg:flex">
+            <Button
+              variant="outline"
+              className="h-10 rounded-sm border-foreground px-4 text-sm font-bold text-foreground hover:bg-muted"
+              asChild
+            >
+              <Link href="/login">Log in</Link>
+            </Button>
+            <Button
+              className="h-10 rounded-sm bg-foreground px-4 text-sm font-bold text-background hover:bg-foreground/90"
+              asChild
+            >
+              <Link href="/signup">Sign up</Link>
+            </Button>
+          </div>
+        ) : null}
 
         {/* Mobile Actions */}
         <div className="ml-auto flex items-center gap-1 lg:hidden">
@@ -241,18 +287,33 @@ export function Header() {
             </Link>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <Button variant="outline" className="h-10 w-full rounded-sm border-foreground font-bold" asChild>
-              <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                Log in
-              </Link>
-            </Button>
-            <Button className="h-10 w-full rounded-sm bg-foreground font-bold text-background" asChild>
-              <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
-                Sign up
-              </Link>
-            </Button>
-          </div>
+          {showAuthButtons ? (
+            <div className="flex flex-col gap-2">
+              <Button variant="outline" className="h-10 w-full rounded-sm border-foreground font-bold" asChild>
+                <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                  Log in
+                </Link>
+              </Button>
+              <Button className="h-10 w-full rounded-sm bg-foreground font-bold text-background" asChild>
+                <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
+                  Sign up
+                </Link>
+              </Button>
+            </div>
+          ) : showProfileActions ? (
+            <div className="flex flex-col gap-2">
+              <Button
+                variant="outline"
+                className="h-10 w-full rounded-sm border-foreground font-bold"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  handleSignOut();
+                }}
+              >
+                Log out
+              </Button>
+            </div>
+          ) : null}
         </nav>
       </div>
     </header>
