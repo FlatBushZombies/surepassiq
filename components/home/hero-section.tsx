@@ -46,7 +46,7 @@ export function HeroSection() {
             }`}
           />
         ))}
-        <div className="absolute inset-0 bg-foreground/80 lg:bg-gradient-to-r lg:from-foreground lg:via-foreground/90 lg:to-transparent" />
+        <div className="absolute inset-0 bg-foreground/50 lg:bg-gradient-to-r lg:from-foreground/80 lg:via-foreground/50 lg:to-foreground/10" />
       </div>
 
       {/* Content */}
@@ -89,7 +89,7 @@ export function HeroSection() {
                 key={highlight}
                 className="flex items-center gap-1.5 text-sm text-background/70"
               >
-                <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
+                <CheckCircle2 className="h-4 w-4 shrink-0 text-white" />
                 <span>{highlight}</span>
               </div>
             ))}
