@@ -87,7 +87,7 @@ export function Footer() {
             className="flex items-center opacity-80 transition-opacity hover:opacity-100"
             aria-label="Surepass IQ home"
           >
-            <Image src="/footer.png" alt="Surepass IQ" width={40} height={40} />
+            <Image src="/footer.png" alt="Surepass IQ" width={80} height={80} />
           </Link>
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs text-background/40">
