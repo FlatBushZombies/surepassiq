@@ -8,25 +8,19 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   {
-    label: "Why SurePassIQ",
-    href: "#",
-    submenu: [
-      { label: "Overview", href: "/business#overview" },
-      { label: "How it works", href: "/business#how-it-works" },
-      { label: "Case studies", href: "/business/case-studies" },
-    ],
-  },
-  {
     label: "Solutions",
     href: "#",
     submenu: [
-      { label: "Enterprise", href: "/business/enterprise" },
-      { label: "Small Business", href: "/business/small-business" },
-      { label: "Government", href: "/business/government" },
+      { label: "On-Demand Learning", href: "/business/on-demand" },
+      { label: "Hands-On Learning", href: "/business/hands-on" },
+      { label: "Cohort Learning", href: "/business/cohort" },
+      { label: "Professional Services", href: "/business/services" },
     ],
   },
   { label: "Resources", href: "/business/resources" },
-  { label: "Impact", href: "/business#overview" },
+  { label: "Plans & Pricing", href: "/business/plans" },
+  { label: "What We Do", href: "/what-we-do" },
+  { label: "Contact Us", href: "/business/contact" },
 ];
 
 export function BusinessHeader() {
@@ -94,11 +88,8 @@ export function BusinessHeader() {
           >
             Log in
           </Link>
-          <Button variant="outline" className="rounded-none border-foreground text-sm font-bold" asChild>
-            <Link href="/business/demo">Request a demo</Link>
-          </Button>
           <Button className="rounded-none bg-foreground text-sm font-bold text-background hover:bg-foreground/90" asChild>
-            <Link href="/business/start">Get started</Link>
+            <Link href="/business/start">Get Started</Link>
           </Button>
         </div>
 
@@ -147,11 +138,8 @@ export function BusinessHeader() {
             </div>
           ))}
           <div className="mt-6 flex flex-col gap-3 border-t border-border pt-6">
-            <Button variant="outline" className="w-full rounded-none border-foreground font-bold" asChild>
-              <Link href="/business/demo">Request a demo</Link>
-            </Button>
             <Button className="w-full rounded-none bg-foreground font-bold text-background" asChild>
-              <Link href="/business/start">Get started</Link>
+              <Link href="/business/start">Get Started</Link>
             </Button>
           </div>
         </nav>
