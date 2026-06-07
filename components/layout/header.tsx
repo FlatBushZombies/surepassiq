@@ -47,51 +47,18 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background shadow-sm">
       <div className="mx-auto flex h-[72px] max-w-[1340px] items-center gap-2 px-4 lg:gap-6 lg:px-6">
         {/* Logo */}
-        <Link
-          href="/"
-          className="flex shrink-0 items-center"
-          aria-label="SurePassIQ home"
-        >
+        <Link href="/" className="flex shrink-0 items-center h-10" aria-label="SurePassIQ home">
           <Image
             src="/logo.png"
             alt="SurePassIQ"
-            width={120}
-            height={40}
+            width={96}
+            height={32}
             priority
-            className="h-10 w-auto object-contain"
+            className="h-8 w-auto object-contain"
           />
         </Link>
 
-        {/* Categories Dropdown - Desktop */}
-        <div
-          className="relative hidden lg:block"
-          onMouseEnter={() => setIsExploreOpen(true)}
-          onMouseLeave={() => setIsExploreOpen(false)}
-        >
-          <button className="flex items-center gap-1 px-3 py-2 text-sm font-normal text-foreground transition hover:text-primary">
-            Categories
-            <ChevronDown className={cn("h-4 w-4 transition-transform", isExploreOpen && "rotate-180")} />
-          </button>
-          <div
-            className={cn(
-              "absolute left-0 top-full w-64 rounded-sm border border-border bg-background py-2 shadow-lg transition-all",
-              isExploreOpen ? "visible opacity-100" : "invisible opacity-0"
-            )}
-          >
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                href={`/categories/${category.slug}`}
-                className="flex items-center justify-between px-4 py-2.5 text-sm text-foreground transition hover:bg-muted"
-              >
-                <span>{category.name}</span>
-                <span className="text-xs text-muted-foreground">
-                  {category.coursesCount}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
+        {/* Categories removed from navbar */}
 
         {/* Search Bar - Desktop */}
         <div className="hidden flex-1 lg:block">
@@ -111,7 +78,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={`px-3 py-2 text-sm font-normal transition hover:text-primary ${
+              className={`px-4 py-2 text-sm font-medium tracking-tight transition-colors hover:text-primary hover:underline-offset-4 ${
                 link.href === "/business"
                   ? "text-muted-foreground"
                   : "text-foreground"
@@ -122,7 +89,7 @@ export function Header() {
           ))}
           <Link
             href="/business"
-            className="px-3 py-2 text-sm font-normal text-muted-foreground transition hover:text-primary"
+            className="px-4 py-2 text-sm font-medium tracking-tight text-muted-foreground transition-colors hover:text-primary hover:underline-offset-4"
           >
             Business
           </Link>
@@ -232,26 +199,7 @@ export function Header() {
         )}
       >
         <nav className="flex flex-col p-4">
-          <div className="mb-4 border-b border-border pb-4">
-            <p className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">
-              Categories
-            </p>
-            <div className="space-y-1">
-              {categories.map((category) => (
-                <Link
-                  key={category.id}
-                  href={`/categories/${category.slug}`}
-                  className="flex items-center justify-between py-2 text-sm text-foreground transition hover:text-primary"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <span>{category.name}</span>
-                  <span className="text-xs text-muted-foreground">
-                    {category.coursesCount}
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
+          {/* Categories removed from mobile menu */}
 
           <div className="mb-4 space-y-1 border-b border-border pb-4">
             {navLinks.map((link) => (

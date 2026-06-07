@@ -6,7 +6,7 @@ export function CTASection() {
   return (
     <section className="bg-background py-12 md:py-16">
       <div className="mx-auto max-w-7xl px-4 lg:px-6">
-        <div className="rounded-sm bg-primary px-6 py-10 text-center md:px-12 md:py-14">
+        <div className="rounded-lg bg-primary px-6 py-10 text-center md:px-12 md:py-14 shadow-sm">
           {/* Badge */}
           <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-sm bg-primary-foreground/10 px-3 py-1.5 text-sm font-medium text-primary-foreground">
             <Sparkles className="h-4 w-4" />
@@ -14,10 +14,8 @@ export function CTASection() {
           </div>
 
           {/* Heading */}
-          <h2 className="mx-auto mb-3 max-w-2xl text-2xl font-bold text-primary-foreground md:text-3xl lg:text-4xl">
-            <span className="text-balance">
-              Unlock your potential with Surepass IQ
-            </span>
+          <h2 className="mx-auto mb-3 max-w-2xl text-2xl font-semibold text-primary-foreground md:text-3xl lg:text-4xl">
+            <span className="text-balance">Unlock your potential with Surepass IQ</span>
           </h2>
 
           {/* Description */}

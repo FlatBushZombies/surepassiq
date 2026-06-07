@@ -31,7 +31,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[600px] overflow-hidden bg-foreground lg:min-h-[540px]">
+    <section className="relative min-h-[520px] overflow-hidden bg-foreground lg:min-h-[520px]">
       {/* Background Images */}
       <div className="absolute inset-0">
         {heroImages.map((image, index) => (
@@ -50,38 +50,26 @@ export function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="relative mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
-        <div className="max-w-xl">
+      <div className="relative mx-auto max-w-7xl px-4 py-14 lg:px-6 lg:py-18">
+        <div className="max-w-2xl">
           {/* Badge */}
-          <div className="mb-5 inline-flex items-center gap-2 rounded-sm bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground">
+          <div className="mb-5 inline-flex items-center gap-3 rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground">
             <Play className="h-3 w-3 fill-current" />
             Guided learning with assessments, notes, and certificates
           </div>
 
           {/* Heading */}
-          <h1 className="mb-4 text-3xl font-bold leading-tight text-background md:text-4xl lg:text-5xl">
+          <h1 className="mb-4 text-4xl font-extrabold leading-tight text-background md:text-5xl lg:text-6xl">
             Learn practical skills and prove
             <span className="text-primary"> what you know</span>
           </h1>
 
           {/* Description */}
-          <p className="mb-6 text-base leading-relaxed text-background/70 lg:text-lg">
+          <p className="mb-6 text-base leading-relaxed text-background/75 lg:text-lg">
             Explore focused programs in AI, data, design, business, and workplace
             skills. Track lesson progress, pass assessments, and grow through one
             clear learning platform.
           </p>
-
-          {/* Search Form */}
-          <div className="mb-6">
-            <CatalogSearchForm
-              placeholder="Search by course, skill, or instructor"
-              buttonLabel="Find courses"
-              className="flex flex-col gap-2 sm:flex-row"
-              inputClassName="h-12 rounded-sm border-0 bg-background pl-10 pr-4 text-sm shadow-none focus:ring-0"
-              buttonClassName="h-12 rounded-sm px-6 text-sm font-semibold"
-            />
-          </div>
-
           {/* Highlights */}
           <div className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2">
             {highlights.map((highlight) => (

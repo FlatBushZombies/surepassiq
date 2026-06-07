@@ -1782,6 +1782,5 @@ export const stats = [
 ];
 
 export const navLinks = [
-  { label: "Categories", href: "/categories" },
   { label: "My Learning", href: "/my-learning" },
 ];

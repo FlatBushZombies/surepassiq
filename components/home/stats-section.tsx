@@ -12,8 +12,8 @@ export function StatsSection() {
             const Icon = icons[index];
             return (
               <div key={stat.label} className="text-center">
-                <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-primary-foreground/10">
-                  <Icon className="h-5 w-5 text-primary-foreground" />
+                <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-primary-foreground/10">
+                  <Icon className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <div className="text-2xl font-bold text-primary-foreground md:text-3xl">
                   {stat.value}

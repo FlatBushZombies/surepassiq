@@ -2,6 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -80,17 +88,32 @@ export function BusinessHeader() {
           ))}
         </nav>
 
-        {/* Desktop Actions */}
+        {/* Desktop Actions (login removed) */}
         <div className="hidden items-center gap-4 lg:flex">
-          <Link
-            href="/login"
-            className="text-sm text-foreground transition-colors hover:text-muted-foreground"
-          >
-            Log in
-          </Link>
-          <Button className="rounded-none bg-foreground text-sm font-bold text-background hover:bg-foreground/90" asChild>
-            <Link href="/business/start">Get Started</Link>
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="rounded-none bg-foreground text-sm font-bold text-background hover:bg-foreground/90">
+                Get Started
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogTitle>Premium plan — Contact sales</DialogTitle>
+              <DialogDescription>
+                Our business offering includes dedicated onboarding, custom
+                learning pathways, and implementation support. To get started,
+                please contact our sales team and mention your organisation's
+                size and learning goals.
+              </DialogDescription>
+              <div className="mt-4 text-sm">
+                Email us at <a className="text-primary" href="mailto:support@surepassiq.com">support@surepassiq.com</a>
+              </div>
+              <DialogFooter>
+                <Button asChild className="bg-foreground text-background">
+                  <a href="mailto:support@surepassiq.com">Contact support</a>
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
 
         {/* Mobile Menu Button */}
@@ -138,9 +161,30 @@ export function BusinessHeader() {
             </div>
           ))}
           <div className="mt-6 flex flex-col gap-3 border-t border-border pt-6">
-            <Button className="w-full rounded-none bg-foreground font-bold text-background" asChild>
-              <Link href="/business/start">Get Started</Link>
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="w-full rounded-none bg-foreground font-bold text-background">
+                  Get Started
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogTitle>Premium plan — Contact sales</DialogTitle>
+                <DialogDescription>
+                  Our business offering includes dedicated onboarding, custom
+                  learning pathways, and implementation support. To get
+                  started, please contact our sales team and mention your
+                  organisation's size and learning goals.
+                </DialogDescription>
+                <div className="mt-4 text-sm">
+                  Email us at <a className="text-primary" href="mailto:support@surepassiq.com">support@surepassiq.com</a>
+                </div>
+                <DialogFooter>
+                  <Button asChild className="bg-foreground text-background">
+                    <a href="mailto:support@surepassiq.com">Contact support</a>
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         </nav>
       </div>
