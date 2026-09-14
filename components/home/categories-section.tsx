@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { categories } from "@/constants";
+import { Reveal } from "@/components/ui/reveal";
+import { staggerDelay } from "@/lib/stagger";
 
 export function CategoriesSection() {
   return (
@@ -18,31 +20,32 @@ export function CategoriesSection() {
           </div>
           <Link
             href="/categories"
-            className="hidden items-center gap-1 text-sm font-medium text-primary hover:underline sm:flex"
+            className="group hidden items-center gap-1 text-sm font-medium text-primary hover:underline sm:flex"
           >
             View all
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4 transition-transform duration-150 ease-out-strong group-hover:translate-x-0.5" />
           </Link>
         </div>
 
         {/* Grid - Clean, minimal cards */}
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {categories.slice(0, 8).map((category) => (
-            <Link
-              key={category.id}
-              href={`/categories/${category.slug}`}
-              className="group flex flex-col rounded-sm border border-border bg-card p-4 transition-shadow hover:shadow-md"
-            >
-              {/* Category name - primary focus */}
-              <h3 className="mb-2 text-sm font-semibold text-card-foreground group-hover:text-primary">
-                {category.name}
-              </h3>
+          {categories.slice(0, 8).map((category, index) => (
+            <Reveal key={category.id} delay={staggerDelay(index)}>
+              <Link
+                href={`/categories/${category.slug}`}
+                className="group flex flex-col rounded-sm border border-border bg-card p-4 transition-shadow hover:shadow-md"
+              >
+                {/* Category name - primary focus */}
+                <h3 className="mb-2 text-sm font-semibold text-card-foreground group-hover:text-primary">
+                  {category.name}
+                </h3>
 
-              {/* Course count - secondary info */}
-              <span className="text-xs text-muted-foreground">
-                {category.coursesCount.toLocaleString()} courses
-              </span>
-            </Link>
+                {/* Course count - secondary info */}
+                <span className="text-xs text-muted-foreground">
+                  {category.coursesCount.toLocaleString()} courses
+                </span>
+              </Link>
+            </Reveal>
           ))}
         </div>
 

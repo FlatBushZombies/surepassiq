@@ -1,5 +1,7 @@
 import { stats } from "@/constants";
 import { GraduationCap, BookOpen, Users, Award } from "lucide-react";
+import { Reveal } from "@/components/ui/reveal";
+import { staggerDelay } from "@/lib/stagger";
 
 const icons = [GraduationCap, BookOpen, Users, Award];
 
@@ -11,17 +13,19 @@ export function StatsSection() {
           {stats.map((stat, index) => {
             const Icon = icons[index];
             return (
-              <div key={stat.label} className="text-center">
-                <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-primary-foreground/10">
-                  <Icon className="h-6 w-6 text-primary-foreground" />
+              <Reveal key={stat.label} delay={staggerDelay(index, 50)}>
+                <div className="text-center">
+                  <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-primary-foreground/10">
+                    <Icon className="h-6 w-6 text-primary-foreground" />
+                  </div>
+                  <div className="text-2xl font-bold text-primary-foreground md:text-3xl">
+                    {stat.value}
+                  </div>
+                  <div className="mt-0.5 text-sm text-primary-foreground/80">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-2xl font-bold text-primary-foreground md:text-3xl">
-                  {stat.value}
-                </div>
-                <div className="mt-0.5 text-sm text-primary-foreground/80">
-                  {stat.label}
-                </div>
-              </div>
+              </Reveal>
             );
           })}
         </div>

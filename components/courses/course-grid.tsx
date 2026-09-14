@@ -1,4 +1,6 @@
 import { CourseCard } from "./course-card";
+import { Reveal } from "@/components/ui/reveal";
+import { staggerDelay } from "@/lib/stagger";
 import type { Course } from "@/constants";
 
 interface CourseGridProps {
@@ -23,8 +25,10 @@ export function CourseGrid({ courses, title, subtitle }: CourseGridProps) {
         </div>
       )}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {courses.map((course) => (
-          <CourseCard key={course.id} course={course} />
+        {courses.map((course, index) => (
+          <Reveal key={course.id} delay={staggerDelay(index)}>
+            <CourseCard course={course} />
+          </Reveal>
         ))}
       </div>
     </section>

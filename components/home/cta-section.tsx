@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sparkles, ArrowRight } from "lucide-react";
+import { Reveal } from "@/components/ui/reveal";
 
 export function CTASection() {
   return (
     <section className="bg-background py-12 md:py-16">
       <div className="mx-auto max-w-7xl px-4 lg:px-6">
-        <div className="rounded-lg bg-primary px-6 py-10 text-center md:px-12 md:py-14 shadow-sm">
+        <Reveal className="rounded-lg bg-primary px-6 py-10 text-center md:px-12 md:py-14 shadow-sm">
           {/* Badge */}
           <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-sm bg-primary-foreground/10 px-3 py-1.5 text-sm font-medium text-primary-foreground">
             <Sparkles className="h-4 w-4" />
@@ -29,11 +30,11 @@ export function CTASection() {
             <Button
               asChild
               size="lg"
-              className="h-11 rounded-sm bg-primary-foreground px-6 text-sm font-semibold text-primary hover:bg-primary-foreground/90"
+              className="group h-11 rounded-sm bg-primary-foreground px-6 text-sm font-semibold text-primary hover:bg-primary-foreground/90"
             >
               <Link href="/signup">
                 Get started for free
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-150 ease-out-strong group-hover:translate-x-0.5" />
               </Link>
             </Button>
             <Button
@@ -45,7 +46,7 @@ export function CTASection() {
               <Link href="/business">Surepass IQ for Business</Link>
             </Button>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

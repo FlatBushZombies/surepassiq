@@ -51,7 +51,7 @@ export function HeroSection() {
 
       {/* Content */}
       <div className="relative mx-auto max-w-7xl px-4 py-14 lg:px-6 lg:py-18">
-        <div className="max-w-2xl">
+        <div className="max-w-2xl animate-in fade-in slide-in-from-bottom-3 duration-700 ease-out-strong fill-mode-both motion-reduce:slide-in-from-bottom-0">
           {/* Badge */}
           <div className="mb-5 inline-flex items-center gap-3 rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground">
             <Play className="h-3 w-3 fill-current" />
@@ -110,7 +110,7 @@ export function HeroSection() {
           <button
             key={index}
             onClick={() => setCurrentImage(index)}
-            className={`h-1 rounded-full transition-all duration-300 ${
+            className={`h-1 rounded-full transition-[width,background-color] duration-300 ease-out-strong ${
               index === currentImage
                 ? "w-6 bg-background"
                 : "w-1 bg-background/40 hover:bg-background/60"

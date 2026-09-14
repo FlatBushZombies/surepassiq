@@ -37,6 +37,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# skills tool: symlinks into .agents/skills use absolute, machine-specific
+# paths and won't resolve on another machine. Re-run `npx skills add` (or
+# the tool's sync command) locally to regenerate them from skills-lock.json.
+.claude/skills/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

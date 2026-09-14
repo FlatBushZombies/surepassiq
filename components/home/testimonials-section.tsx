@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { Star, Quote } from "lucide-react";
 import { testimonials } from "@/constants";
+import { Reveal } from "@/components/ui/reveal";
+import { staggerDelay } from "@/lib/stagger";
 
 export function TestimonialsSection() {
   return (
@@ -18,55 +20,54 @@ export function TestimonialsSection() {
 
         {/* Grid - Clean testimonial cards */}
         <div className="grid gap-4 md:grid-cols-3">
-          {testimonials.map((testimonial) => (
-            <article
-              key={testimonial.id}
-              className="relative flex flex-col rounded-lg border border-border bg-card p-6 shadow-sm"
-            >
-              {/* Quote icon */}
-              <Quote className="absolute -right-2 -top-2 h-7 w-7 text-muted-foreground/20" />
+          {testimonials.map((testimonial, index) => (
+            <Reveal key={testimonial.id} delay={staggerDelay(index)}>
+              <article className="relative flex h-full flex-col rounded-lg border border-border bg-card p-6 shadow-sm">
+                {/* Quote icon */}
+                <Quote className="absolute -right-2 -top-2 h-7 w-7 text-muted-foreground/20" />
 
-              {/* Rating */}
-              <div className="mb-3 flex items-center gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`h-4 w-4 ${
-                      i < testimonial.rating
-                        ? "fill-amber-400 text-amber-400"
-                        : "fill-muted text-muted"
-                    }`}
-                  />
-                ))}
-              </div>
-
-              {/* Content */}
-              <p className="mb-4 flex-1 text-sm leading-relaxed text-card-foreground/85">
-                &ldquo;{testimonial.content}&rdquo;
-              </p>
-
-              {/* Divider */}
-              <div className="mb-4 h-px bg-border" />
-
-              {/* Author */}
-              <div className="flex items-center gap-3">
-                <Image
-                  src={testimonial.avatar}
-                  alt={testimonial.name}
-                  width={40}
-                  height={40}
-                  className="rounded-full object-cover"
-                />
-                <div>
-                  <p className="text-sm font-semibold text-card-foreground">
-                    {testimonial.name}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {testimonial.role}
-                  </p>
+                {/* Rating */}
+                <div className="mb-3 flex items-center gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`h-4 w-4 ${
+                        i < testimonial.rating
+                          ? "fill-amber-400 text-amber-400"
+                          : "fill-muted text-muted"
+                      }`}
+                    />
+                  ))}
                 </div>
-              </div>
-            </article>
+
+                {/* Content */}
+                <p className="mb-4 flex-1 text-sm leading-relaxed text-card-foreground/85">
+                  &ldquo;{testimonial.content}&rdquo;
+                </p>
+
+                {/* Divider */}
+                <div className="mb-4 h-px bg-border" />
+
+                {/* Author */}
+                <div className="flex items-center gap-3">
+                  <Image
+                    src={testimonial.avatar}
+                    alt={testimonial.name}
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="text-sm font-semibold text-card-foreground">
+                      {testimonial.name}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {testimonial.role}
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </Reveal>
           ))}
         </div>
       </div>

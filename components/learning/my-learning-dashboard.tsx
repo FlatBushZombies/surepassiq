@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Award, Bell, Bookmark, PlayCircle, Search, Sparkles, Trophy } from "lucide-react";
 import { courses } from "@/constants";
 import { useLearner } from "@/components/learning/learner-provider";
+import { PointsSummaryCard } from "@/components/community/points-summary-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -87,6 +88,8 @@ export function MyLearningDashboard() {
 
   return (
     <div className="space-y-8">
+      <PointsSummaryCard />
+
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Card>
           <CardHeader className="pb-2">
@@ -312,6 +315,9 @@ export function MyLearningDashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
+              <Button variant="outline" className="w-full justify-start" asChild>
+                <Link href="/community">Challenges &amp; leaderboard</Link>
+              </Button>
               <Button variant="outline" className="w-full justify-start" asChild>
                 <Link href="/wishlist">Open wishlist</Link>
               </Button>

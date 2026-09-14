@@ -36,7 +36,7 @@ export function CourseCard({ course }: CourseCardProps) {
             src={course.image}
             alt={course.title}
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-300 ease-out-strong group-hover:scale-105 motion-reduce:group-hover:scale-100"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           />
         </div>

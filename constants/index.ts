@@ -1783,4 +1783,5 @@ export const stats = [
 
 export const navLinks = [
   { label: "My Learning", href: "/my-learning" },
+  { label: "Community", href: "/community" },
 ];

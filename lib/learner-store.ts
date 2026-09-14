@@ -50,10 +50,32 @@ export interface LearnerNotification {
   courseSlug?: string;
 }
 
+export interface LearnerStreakState {
+  current: number;
+  longest: number;
+  lastActiveDate: string | null;
+}
+
+export interface CommunityPost {
+  id: string;
+  authorName: string;
+  body: string;
+  createdAt: string;
+  courseSlug?: string;
+  isSeed?: boolean;
+  baseLikeCount: number;
+}
+
 export interface LearnerPlatformState {
   wishlistedCourseSlugs: string[];
   courseStates: Record<string, LearnerCourseState>;
   notifications: LearnerNotification[];
+  streak: LearnerStreakState;
+  joinedChallengeIds: string[];
+  challengeCompletions: Record<string, string>;
+  communityPosts: CommunityPost[];
+  likedPostIds: string[];
+  joinedGroupSlugs: string[];
 }
 
 export interface LearnerAchievement {
@@ -72,6 +94,70 @@ export function createDefaultLearnerState(): LearnerPlatformState {
     wishlistedCourseSlugs: [],
     courseStates: {},
     notifications: [],
+    streak: { current: 0, longest: 0, lastActiveDate: null },
+    joinedChallengeIds: [],
+    challengeCompletions: {},
+    communityPosts: [],
+    likedPostIds: [],
+    joinedGroupSlugs: [],
+  };
+}
+
+/**
+ * Merges a persisted (possibly older-shaped) state blob with the current
+ * defaults so fields added later don't crash learners who have state saved
+ * from before those fields existed.
+ */
+export function mergeWithDefaultState(
+  parsed: Partial<LearnerPlatformState> | null | undefined,
+): LearnerPlatformState {
+  const defaults = createDefaultLearnerState();
+  if (!parsed) {
+    return defaults;
+  }
+
+  return {
+    ...defaults,
+    ...parsed,
+    streak: { ...defaults.streak, ...(parsed.streak ?? {}) },
+  };
+}
+
+function toDateKey(date: Date) {
+  return date.toISOString().slice(0, 10);
+}
+
+/**
+ * Advances the learner's daily streak. A gap of exactly one day extends the
+ * streak; anything longer resets it. Multiple activities on the same day are
+ * idempotent (no double-counting).
+ */
+export function recordLearnerActivity(
+  state: LearnerPlatformState,
+): LearnerPlatformState {
+  const today = toDateKey(new Date());
+  const { streak } = state;
+
+  if (streak.lastActiveDate === today) {
+    return state;
+  }
+
+  let current = 1;
+  if (streak.lastActiveDate) {
+    const msPerDay = 24 * 60 * 60 * 1000;
+    const diffDays = Math.round(
+      (Date.parse(today) - Date.parse(streak.lastActiveDate)) / msPerDay,
+    );
+    current = diffDays === 1 ? streak.current + 1 : 1;
+  }
+
+  return {
+    ...state,
+    streak: {
+      current,
+      longest: Math.max(streak.longest, current),
+      lastActiveDate: today,
+    },
   };
 }
 

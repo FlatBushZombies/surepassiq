@@ -3,6 +3,8 @@ import Link from "next/link";
 import { BusinessHeader } from "@/components/business/business-header";
 import { BusinessFooter } from "@/components/business/business-footer";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/ui/reveal";
+import { staggerDelay } from "@/lib/stagger";
 import { CheckCircle2, Users, BookOpen, Award, TrendingUp, Globe, Zap } from "lucide-react";
 
 export const metadata = {
@@ -70,7 +72,7 @@ export default function WhatWeDoPage() {
             />
           </div>
           <div className="relative mx-auto max-w-7xl px-4 lg:px-6">
-            <div className="max-w-3xl">
+            <div className="max-w-3xl animate-in fade-in slide-in-from-bottom-3 duration-700 ease-out-strong fill-mode-both motion-reduce:slide-in-from-bottom-0">
               <span className="inline-block rounded-sm bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary-foreground">
                 Enterprise Solutions
               </span>
@@ -96,11 +98,13 @@ export default function WhatWeDoPage() {
         <section className="border-b border-border bg-muted/30 py-8">
           <div className="mx-auto max-w-7xl px-4 lg:px-6">
             <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-              {stats.map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="text-2xl font-bold text-primary lg:text-3xl">{stat.value}</div>
-                  <div className="mt-1 text-sm text-muted-foreground">{stat.label}</div>
-                </div>
+              {stats.map((stat, index) => (
+                <Reveal key={stat.label} delay={staggerDelay(index, 50)}>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary lg:text-3xl">{stat.value}</div>
+                    <div className="mt-1 text-sm text-muted-foreground">{stat.label}</div>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -123,8 +127,8 @@ export default function WhatWeDoPage() {
                 const Icon = solution.icon;
                 const isReversed = index % 2 === 1;
                 return (
-                  <div 
-                    key={solution.title} 
+                  <Reveal
+                    key={solution.title}
                     className={`flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-16 ${isReversed ? "lg:flex-row-reverse" : ""}`}
                   >
                     {/* Image */}
@@ -160,7 +164,7 @@ export default function WhatWeDoPage() {
                         Learn More
                       </Button>
                     </div>
-                  </div>
+                  </Reveal>
                 );
               })}
             </div>
@@ -180,27 +184,27 @@ export default function WhatWeDoPage() {
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              <div className="rounded-lg border border-border bg-background p-6">
+              <Reveal delay={staggerDelay(0)} className="rounded-lg border border-border bg-background p-6">
                 <Globe className="h-8 w-8 text-primary" />
                 <h3 className="mt-4 text-lg font-semibold text-foreground">Local + Global Content</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
                   Access world-class content from global experts, combined with locally relevant case studies and examples.
                 </p>
-              </div>
-              <div className="rounded-lg border border-border bg-background p-6">
+              </Reveal>
+              <Reveal delay={staggerDelay(1)} className="rounded-lg border border-border bg-background p-6">
                 <TrendingUp className="h-8 w-8 text-primary" />
                 <h3 className="mt-4 text-lg font-semibold text-foreground">Analytics & Insights</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
                   Track learning progress, measure skill development, and demonstrate ROI with comprehensive reporting.
                 </p>
-              </div>
-              <div className="rounded-lg border border-border bg-background p-6">
+              </Reveal>
+              <Reveal delay={staggerDelay(2)} className="rounded-lg border border-border bg-background p-6">
                 <Award className="h-8 w-8 text-primary" />
                 <h3 className="mt-4 text-lg font-semibold text-foreground">Certification Paths</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
                   Industry-recognized certifications that validate skills and advance careers across your organization.
                 </p>
-              </div>
+              </Reveal>
             </div>
           </div>
         </section>
@@ -209,7 +213,7 @@ export default function WhatWeDoPage() {
         <section className="py-16 lg:py-24">
           <div className="mx-auto max-w-7xl px-4 lg:px-6">
             <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
-              <div className="lg:w-1/2">
+              <Reveal className="lg:w-1/2">
                 <h2 className="text-3xl font-bold tracking-tight text-foreground lg:text-4xl">
                   Trusted Across Industries
                 </h2>
@@ -218,7 +222,7 @@ export default function WhatWeDoPage() {
                 </p>
                 <div className="mt-8 flex flex-wrap gap-2">
                   {industries.map((industry) => (
-                    <span 
+                    <span
                       key={industry}
                       className="rounded-sm bg-muted px-3 py-1.5 text-sm font-medium text-foreground"
                     >
@@ -226,22 +230,22 @@ export default function WhatWeDoPage() {
                     </span>
                   ))}
                 </div>
-              </div>
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg lg:w-1/2">
+              </Reveal>
+              <Reveal delay={120} className="relative aspect-[4/3] w-full overflow-hidden rounded-lg lg:w-1/2">
                 <Image
                   src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800"
                   alt="Diverse industries"
                   fill
                   className="object-cover"
                 />
-              </div>
+              </Reveal>
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
         <section className="bg-primary py-16 lg:py-20">
-          <div className="mx-auto max-w-7xl px-4 text-center lg:px-6">
+          <Reveal className="mx-auto max-w-7xl px-4 text-center lg:px-6">
             <h2 className="text-3xl font-bold tracking-tight text-primary-foreground lg:text-4xl">
               Ready to Transform Your Workforce?
             </h2>
@@ -258,7 +262,7 @@ export default function WhatWeDoPage() {
                 </Button>
               </Link>
             </div>
-          </div>
+          </Reveal>
         </section>
       </main>
 
