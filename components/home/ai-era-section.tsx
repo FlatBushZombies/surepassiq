@@ -78,50 +78,15 @@ export function AiEraSection() {
               </div>
             </div>
 
-            {/* Right Bento Visuals Column */}
-            <div className="lg:col-span-6 grid grid-cols-12 gap-3 sm:gap-4 items-stretch h-[380px] sm:h-[420px]">
-              {/* Card 1: Left Vertical Abstract 3D Artwork */}
-              <div className="col-span-5 relative overflow-hidden rounded-[20px] bg-gradient-to-b from-cyan-400 to-indigo-600 shadow-md">
-                <Image
-                  src="/images/ai-era-abstract.png"
-                  alt="AI Era Abstract Artwork"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 40vw, 25vw"
-                />
-              </div>
-
-              {/* Stacked Right Column: Card 2 Top + Card 3 Bottom */}
-              <div className="col-span-7 flex flex-col gap-3 sm:gap-4 h-full">
-                {/* Card 2: Top Right Instructor Card with Floating 3D Sparkle Badge */}
-                <div className="relative flex-1 overflow-hidden rounded-[20px] bg-[#edf0f7]">
-                  <Image
-                    src="/images/ai-era-instructor.png"
-                    alt="AI Era Instructor"
-                    fill
-                    className="object-cover object-center"
-                    sizes="(max-width: 768px) 60vw, 35vw"
-                  />
-
-                  {/* Floating 3D Purple Badge at Top Right */}
-                  <div className="absolute top-3 right-3 z-10 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d8b4fe] via-[#a855f7] to-[#7e22ce] p-2.5 shadow-xl shadow-purple-950/40 border border-purple-200/50 transform rotate-6 hover:rotate-12 transition-transform duration-300">
-                    <div className="flex items-center gap-0.5 text-white">
-                      <Sparkles className="h-6 w-6 fill-white text-white drop-shadow-md" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card 3: Bottom Right VR Headset Card */}
-                <div className="relative h-[130px] sm:h-[150px] overflow-hidden rounded-[20px] bg-[#a78bfa] p-2 flex items-center justify-center">
-                  <Image
-                    src="/images/ai-era-vr.png"
-                    alt="VR Headset"
-                    fill
-                    className="object-contain p-2"
-                    sizes="(max-width: 768px) 60vw, 35vw"
-                  />
-                </div>
-              </div>
+            {/* Right Column: Career Image */}
+            <div className="lg:col-span-6 relative h-[340px] sm:h-[380px] lg:h-[420px] w-full overflow-hidden rounded-[24px] shadow-lg">
+              <Image
+                src="/career.png"
+                alt="Reimagine your career in the AI era"
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
             </div>
           </div>
         </div>

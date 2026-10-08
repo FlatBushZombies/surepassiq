@@ -15,6 +15,7 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { CourseGrid } from "@/components/courses/course-grid";
 import { CourseActions } from "@/components/courses/course-actions";
+import { CourseNavigationTabs } from "@/components/courses/course-navigation-tabs";
 import { courses } from "@/constants";
 import { getCourseCategorySlug } from "@/lib/catalog";
 
@@ -133,7 +134,7 @@ export default async function CoursePage(props: CoursePageProps) {
                     </p>
                     <p className="inline-flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4" />
-                      Final assessment with {course.assessment.questions.length} questions
+                      Mock tests & Timed exam simulation
                     </p>
                     <p className="inline-flex items-center gap-2">
                       <Award className="h-4 w-4" />
@@ -163,48 +164,9 @@ export default async function CoursePage(props: CoursePageProps) {
                 </div>
               </section>
 
-              <section id="curriculum" className="rounded-3xl border border-border bg-card p-6 shadow-sm">
-                <h2 className="text-2xl font-semibold text-card-foreground">Curriculum preview</h2>
-                <div className="mt-5 space-y-4">
-                  {course.modules.map((module) => (
-                    <article key={module.id} className="rounded-2xl border border-border p-4">
-                      <h3 className="text-lg font-semibold text-card-foreground">{module.title}</h3>
-                      <p className="mt-1 text-sm text-muted-foreground">{module.summary}</p>
-                      <ul className="mt-4 space-y-2">
-                        {module.lessons.map((lesson) => (
-                          <li
-                            key={lesson.id}
-                            className="flex items-center justify-between gap-3 rounded-xl bg-muted/30 px-3 py-2 text-sm"
-                          >
-                            <span className="font-medium text-card-foreground">{lesson.title}</span>
-                            <span className="text-muted-foreground">
-                              {lesson.kind} · {lesson.durationMinutes} min
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </article>
-                  ))}
-                </div>
-              </section>
-
-              <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
-                <h2 className="text-2xl font-semibold text-card-foreground">Assessment and completion</h2>
-                <p className="mt-3 text-muted-foreground">{course.assessment.description}</p>
-                <div className="mt-4 grid gap-4 md:grid-cols-2">
-                  <div className="rounded-2xl border border-border p-4">
-                    <p className="text-sm font-semibold text-card-foreground">Pass mark</p>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      You need {course.assessment.passMark}% to pass the assessment and complete the course.
-                    </p>
-                  </div>
-                  <div className="rounded-2xl border border-border p-4">
-                    <p className="text-sm font-semibold text-card-foreground">Completion rule</p>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      Finish every lesson, submit the final assessment, and your certificate unlocks automatically.
-                    </p>
-                  </div>
-                </div>
+              {/* Universal Course Navigation Tabs (Modules, Mock Tests, Timed Test, Practical Labs, Resources) */}
+              <section id="course-navigation">
+                <CourseNavigationTabs course={course} />
               </section>
             </div>
 

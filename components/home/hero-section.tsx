@@ -38,8 +38,8 @@ export function HeroSection() {
           <div className="relative lg:col-span-6 flex justify-end">
             <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[5/4] overflow-hidden rounded-sm">
               <Image
-                src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt="Diverse workforce collaborating and upskilling together"
+                src="/surepass-hero.jpeg"
+                alt="SurePass IQ hero training"
                 fill
                 priority
                 className="object-cover object-center"
