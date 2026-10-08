@@ -5,8 +5,14 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { LearnerProvider } from "@/components/learning/learner-provider";
 import "./globals.css";
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
   title: "Surepass IQ - Online Courses and Learning",
@@ -38,7 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className="bg-background">
+      <html lang="en" className={`bg-background ${geist.variable} ${geistMono.variable}`}>
         <body className="font-sans antialiased">
           <LearnerProvider>{children}</LearnerProvider>
           {process.env.NODE_ENV === "production" && <Analytics />}

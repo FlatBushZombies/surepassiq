@@ -3,15 +3,13 @@ import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/home/hero-section";
 import { CategoriesSection } from "@/components/home/categories-section";
 import { CourseGrid } from "@/components/courses/course-grid";
-import { StatsSection } from "@/components/home/stats-section";
-import { TestimonialsSection } from "@/components/home/testimonials-section";
-import { CTASection } from "@/components/home/cta-section";
+import { PopularCoursesCarousel } from "@/components/home/popular-courses-carousel";
+import { AiEraSection } from "@/components/home/ai-era-section";
 import { courses } from "@/constants";
 
 export default function HomePage() {
   const featuredCourses = courses.filter((c) => c.bestseller).slice(0, 4);
   const popularCourses = courses.slice(0, 8);
-  const newCourses = courses.slice(4, 8);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -31,26 +29,10 @@ export default function HomePage() {
         <CategoriesSection />
         
         <div className="mx-auto max-w-7xl px-4 lg:px-6">
-          <CourseGrid
-            courses={popularCourses}
-            title="Most popular courses"
-            subtitle="Popular picks from our early learner community"
-          />
+          <PopularCoursesCarousel courses={popularCourses} />
         </div>
         
-        <StatsSection />
-        
-        <div className="mx-auto max-w-7xl px-4 lg:px-6">
-          <CourseGrid
-            courses={newCourses}
-            title="Students are viewing"
-            subtitle="Fresh programs learners are currently exploring"
-          />
-        </div>
-        
-        <TestimonialsSection />
-        
-        <CTASection />
+        <AiEraSection />
       </main>
 
       <Footer />

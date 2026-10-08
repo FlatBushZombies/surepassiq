@@ -29,9 +29,9 @@ export function CourseCard({ course }: CourseCardProps) {
   };
 
   return (
-    <article className="group flex h-full flex-col border-b border-border bg-card pb-4 transition-colors hover:bg-muted/30">
+    <article className="group flex h-full flex-col rounded-md border border-neutral-300 dark:border-neutral-700 bg-card p-3 shadow-2xs transition-all duration-200 hover:border-neutral-400 dark:hover:border-neutral-500 hover:shadow-xs">
       <Link href={`/course/${course.slug}`} className="block">
-        <div className="relative aspect-video overflow-hidden">
+        <div className="relative aspect-video overflow-hidden rounded-sm">
           <Image
             src={course.image}
             alt={course.title}

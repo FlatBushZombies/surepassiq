@@ -44,8 +44,8 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background shadow-sm">
-      <div className="mx-auto flex h-[72px] max-w-[1340px] items-center gap-2 px-4 lg:gap-6 lg:px-6">
+    <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/95 backdrop-blur-md shadow-xs">
+      <div className="w-full flex h-[72px] items-center gap-3 px-4 sm:px-6 lg:gap-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex shrink-0 items-center h-10" aria-label="SurePassIQ home">
           <Image

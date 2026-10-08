@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Dialog,
@@ -39,10 +40,15 @@ export function BusinessHeader() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background">
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 lg:px-6">
         {/* Logo */}
-        <Link href="/business" className="flex items-center gap-3">
-          <span className="text-xl font-bold tracking-tight text-foreground">
-            SurePassIQ
-          </span>
+        <Link href="/business" className="flex items-center gap-3 h-10" aria-label="SurePassIQ Business home">
+          <Image
+            src="/logo.png"
+            alt="SurePassIQ"
+            width={96}
+            height={32}
+            priority
+            className="h-8 w-auto object-contain"
+          />
           <span className="border-l border-border pl-3 text-sm font-medium text-muted-foreground">
             Business
           </span>
