@@ -111,12 +111,12 @@ export function CategoriesSection() {
                         className="group flex flex-col w-full rounded-[22px] transition-all duration-300 hover:-translate-y-1"
                       >
                         {/* Top 3D Image Graphic (Controlled Height, not way too high) */}
-                        <div className="relative h-[220px] sm:h-[240px] w-full overflow-hidden rounded-[22px] bg-slate-100 dark:bg-slate-800 shadow-sm border border-slate-200/70 dark:border-slate-800">
+                        <div className="relative h-[260px] w-full overflow-hidden rounded-[22px] border border-slate-200/70 bg-slate-100 shadow-sm dark:border-slate-800 dark:bg-slate-800 sm:h-[280px] lg:h-[300px]">
                           <Image
                             src={category.image}
                             alt={category.title}
                             fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            className="object-contain p-3 transition-transform duration-500 group-hover:scale-[1.03]"
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           />
                         </div>

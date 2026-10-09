@@ -199,6 +199,7 @@ const categorySeeds: CategorySeed[] = [
       "Exam Preparation",
       "Certification Practice",
       "Timed Tests",
+      "Driving Theory",
     ],
   },
 ];
@@ -2476,6 +2477,165 @@ export const courses: Course[] = [
           "Schedule initial review on Day 1, followed by active recall checks on Day 3, Day 7, Day 14, and Day 28.",
           "Draft 20 flashcard questions focusing on weak topics.",
           "Run a 15-minute timed test sprint and calculate accuracy rate.",
+        ],
+      },
+    ],
+  }),
+  createCourse({
+    id: "driving-essential",
+    title: "Driving Theory & Hazard Perception Mastery",
+    slug: "driving-theory-hazard-perception",
+    description:
+      "Pass your driving theory test first time with complete highway code coverage, hazard perception video clip strategy, road signs, & mock exams.",
+    instructor: {
+      name: "Sgt. David Miller",
+      avatar:
+        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
+      title: "Senior Driving Instructor & Road Safety Specialist",
+    },
+    image:
+      "https://images.pexels.com/photos/13861/pexels-photo-13861.jpeg?auto=compress&cs=tinysrgb&w=800",
+    price: 14.99,
+    originalPrice: 79.99,
+    rating: 4.9,
+    reviewsCount: 540,
+    studentsCount: 4100,
+    duration: "9 hours",
+    level: "All Levels",
+    category: "Test Prep",
+    subcategory: "Driving Theory",
+    bestseller: true,
+    featured: true,
+    lastUpdated: "October 2026",
+    language: "English",
+    whatYouWillLearn: [
+      "Master all 14 official Highway Code topic areas for car and commercial drivers",
+      "Identify developing hazards early using CGI video hazard perception techniques",
+      "Understand stopping distances, road signs, traffic signals, and right-of-way rules",
+      "Pass unlimited timed mock tests matching real theory exam formats",
+    ],
+    requirements: [
+      "No prior driving experience required",
+      "Smartphone or computer for practice test simulation",
+    ],
+    targetAudience: [
+      "Learner Drivers",
+      "License Conversion Candidates",
+      "Driving Instructor Trainees",
+    ],
+    skills: [
+      "Highway Code",
+      "Hazard Perception",
+      "Road Sign Recognition",
+      "Mock Exam Speed",
+    ],
+    modules: [
+      {
+        id: "m1",
+        title: "Highway Code & Essential Road Rules",
+        summary:
+          "Road signs, speed limits, vehicle safety, and right of way.",
+        lessons: [
+          createLesson(
+            "l1",
+            "Road Signs & Markings Mastery",
+            "video",
+            20,
+            "Comprehensive breakdown of warning, regulatory, and info signs.",
+            ["Recognize 100+ road signs instantly"],
+          ),
+          createLesson(
+            "l2",
+            "Stopping Distances & Vehicle Handling",
+            "reading",
+            15,
+            "Dry, wet, and icy braking calculations.",
+            ["Calculate braking & thinking distances"],
+          ),
+        ],
+      },
+      {
+        id: "m2",
+        title: "Hazard Perception & Mock Exam Sprint",
+        summary:
+          "Spotting developing hazards and timing your clicks for top scores.",
+        lessons: [
+          createLesson(
+            "l3",
+            "CGI Hazard Clip Strategy",
+            "lab",
+            25,
+            "Practice identifying pedestrians, emerging vehicles, and hazards.",
+            ["Score 4/5 or 5/5 per hazard clip"],
+          ),
+        ],
+      },
+    ],
+    assessment: {
+      id: "a-driving",
+      title: "Official Driving Theory Mock Test Sprint",
+      description:
+        "50-question mock test simulating real theory exam conditions with pass mark at 86%.",
+      passMark: 86,
+      questions: [
+        {
+          id: "q1",
+          prompt:
+            "What is the overall stopping distance (thinking + braking) when traveling at 50 mph on a dry road?",
+          options: [
+            "36 metres (118 feet)",
+            "53 metres (175 feet)",
+            "73 metres (240 feet)",
+            "96 metres (315 feet)",
+          ],
+          correctOption: 1,
+          explanation:
+            "At 50 mph, thinking distance is 15 metres (50 ft) and braking distance is 38 metres (125 ft), totaling 53 metres (175 ft).",
+        },
+        {
+          id: "q2",
+          prompt:
+            "What should you do when approaching a pelican crossing when the amber light is flashing?",
+          options: [
+            "Stop and wait for the green light regardless of pedestrians",
+            "Give way to any pedestrians on the crossing, but proceed if clear",
+            "Accelerate quickly before pedestrians enter",
+            "Sound your horn to warn pedestrians",
+          ],
+          correctOption: 1,
+          explanation:
+            "A flashing amber light at a pelican crossing means you must give way to pedestrians already crossing, but if it is clear you may proceed.",
+        },
+      ],
+    },
+    resources: [
+      {
+        id: "r1",
+        title: "Complete Highway Code Road Signs Cheatsheet",
+        kind: "guide",
+        description: "Visual reference poster for all traffic signs.",
+      },
+      {
+        id: "r2",
+        title: "Hazard Perception Scoring Guide",
+        kind: "checklist",
+        description:
+          "How to click at the start of a developing hazard without over-clicking.",
+      },
+    ],
+    practicalLabs: [
+      {
+        id: "lab-driving-1",
+        title: "Simulated Hazard Perception & Mock Exam Sprint",
+        durationMinutes: 45,
+        description:
+          "Complete a timed 50-question theory mock test followed by 14 CGI hazard perception video clips under exam timer constraints.",
+        toolsNeeded: ["Timer", "Mock Exam Interface"],
+        steps: [
+          "Review 14 Highway Code topic areas.",
+          "Answer 50 multiple choice questions within 57 minutes.",
+          "Watch 14 CGI hazard clips, clicking as soon as developing hazards appear.",
+          "Review incorrect answers with full official explanations.",
         ],
       },
     ],

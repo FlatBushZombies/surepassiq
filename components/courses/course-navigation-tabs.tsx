@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   BookOpen,
   CheckCircle2,
@@ -22,8 +22,6 @@ import {
 import type { Course, PracticalLab } from "@/constants";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
 
 interface CourseNavigationTabsProps {
@@ -32,10 +30,13 @@ interface CourseNavigationTabsProps {
 
 type TabType = "modules" | "mock-tests" | "timed-test" | "practical-labs" | "resources";
 
+const answerLetters = ["A", "B", "C", "D", "E", "F"];
+
 export function CourseNavigationTabs({ course }: CourseNavigationTabsProps) {
   const [activeTab, setActiveTab] = useState<TabType>("modules");
 
   // Mock Test State
+  const [mockQuestionIndex, setMockQuestionIndex] = useState(0);
   const [mockAnswers, setMockAnswers] = useState<Record<string, number>>({});
   const [revealedAnswers, setRevealedAnswers] = useState<Record<string, boolean>>({});
 
@@ -55,28 +56,7 @@ export function CourseNavigationTabs({ course }: CourseNavigationTabsProps) {
   const [savedNotes, setSavedNotes] = useState<string[]>([]);
   const [noteSavedFeedback, setNoteSavedFeedback] = useState(false);
 
-  // Timer Effect for Timed Exam
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (isTimedRunning && timeLeft > 0 && !timedSubmitted) {
-      timer = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-      }, 1000);
-    } else if (timeLeft === 0 && isTimedRunning && !timedSubmitted) {
-      handleCompleteTimedExam();
-    }
-    return () => clearInterval(timer);
-  }, [isTimedRunning, timeLeft, timedSubmitted]);
-
-  const startTimedExam = () => {
-    setIsTimedRunning(true);
-    setTimedSubmitted(false);
-    setTimeLeft(900);
-    setTimedAnswers({});
-    setTimedScore(null);
-  };
-
-  const handleCompleteTimedExam = () => {
+  const handleCompleteTimedExam = useCallback(() => {
     setIsTimedRunning(false);
     setTimedSubmitted(true);
     let correctCount = 0;
@@ -88,6 +68,27 @@ export function CourseNavigationTabs({ course }: CourseNavigationTabsProps) {
     });
     const finalScore = Math.round((correctCount / questions.length) * 100);
     setTimedScore(finalScore);
+  }, [course.assessment.questions, timedAnswers]);
+
+  // Timer Effect for Timed Exam
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isTimedRunning && timeLeft > 0 && !timedSubmitted) {
+      timer = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+    } else if (timeLeft === 0 && isTimedRunning && !timedSubmitted) {
+      queueMicrotask(handleCompleteTimedExam);
+    }
+    return () => clearInterval(timer);
+  }, [handleCompleteTimedExam, isTimedRunning, timeLeft, timedSubmitted]);
+
+  const startTimedExam = () => {
+    setIsTimedRunning(true);
+    setTimedSubmitted(false);
+    setTimeLeft(900);
+    setTimedAnswers({});
+    setTimedScore(null);
   };
 
   const formatTime = (seconds: number) => {
@@ -137,6 +138,77 @@ export function CourseNavigationTabs({ course }: CourseNavigationTabsProps) {
       ],
     },
   ];
+
+  const mockQuestions = course.assessment.questions;
+  const currentMockQuestion = mockQuestions[mockQuestionIndex] ?? mockQuestions[0];
+  const mockSelectedOption = currentMockQuestion
+    ? mockAnswers[currentMockQuestion.id]
+    : undefined;
+  const currentMockRevealed = currentMockQuestion
+    ? Boolean(revealedAnswers[currentMockQuestion.id])
+    : false;
+  const currentMockCorrect = currentMockQuestion
+    ? mockSelectedOption === currentMockQuestion.correctOption
+    : false;
+  const mockCorrectCount = mockQuestions.filter(
+    (question) =>
+      revealedAnswers[question.id] &&
+      mockAnswers[question.id] === question.correctOption,
+  ).length;
+  const mockWrongCount = mockQuestions.filter(
+    (question) =>
+      revealedAnswers[question.id] &&
+      mockAnswers[question.id] !== undefined &&
+      mockAnswers[question.id] !== question.correctOption,
+  ).length;
+  const mockRemainingCount = Math.max(
+    mockQuestions.length - mockCorrectCount - mockWrongCount,
+    0,
+  );
+
+  const handleMockOptionSelect = (optionIndex: number) => {
+    if (!currentMockQuestion || revealedAnswers[currentMockQuestion.id]) {
+      return;
+    }
+
+    setMockAnswers((prev) => ({
+      ...prev,
+      [currentMockQuestion.id]: optionIndex,
+    }));
+    setRevealedAnswers((prev) => ({
+      ...prev,
+      [currentMockQuestion.id]: true,
+    }));
+  };
+
+  const handleMockNext = () => {
+    if (!mockQuestions.length) {
+      return;
+    }
+
+    if (mockRemainingCount === 0 && currentMockRevealed) {
+      setMockQuestionIndex(0);
+      setMockAnswers({});
+      setRevealedAnswers({});
+      return;
+    }
+
+    const nextUnansweredIndex = mockQuestions.findIndex(
+      (question, index) => index > mockQuestionIndex && !revealedAnswers[question.id],
+    );
+    const firstUnansweredIndex = mockQuestions.findIndex(
+      (question) => !revealedAnswers[question.id],
+    );
+
+    if (firstUnansweredIndex < 0) {
+      setMockQuestionIndex(0);
+      return;
+    }
+
+    setMockQuestionIndex(
+      nextUnansweredIndex >= 0 ? nextUnansweredIndex : firstUnansweredIndex,
+    );
+  };
 
   return (
     <div className="w-full space-y-6">
@@ -317,6 +389,7 @@ export function CourseNavigationTabs({ course }: CourseNavigationTabsProps) {
                 variant="outline"
                 size="sm"
                 onClick={() => {
+                  setMockQuestionIndex(0);
                   setMockAnswers({});
                   setRevealedAnswers({});
                 }}
@@ -326,108 +399,127 @@ export function CourseNavigationTabs({ course }: CourseNavigationTabsProps) {
               </Button>
             </div>
 
-            <div className="mt-6 space-y-6">
-              {course.assessment.questions.map((q, idx) => {
-                const isAnswered = mockAnswers[q.id] !== undefined;
-                const isRevealed = revealedAnswers[q.id];
-                const selectedOption = mockAnswers[q.id];
-                const isCorrect = selectedOption === q.correctOption;
+            {currentMockQuestion && (
+              <div className="mx-auto mt-6 max-w-5xl">
+                <div className="mb-5 flex flex-wrap justify-center gap-3">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-sm font-bold text-slate-700 dark:bg-red-950/30 dark:text-red-100">
+                    <span className="h-2.5 w-2.5 rounded-full bg-red-600" />
+                    {mockRemainingCount} Remaining
+                  </div>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-2 text-sm font-bold text-slate-700 dark:bg-amber-950/30 dark:text-amber-100">
+                    <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
+                    {mockWrongCount} Wrong
+                  </div>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-bold text-slate-700 dark:bg-emerald-950/30 dark:text-emerald-100">
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-600" />
+                    {mockCorrectCount} Correct
+                  </div>
+                </div>
 
-                return (
-                  <div
-                    key={q.id}
-                    className={`rounded-2xl border p-5 transition-all ${
-                      isRevealed
-                        ? isCorrect
-                          ? "border-emerald-500/50 bg-emerald-500/5 dark:bg-emerald-950/20"
-                          : "border-rose-500/50 bg-rose-500/5 dark:bg-rose-950/20"
-                        : "border-border bg-card"
-                    }`}
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <h4 className="text-base font-semibold text-card-foreground">
-                        Question {idx + 1}: {q.prompt}
-                      </h4>
-                      {isRevealed && (
-                        <Badge
-                          variant={isCorrect ? "default" : "destructive"}
-                          className="shrink-0 gap-1"
+                <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950 sm:p-8">
+                  <p className="mb-3 text-sm font-bold text-muted-foreground">
+                    Question {mockQuestionIndex + 1} of {mockQuestions.length}
+                  </p>
+                  <h4 className="text-2xl font-extrabold leading-tight text-slate-950 dark:text-white sm:text-3xl">
+                    {currentMockQuestion.prompt}
+                  </h4>
+
+                  <div className="mt-8 space-y-3.5">
+                    {currentMockQuestion.options.map((option, optionIndex) => {
+                      const selected = mockSelectedOption === optionIndex;
+                      const correct = optionIndex === currentMockQuestion.correctOption;
+                      const wrongSelection =
+                        currentMockRevealed && selected && !currentMockCorrect;
+                      const showCorrect = currentMockRevealed && correct;
+                      const mutedAfterReveal =
+                        currentMockRevealed && !selected && !correct;
+
+                      const optionClasses = showCorrect
+                        ? "border-emerald-500 bg-emerald-50 text-slate-800 dark:border-emerald-400 dark:bg-emerald-950/40 dark:text-emerald-50"
+                        : wrongSelection
+                          ? "border-red-500 bg-red-50 text-slate-800 dark:border-red-400 dark:bg-red-950/40 dark:text-red-50"
+                          : mutedAfterReveal
+                            ? "border-slate-100 bg-white text-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-500"
+                            : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200 dark:hover:border-slate-700";
+
+                      const letterClasses = showCorrect
+                        ? "bg-emerald-600 text-white"
+                        : wrongSelection
+                          ? "bg-red-600 text-white"
+                          : "bg-slate-50 text-slate-400 dark:bg-slate-900 dark:text-slate-500";
+
+                      return (
+                        <button
+                          key={option}
+                          type="button"
+                          disabled={currentMockRevealed}
+                          onClick={() => handleMockOptionSelect(optionIndex)}
+                          className={`flex min-h-20 w-full items-center gap-4 rounded-[20px] border px-5 py-4 text-left text-base font-bold transition sm:min-h-24 sm:gap-5 sm:px-6 sm:text-lg ${optionClasses}`}
                         >
-                          {isCorrect ? (
-                            <>
-                              <CheckCircle2 className="h-3.5 w-3.5" /> Correct
-                            </>
-                          ) : (
-                            <>
-                              <XCircle className="h-3.5 w-3.5" /> Incorrect
-                            </>
-                          )}
-                        </Badge>
-                      )}
-                    </div>
-
-                    <div className="mt-4 space-y-2.5">
-                      {q.options.map((opt, optIdx) => {
-                        const isOptionSelected = selectedOption === optIdx;
-                        let optionStyle = "border-border bg-background hover:bg-muted/50";
-                        if (isRevealed) {
-                          if (optIdx === q.correctOption) {
-                            optionStyle = "border-emerald-500 bg-emerald-500/10 text-emerald-950 dark:text-emerald-200 font-semibold";
-                          } else if (isOptionSelected && !isCorrect) {
-                            optionStyle = "border-rose-500 bg-rose-500/10 text-rose-950 dark:text-rose-200";
-                          }
-                        } else if (isOptionSelected) {
-                          optionStyle = "border-primary bg-primary/10 text-primary font-medium";
-                        }
-
-                        return (
-                          <label
-                            key={opt}
-                            onClick={() => {
-                              if (!isRevealed) {
-                                setMockAnswers((prev) => ({ ...prev, [q.id]: optIdx }));
-                              }
-                            }}
-                            className={`flex cursor-pointer items-start gap-3 rounded-xl border p-3.5 text-sm transition ${optionStyle}`}
+                          <span
+                            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-base font-extrabold sm:h-12 sm:w-12 ${letterClasses}`}
                           >
-                            <input
-                              type="radio"
-                              name={`mock-${q.id}`}
-                              checked={isOptionSelected}
-                              onChange={() => {}}
-                              disabled={isRevealed}
-                              className="mt-0.5"
-                            />
-                            <span className="flex-1">{opt}</span>
-                          </label>
-                        );
-                      })}
-                    </div>
+                            {answerLetters[optionIndex] ?? optionIndex + 1}
+                          </span>
+                          <span className="min-w-0 flex-1 leading-snug">{option}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
 
-                    {/* Action buttons per question */}
-                    <div className="mt-4 flex items-center justify-between pt-2">
-                      <Button
-                        size="sm"
-                        disabled={!isAnswered || isRevealed}
-                        onClick={() =>
-                          setRevealedAnswers((prev) => ({ ...prev, [q.id]: true }))
-                        }
-                        className="gap-1.5"
+                  {currentMockRevealed && (
+                    <div
+                      className={`mt-4 rounded-[20px] border p-5 ${
+                        currentMockCorrect
+                          ? "border-emerald-200 bg-emerald-50 text-slate-900 dark:border-emerald-900 dark:bg-emerald-950/30 dark:text-emerald-50"
+                          : "border-red-200 bg-red-50 text-slate-900 dark:border-red-900 dark:bg-red-950/30 dark:text-red-50"
+                      }`}
+                    >
+                      <p
+                        className={`flex items-center gap-2 text-base font-extrabold ${
+                          currentMockCorrect ? "text-emerald-700" : "text-red-600"
+                        }`}
                       >
-                        <Sparkles className="h-3.5 w-3.5" /> Check Answer
-                      </Button>
+                        {currentMockCorrect ? (
+                          <>
+                            <CheckCircle2 className="h-5 w-5" />
+                            Correct
+                          </>
+                        ) : (
+                          <>
+                            <XCircle className="h-5 w-5" />
+                            Incorrect
+                          </>
+                        )}
+                      </p>
+                      <p className="mt-3 max-w-3xl text-sm leading-relaxed sm:text-base">
+                        {currentMockQuestion.explanation}
+                      </p>
+                    </div>
+                  )}
 
-                      {isRevealed && (
-                        <p className="text-xs text-muted-foreground italic max-w-md text-right">
-                          <strong className="not-italic text-card-foreground">Explanation: </strong>
-                          {q.explanation}
-                        </p>
-                      )}
+                  <div className="mt-4 rounded-[20px] border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
+                    <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(180px,0.6fr)]">
+                      <Button
+                        variant="outline"
+                        disabled={!currentMockRevealed}
+                        className="h-14 justify-start rounded-2xl border-slate-200 px-5 text-left text-base font-bold text-slate-700 dark:border-slate-800 dark:text-slate-200"
+                      >
+                        <Sparkles className="h-5 w-5 text-red-600" />
+                        Correct Answer Explanation
+                      </Button>
+                      <Button
+                        disabled={!currentMockRevealed}
+                        onClick={handleMockNext}
+                        className="h-14 rounded-2xl bg-red-600 text-base font-extrabold text-white hover:bg-red-700"
+                      >
+                        {mockRemainingCount === 0 ? "Restart" : "Next"}
+                      </Button>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -2,13 +2,10 @@
 
 import * as React from "react";
 import { CourseCard } from "@/components/courses/course-card";
-import { Reveal } from "@/components/ui/reveal";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -29,23 +26,23 @@ export function PopularCoursesCarousel({
   const [api, setApi] = React.useState<CarouselApi>();
   const [canScrollPrev, setCanScrollPrev] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
-  const [currentSlide, setCurrentSlide] = React.useState(0);
-  const [count, setCount] = React.useState(0);
 
   React.useEffect(() => {
     if (!api) return;
 
-    setCount(api.scrollSnapList().length);
-    setCurrentSlide(api.selectedScrollSnap());
-
-    api.on("select", () => {
-      setCurrentSlide(api.selectedScrollSnap());
+    const updateScrollButtons = () => {
       setCanScrollPrev(api.canScrollPrev());
       setCanScrollNext(api.canScrollNext());
-    });
+    };
 
-    setCanScrollPrev(api.canScrollPrev());
-    setCanScrollNext(api.canScrollNext());
+    queueMicrotask(updateScrollButtons);
+    api.on("select", updateScrollButtons);
+    api.on("reInit", updateScrollButtons);
+
+    return () => {
+      api.off("select", updateScrollButtons);
+      api.off("reInit", updateScrollButtons);
+    };
   }, [api]);
 
   return (
@@ -95,7 +92,7 @@ export function PopularCoursesCarousel({
         </div>
 
         <CarouselContent className="-ml-4">
-          {courses.map((course, index) => (
+          {courses.map((course) => (
             <CarouselItem
               key={course.id}
               className="pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"

@@ -11,7 +11,9 @@ import {
   MessageSquare,
   NotebookPen,
   PlayCircle,
+  RotateCcw,
   Star,
+  XCircle,
 } from "lucide-react";
 import type { Course } from "@/constants";
 import { Badge } from "@/components/ui/badge";
@@ -33,6 +35,8 @@ import {
 interface LearningWorkspaceProps {
   course: Course;
 }
+
+const answerLetters = ["A", "B", "C", "D", "E", "F"];
 
 export function LearningWorkspace({ course }: LearningWorkspaceProps) {
   const {
@@ -239,40 +243,110 @@ export function LearningWorkspace({ course }: LearningWorkspaceProps) {
             <p className="text-sm text-muted-foreground">{course.assessment.description}</p>
           </CardHeader>
           <CardContent className="space-y-6">
-            {course.assessment.questions.map((question, index) => (
-              <div key={question.id} className="space-y-3 rounded-2xl border border-border p-4">
-                <p className="font-medium text-foreground">
-                  {index + 1}. {question.prompt}
-                </p>
-                <div className="space-y-2">
-                  {question.options.map((option, optionIndex) => (
-                    <label
-                      key={option}
-                      className="flex cursor-pointer items-start gap-3 rounded-xl border border-border px-3 py-3 text-sm hover:bg-muted/40"
-                    >
-                      <input
-                        type="radio"
-                        name={question.id}
-                        checked={answers[question.id] === optionIndex}
-                        onChange={() =>
-                          setAnswers((current) => ({
-                            ...current,
-                            [question.id]: optionIndex,
-                          }))
-                        }
-                        className="mt-1"
-                      />
-                      <span>{option}</span>
-                    </label>
-                  ))}
+            {course.assessment.questions.map((question, index) => {
+              const submitted = Boolean(assessmentResult);
+              const selectedOption = answers[question.id];
+              const answeredCorrectly = selectedOption === question.correctOption;
+
+              return (
+                <div key={question.id} className="space-y-3 rounded-2xl border border-border p-4">
+                  <p className="font-semibold text-foreground">
+                    {index + 1}. {question.prompt}
+                  </p>
+                  <div className="space-y-2">
+                    {question.options.map((option, optionIndex) => {
+                      const selected = selectedOption === optionIndex;
+                      const correct = optionIndex === question.correctOption;
+                      const showCorrect = submitted && correct;
+                      const wrongSelection = submitted && selected && !correct;
+                      const faded = submitted && !selected && !correct;
+
+                      const optionClasses = showCorrect
+                        ? "border-emerald-500 bg-emerald-50 text-emerald-950 dark:border-emerald-500 dark:bg-emerald-950/30 dark:text-emerald-100"
+                        : wrongSelection
+                          ? "border-red-500 bg-red-50 text-red-950 dark:border-red-500 dark:bg-red-950/30 dark:text-red-100"
+                          : faded
+                            ? "border-border bg-background text-muted-foreground opacity-70"
+                            : selected
+                              ? "border-primary bg-primary/10 text-primary"
+                              : "border-border hover:bg-muted/40";
+
+                      const letterClasses = showCorrect
+                        ? "bg-emerald-600 text-white"
+                        : wrongSelection
+                          ? "bg-red-600 text-white"
+                          : selected
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted text-muted-foreground";
+
+                      return (
+                        <label
+                          key={option}
+                          className={`flex cursor-pointer items-start gap-3 rounded-xl border px-3 py-3 text-sm font-medium transition ${optionClasses} ${
+                            submitted ? "cursor-default" : ""
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name={question.id}
+                            checked={selected}
+                            disabled={submitted}
+                            onChange={() =>
+                              setAnswers((current) => ({
+                                ...current,
+                                [question.id]: optionIndex,
+                              }))
+                            }
+                            className="sr-only"
+                          />
+                          <span
+                            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${letterClasses}`}
+                          >
+                            {answerLetters[optionIndex] ?? optionIndex + 1}
+                          </span>
+                          <span className="min-w-0 flex-1 pt-1">{option}</span>
+                          {showCorrect && <CheckCircle2 className="mt-1 h-4 w-4 shrink-0" />}
+                          {wrongSelection && <XCircle className="mt-1 h-4 w-4 shrink-0" />}
+                        </label>
+                      );
+                    })}
+                  </div>
+
+                  {submitted && !answeredCorrectly && (
+                    <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-950 dark:border-red-900 dark:bg-red-950/30 dark:text-red-100">
+                      <p className="font-bold text-red-600">Incorrect</p>
+                      <p className="mt-2">
+                        Correct answer:{" "}
+                        <span className="font-semibold">
+                          {question.options[question.correctOption]}
+                        </span>
+                      </p>
+                      <p className="mt-2 leading-relaxed">{question.explanation}</p>
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
 
             <div className="flex flex-wrap items-center gap-3">
-              <Button onClick={() => setAssessmentResult(submitAssessment(course.slug, answers))}>
+              <Button
+                onClick={() => setAssessmentResult(submitAssessment(course.slug, answers))}
+                disabled={Boolean(assessmentResult)}
+              >
                 Submit assessment
               </Button>
+              {assessmentResult && (
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setAnswers({});
+                    setAssessmentResult(null);
+                  }}
+                >
+                  <RotateCcw className="mr-2 h-4 w-4" />
+                  Try again
+                </Button>
+              )}
               {bestAttempt && (
                 <p className="text-sm text-muted-foreground">
                   Best score: {bestAttempt.score}% ({bestAttempt.passed ? "passed" : "not yet"})
