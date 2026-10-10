@@ -12,6 +12,7 @@ import {
   NotebookPen,
   PlayCircle,
   RotateCcw,
+  Sparkles,
   Star,
   XCircle,
 } from "lucide-react";
@@ -60,6 +61,10 @@ export function LearningWorkspace({ course }: LearningWorkspaceProps) {
     passed: boolean;
   } | null>(null);
   const [answers, setAnswers] = useState<Record<string, number>>({});
+  const [assessmentQuestionIndex, setAssessmentQuestionIndex] = useState(0);
+  const [revealedAssessmentAnswers, setRevealedAssessmentAnswers] = useState<
+    Record<string, boolean>
+  >({});
 
   const courseState = getCourseState(course.slug);
   const allLessons = course.modules.flatMap((module) => module.lessons);
@@ -73,6 +78,77 @@ export function LearningWorkspace({ course }: LearningWorkspaceProps) {
   const complete = isCourseComplete(course, courseState);
   const notesForSelectedLesson =
     courseState?.notes.filter((note) => note.lessonId === selectedLesson?.id) ?? [];
+
+  const assessmentQuestions = course.assessment.questions;
+  const currentAssessmentQuestion =
+    assessmentQuestions[assessmentQuestionIndex] ?? assessmentQuestions[0];
+  const selectedAssessmentOption = currentAssessmentQuestion
+    ? answers[currentAssessmentQuestion.id]
+    : undefined;
+  const currentAssessmentRevealed = currentAssessmentQuestion
+    ? Boolean(revealedAssessmentAnswers[currentAssessmentQuestion.id])
+    : false;
+  const currentAssessmentCorrect = currentAssessmentQuestion
+    ? selectedAssessmentOption === currentAssessmentQuestion.correctOption
+    : false;
+  const assessmentCorrectCount = assessmentQuestions.filter(
+    (question) =>
+      revealedAssessmentAnswers[question.id] &&
+      answers[question.id] === question.correctOption,
+  ).length;
+  const assessmentWrongCount = assessmentQuestions.filter(
+    (question) =>
+      revealedAssessmentAnswers[question.id] &&
+      answers[question.id] !== undefined &&
+      answers[question.id] !== question.correctOption,
+  ).length;
+  const assessmentRemainingCount = Math.max(
+    assessmentQuestions.length - assessmentCorrectCount - assessmentWrongCount,
+    0,
+  );
+  const isLastAssessmentQuestion =
+    assessmentQuestionIndex === assessmentQuestions.length - 1;
+
+  const handleAssessmentOptionSelect = (optionIndex: number) => {
+    if (
+      !currentAssessmentQuestion ||
+      revealedAssessmentAnswers[currentAssessmentQuestion.id] ||
+      assessmentResult
+    ) {
+      return;
+    }
+
+    setAnswers((current) => ({
+      ...current,
+      [currentAssessmentQuestion.id]: optionIndex,
+    }));
+    setRevealedAssessmentAnswers((current) => ({
+      ...current,
+      [currentAssessmentQuestion.id]: true,
+    }));
+  };
+
+  const handleAssessmentNext = () => {
+    if (!currentAssessmentQuestion) {
+      return;
+    }
+
+    if (isLastAssessmentQuestion) {
+      setAssessmentResult(submitAssessment(course.slug, answers));
+      return;
+    }
+
+    setAssessmentQuestionIndex((index) =>
+      Math.min(index + 1, assessmentQuestions.length - 1),
+    );
+  };
+
+  const handleAssessmentRetry = () => {
+    setAnswers({});
+    setRevealedAssessmentAnswers({});
+    setAssessmentQuestionIndex(0);
+    setAssessmentResult(null);
+  };
 
   useEffect(() => {
     if (!courseState) {
@@ -243,133 +319,166 @@ export function LearningWorkspace({ course }: LearningWorkspaceProps) {
             <p className="text-sm text-muted-foreground">{course.assessment.description}</p>
           </CardHeader>
           <CardContent className="space-y-6">
-            {course.assessment.questions.map((question, index) => {
-              const submitted = Boolean(assessmentResult);
-              const selectedOption = answers[question.id];
-              const answeredCorrectly = selectedOption === question.correctOption;
-
-              return (
-                <div key={question.id} className="space-y-3 rounded-2xl border border-border p-4">
+            {assessmentResult ? (
+              <>
+                <div
+                  className={`rounded-2xl border p-4 text-sm ${
+                    assessmentResult.passed
+                      ? "border-primary/20 bg-primary/5"
+                      : "border-border bg-muted/40"
+                  }`}
+                >
                   <p className="font-semibold text-foreground">
-                    {index + 1}. {question.prompt}
+                    {assessmentResult.passed ? "Assessment passed" : "Keep going"}
                   </p>
-                  <div className="space-y-2">
-                    {question.options.map((option, optionIndex) => {
-                      const selected = selectedOption === optionIndex;
-                      const correct = optionIndex === question.correctOption;
-                      const showCorrect = submitted && correct;
-                      const wrongSelection = submitted && selected && !correct;
-                      const faded = submitted && !selected && !correct;
+                  <p className="mt-1 text-muted-foreground">
+                    You scored {assessmentResult.score}%. The pass mark is{" "}
+                    {course.assessment.passMark}%.
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center gap-3">
+                  <Button variant="outline" onClick={handleAssessmentRetry}>
+                    <RotateCcw className="mr-2 h-4 w-4" />
+                    Try again
+                  </Button>
+                  {bestAttempt && (
+                    <p className="text-sm text-muted-foreground">
+                      Best score: {bestAttempt.score}% (
+                      {bestAttempt.passed ? "passed" : "not yet"})
+                    </p>
+                  )}
+                </div>
+              </>
+            ) : currentAssessmentQuestion ? (
+              <div>
+                <div className="mb-5 flex flex-wrap justify-center gap-3">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-sm font-bold text-slate-700 dark:bg-red-950/30 dark:text-red-100">
+                    <span className="h-2.5 w-2.5 rounded-full bg-red-600" />
+                    {assessmentRemainingCount} Remaining
+                  </div>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-2 text-sm font-bold text-slate-700 dark:bg-amber-950/30 dark:text-amber-100">
+                    <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
+                    {assessmentWrongCount} Wrong
+                  </div>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-bold text-slate-700 dark:bg-emerald-950/30 dark:text-emerald-100">
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-600" />
+                    {assessmentCorrectCount} Correct
+                  </div>
+                </div>
+
+                <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950 sm:p-8">
+                  <p className="mb-3 text-sm font-bold text-muted-foreground">
+                    Question {assessmentQuestionIndex + 1} of{" "}
+                    {assessmentQuestions.length}
+                  </p>
+                  <h4 className="text-xl font-extrabold leading-tight text-slate-950 dark:text-white sm:text-2xl">
+                    {currentAssessmentQuestion.prompt}
+                  </h4>
+
+                  <div className="mt-6 space-y-3">
+                    {currentAssessmentQuestion.options.map((option, optionIndex) => {
+                      const selected = selectedAssessmentOption === optionIndex;
+                      const correct =
+                        optionIndex === currentAssessmentQuestion.correctOption;
+                      const wrongSelection =
+                        currentAssessmentRevealed && selected && !currentAssessmentCorrect;
+                      const showCorrect = currentAssessmentRevealed && correct;
+                      const mutedAfterReveal =
+                        currentAssessmentRevealed && !selected && !correct;
 
                       const optionClasses = showCorrect
-                        ? "border-emerald-500 bg-emerald-50 text-emerald-950 dark:border-emerald-500 dark:bg-emerald-950/30 dark:text-emerald-100"
+                        ? "border-emerald-500 bg-emerald-50 text-slate-800 dark:border-emerald-400 dark:bg-emerald-950/40 dark:text-emerald-50"
                         : wrongSelection
-                          ? "border-red-500 bg-red-50 text-red-950 dark:border-red-500 dark:bg-red-950/30 dark:text-red-100"
-                          : faded
-                            ? "border-border bg-background text-muted-foreground opacity-70"
-                            : selected
-                              ? "border-primary bg-primary/10 text-primary"
-                              : "border-border hover:bg-muted/40";
+                          ? "border-red-500 bg-red-50 text-slate-800 dark:border-red-400 dark:bg-red-950/40 dark:text-red-50"
+                          : mutedAfterReveal
+                            ? "border-slate-100 bg-white text-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-500"
+                            : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200 dark:hover:border-slate-700";
 
                       const letterClasses = showCorrect
                         ? "bg-emerald-600 text-white"
                         : wrongSelection
                           ? "bg-red-600 text-white"
-                          : selected
-                            ? "bg-primary text-primary-foreground"
-                            : "bg-muted text-muted-foreground";
+                          : "bg-slate-50 text-slate-400 dark:bg-slate-900 dark:text-slate-500";
 
                       return (
-                        <label
+                        <button
                           key={option}
-                          className={`flex cursor-pointer items-start gap-3 rounded-xl border px-3 py-3 text-sm font-medium transition ${optionClasses} ${
-                            submitted ? "cursor-default" : ""
-                          }`}
+                          type="button"
+                          disabled={currentAssessmentRevealed}
+                          onClick={() => handleAssessmentOptionSelect(optionIndex)}
+                          className={`flex min-h-16 w-full items-center gap-4 rounded-2xl border px-5 py-4 text-left text-sm font-bold transition sm:min-h-20 sm:text-base ${optionClasses}`}
                         >
-                          <input
-                            type="radio"
-                            name={question.id}
-                            checked={selected}
-                            disabled={submitted}
-                            onChange={() =>
-                              setAnswers((current) => ({
-                                ...current,
-                                [question.id]: optionIndex,
-                              }))
-                            }
-                            className="sr-only"
-                          />
                           <span
-                            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${letterClasses}`}
+                            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-extrabold sm:h-10 sm:w-10 ${letterClasses}`}
                           >
                             {answerLetters[optionIndex] ?? optionIndex + 1}
                           </span>
-                          <span className="min-w-0 flex-1 pt-1">{option}</span>
-                          {showCorrect && <CheckCircle2 className="mt-1 h-4 w-4 shrink-0" />}
-                          {wrongSelection && <XCircle className="mt-1 h-4 w-4 shrink-0" />}
-                        </label>
+                          <span className="min-w-0 flex-1 leading-snug">{option}</span>
+                        </button>
                       );
                     })}
                   </div>
 
-                  {submitted && !answeredCorrectly && (
-                    <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-950 dark:border-red-900 dark:bg-red-950/30 dark:text-red-100">
-                      <p className="font-bold text-red-600">Incorrect</p>
-                      <p className="mt-2">
-                        Correct answer:{" "}
-                        <span className="font-semibold">
-                          {question.options[question.correctOption]}
-                        </span>
+                  {currentAssessmentRevealed && (
+                    <div
+                      className={`mt-4 rounded-2xl border p-5 ${
+                        currentAssessmentCorrect
+                          ? "border-emerald-200 bg-emerald-50 text-slate-900 dark:border-emerald-900 dark:bg-emerald-950/30 dark:text-emerald-50"
+                          : "border-red-200 bg-red-50 text-slate-900 dark:border-red-900 dark:bg-red-950/30 dark:text-red-50"
+                      }`}
+                    >
+                      <p
+                        className={`flex items-center gap-2 text-base font-extrabold ${
+                          currentAssessmentCorrect ? "text-emerald-700" : "text-red-600"
+                        }`}
+                      >
+                        {currentAssessmentCorrect ? (
+                          <>
+                            <CheckCircle2 className="h-5 w-5" />
+                            Correct
+                          </>
+                        ) : (
+                          <>
+                            <XCircle className="h-5 w-5" />
+                            Incorrect
+                          </>
+                        )}
                       </p>
-                      <p className="mt-2 leading-relaxed">{question.explanation}</p>
+                      <p className="mt-3 text-sm leading-relaxed sm:text-base">
+                        {currentAssessmentQuestion.explanation}
+                      </p>
                     </div>
                   )}
+
+                  <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
+                    <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(180px,0.6fr)]">
+                      <Button
+                        variant="outline"
+                        disabled={!currentAssessmentRevealed}
+                        className="h-14 justify-start rounded-2xl border-slate-200 px-5 text-left text-sm font-bold text-slate-700 dark:border-slate-800 dark:text-slate-200"
+                      >
+                        <Sparkles className="h-5 w-5 text-red-600" />
+                        Correct Answer Explanation
+                      </Button>
+                      <Button
+                        disabled={!currentAssessmentRevealed}
+                        onClick={handleAssessmentNext}
+                        className="h-14 rounded-2xl bg-red-600 text-base font-extrabold text-white hover:bg-red-700"
+                      >
+                        {isLastAssessmentQuestion ? "Submit assessment" : "Next"}
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-              );
-            })}
 
-            <div className="flex flex-wrap items-center gap-3">
-              <Button
-                onClick={() => setAssessmentResult(submitAssessment(course.slug, answers))}
-                disabled={Boolean(assessmentResult)}
-              >
-                Submit assessment
-              </Button>
-              {assessmentResult && (
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setAnswers({});
-                    setAssessmentResult(null);
-                  }}
-                >
-                  <RotateCcw className="mr-2 h-4 w-4" />
-                  Try again
-                </Button>
-              )}
-              {bestAttempt && (
-                <p className="text-sm text-muted-foreground">
-                  Best score: {bestAttempt.score}% ({bestAttempt.passed ? "passed" : "not yet"})
-                </p>
-              )}
-            </div>
-
-            {assessmentResult && (
-              <div
-                className={`rounded-2xl border p-4 text-sm ${
-                  assessmentResult.passed
-                    ? "border-primary/20 bg-primary/5"
-                    : "border-border bg-muted/40"
-                }`}
-              >
-                <p className="font-semibold text-foreground">
-                  {assessmentResult.passed ? "Assessment passed" : "Keep going"}
-                </p>
-                <p className="mt-1 text-muted-foreground">
-                  You scored {assessmentResult.score}%. The pass mark is {course.assessment.passMark}%.
-                </p>
+                {bestAttempt && (
+                  <p className="mt-4 text-center text-sm text-muted-foreground">
+                    Best score: {bestAttempt.score}% (
+                    {bestAttempt.passed ? "passed" : "not yet"})
+                  </p>
+                )}
               </div>
-            )}
+            ) : null}
           </CardContent>
         </Card>
 

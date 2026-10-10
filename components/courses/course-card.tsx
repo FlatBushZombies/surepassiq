@@ -52,7 +52,7 @@ export function CourseCard({ course }: CourseCardProps) {
         <p className="mt-1 text-xs text-muted-foreground">{course.instructor.name}</p>
 
         <div className="mt-1 flex items-center gap-1">
-          <span className="text-sm font-bold text-[oklch(var(--rating))]">
+          <span className="text-sm font-bold text-amber-500">
             {course.rating.toFixed(1)}
           </span>
           <div className="flex items-center">
@@ -61,9 +61,9 @@ export function CourseCard({ course }: CourseCardProps) {
                 key={index}
                 className={`h-3 w-3 ${
                   index < Math.floor(course.rating)
-                    ? "fill-[oklch(var(--rating))] text-[oklch(var(--rating))]"
+                    ? "fill-amber-400 text-amber-400"
                     : index < course.rating
-                      ? "fill-[oklch(var(--rating))]/50 text-[oklch(var(--rating))]"
+                      ? "fill-amber-400/50 text-amber-400"
                       : "fill-muted text-muted"
                 }`}
               />
