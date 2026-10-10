@@ -15,23 +15,36 @@ import { Reveal } from "@/components/ui/reveal";
 import { courses, type Course } from "@/constants";
 import { cn } from "@/lib/utils";
 
-const tabs = [
-  "Child Development",
-  "Driving",
-  "AI Video Generation",
-  "O Level",
-  "A Level",
-] as const;
+interface SkillsTab {
+  label: string;
+  match: (course: Course) => boolean;
+}
+
+const tabs: SkillsTab[] = [
+  { label: "AI & Data", match: (c) => c.category === "AI & Data" },
+  { label: "Business", match: (c) => c.category === "Business" },
+  { label: "Design", match: (c) => c.category === "Design" },
+  { label: "Marketing", match: (c) => c.category === "Marketing" },
+  { label: "IT & Software", match: (c) => c.category === "IT & Software" },
+  { label: "Personal Development", match: (c) => c.category === "Personal Development" },
+  { label: "Child Development", match: (c) => c.category === "Child Development" },
+  { label: "Driving", match: (c) => c.category === "Driving" },
+  { label: "AI Video Generation", match: (c) => c.category === "AI Video Generation" },
+  {
+    label: "Exam Preparation",
+    match: (c) => c.category === "Test Prep" && c.subcategory === "Exam Preparation",
+  },
+];
 
 export function SkillsTransformSection() {
   const [activeTab, setActiveTab] = React.useState(0);
   const [api, setApi] = React.useState<CarouselApi>();
   const [canScrollNext, setCanScrollNext] = React.useState(false);
 
-  const activeCategory = tabs[activeTab];
+  const activeCategory = tabs[activeTab].label;
   const tabCourses = React.useMemo(
-    () => courses.filter((course) => course.category === activeCategory),
-    [activeCategory],
+    () => courses.filter((course) => tabs[activeTab].match(course)),
+    [activeTab],
   );
 
   React.useEffect(() => {
@@ -64,7 +77,7 @@ export function SkillsTransformSection() {
         <div className="mt-8 flex gap-6 overflow-x-auto border-b border-border sm:gap-8">
           {tabs.map((tab, index) => (
             <button
-              key={tab}
+              key={tab.label}
               type="button"
               onClick={() => setActiveTab(index)}
               className={cn(
@@ -74,7 +87,7 @@ export function SkillsTransformSection() {
                   : "font-medium text-muted-foreground hover:text-foreground",
               )}
             >
-              {tab}
+              {tab.label}
               {index === activeTab && (
                 <span className="absolute inset-x-0 -bottom-px h-0.5 bg-foreground" />
               )}
@@ -105,7 +118,7 @@ export function SkillsTransformSection() {
                   type="button"
                   onClick={() => api?.scrollNext()}
                   aria-label="Show more courses"
-                  className="absolute right-0 top-[92px] flex h-10 w-10 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-border bg-background text-foreground shadow-md transition-[background-color,transform] duration-150 ease-out-strong hover:bg-muted active:scale-95"
+                  className="absolute right-2 top-[92px] flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background text-foreground shadow-md transition-[background-color,transform] duration-150 ease-out-strong hover:bg-muted active:scale-95"
                 >
                   <ChevronRight className="h-5 w-5" />
                 </button>

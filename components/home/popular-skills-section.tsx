@@ -46,6 +46,21 @@ const columns: { title: string; skills: SkillLink[] }[] = [
       { label: "Cellphone & Laptop Repairs", categorySlug: "practical-trades", topic: "Cellphone & Laptop Repairs" },
     ],
   },
+  {
+    title: "Business & Leadership",
+    skills: [
+      { label: "Operations", categorySlug: "business", topic: "Operations" },
+      { label: "Leadership", categorySlug: "personal-development", topic: "Leadership" },
+      { label: "Cybersecurity", categorySlug: "it-software", topic: "Cybersecurity" },
+    ],
+  },
+  {
+    title: "Design & Marketing",
+    skills: [
+      { label: "UX Design", categorySlug: "design", topic: "UX Design" },
+      { label: "Digital Marketing", categorySlug: "marketing", topic: "Digital Marketing" },
+    ],
+  },
 ];
 
 export function PopularSkillsSection() {
@@ -58,7 +73,7 @@ export function PopularSkillsSection() {
           </h2>
           <div className="mt-4 border-b border-border" />
 
-          <div className="mt-8 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          <div className="mt-8 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {/* Spotlight column */}
             <div>
               <h3 className="text-xl font-bold text-foreground sm:text-2xl">

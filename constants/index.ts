@@ -223,20 +223,6 @@ const categorySeeds: CategorySeed[] = [
     icon: "Video",
     subcategories: ["Text-to-Video", "AI Editing"],
   },
-  {
-    id: "12",
-    name: "O Level",
-    slug: "o-level",
-    icon: "O",
-    subcategories: ["Mathematics", "Combined Science", "English"],
-  },
-  {
-    id: "13",
-    name: "A Level",
-    slug: "a-level",
-    icon: "A",
-    subcategories: ["Mathematics", "Physics", "Biology"],
-  },
 ];
 
 function createLesson(
@@ -270,10 +256,9 @@ export const courses: Course[] = [
     description:
       "Build confidence with modern AI tools, core terminology, safe prompting habits, and practical ways to save time at work.",
     instructor: {
-      name: "Dr. Angela Dube",
-      avatar:
-        "https://images.pexels.com/photos/3796217/pexels-photo-3796217.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "AI Learning Lead",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image:
       "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -465,10 +450,9 @@ export const courses: Course[] = [
     description:
       "Create reusable prompt systems for operations, customer support, and internal communication workflows.",
     instructor: {
-      name: "Tariro Muchengeti",
-      avatar:
-        "https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Prompt Systems Consultant",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image:
       "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -658,10 +642,9 @@ export const courses: Course[] = [
     description:
       "Clean data, build dashboards, and communicate business insights clearly using Excel and Power BI.",
     instructor: {
-      name: "Rudo Chari",
-      avatar:
-        "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Business Intelligence Trainer",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image:
       "https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -846,10 +829,9 @@ export const courses: Course[] = [
     description:
       "Map repeatable tasks, automate handoffs, and use AI tools to reduce low-value operational work.",
     instructor: {
-      name: "Michael Ncube",
-      avatar:
-        "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Operations Systems Strategist",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image:
       "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -1039,10 +1021,9 @@ export const courses: Course[] = [
     description:
       "Use research, flows, wireframes, and prototype testing to design products people can actually use.",
     instructor: {
-      name: "Sarah Chikafa",
-      avatar:
-        "https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Senior Product Designer",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image:
       "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -1232,10 +1213,9 @@ export const courses: Course[] = [
     description:
       "Plan campaigns, create content systems, and use analytics to improve marketing performance.",
     instructor: {
-      name: "Mark Thompson",
-      avatar:
-        "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Growth Marketing Advisor",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image:
       "https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -1425,10 +1405,9 @@ export const courses: Course[] = [
     description:
       "Understand security risks, strengthen daily habits, and respond well to common cyber threats at work.",
     instructor: {
-      name: "Farai Mlambo",
-      avatar:
-        "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Cybersecurity Awareness Lead",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image:
       "https://images.pexels.com/photos/1092671/pexels-photo-1092671.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -1618,10 +1597,9 @@ export const courses: Course[] = [
     description:
       "Lead with clarity, coach with empathy, and improve team communication during growth, change, and pressure.",
     instructor: {
-      name: "Chris Haroun",
-      avatar:
-        "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Leadership Coach and MBA Lecturer",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image:
       "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -1810,9 +1788,9 @@ export const courses: Course[] = [
     slug: "generative-ai",
     description: "Master LLMs, ChatGPT, Claude, diffusion models, fine-tuning, and generative application development.",
     instructor: {
-      name: "Dr. Angela Dube",
-      avatar: "https://images.pexels.com/photos/3796217/pexels-photo-3796217.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Lead AI Researcher",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image: "/courses/gen-AI.jpeg",
     price: 19.99,
@@ -1909,9 +1887,9 @@ export const courses: Course[] = [
     slug: "it-certifications",
     description: "Comprehensive exam prep & hands-on practice for CompTIA Security+, A+, AWS Cloud Practitioner, & CCNA.",
     instructor: {
-      name: "Marcus Vance",
-      avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Senior Cloud & Security Architect",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image: "/courses/IT-certifications.jpeg",
     price: 24.99,
@@ -1995,9 +1973,9 @@ export const courses: Course[] = [
     slug: "prompt-engineering",
     description: "Systematic prompt design, few-shot techniques, chain-of-thought, and automated prompt engineering.",
     instructor: {
-      name: "Tariro Muchengeti",
-      avatar: "https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Prompt Systems Consultant",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image: "/courses/prompt-engineering.jpeg",
     price: 16.99,
@@ -2076,9 +2054,9 @@ export const courses: Course[] = [
     slug: "ai-agents",
     description: "Design autonomous AI agents, tool integration, multi-agent frameworks (CrewAI, AutoGen, LangChain).",
     instructor: {
-      name: "Dr. Angela Dube",
-      avatar: "https://images.pexels.com/photos/3796217/pexels-photo-3796217.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "AI Learning Lead",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image: "/courses/AI-agents.jpeg",
     price: 21.99,
@@ -2158,9 +2136,9 @@ export const courses: Course[] = [
     slug: "plumbing-practical",
     description: "Hands-on training in pipe fitting, copper soldering, water pressure systems, drainage, & leak repair.",
     instructor: {
-      name: "Blessing Moyo",
-      avatar: "https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Master Plumber & Vocational Instructor",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image: "/courses/practical-skills.jpeg",
     price: 18.99,
@@ -2262,9 +2240,9 @@ export const courses: Course[] = [
     slug: "aluminum-fabrication",
     description: "Architectural aluminum cutting, TIG welding, window & door frame assembly, mitering, & structural joining.",
     instructor: {
-      name: "Tinashe Zhou",
-      avatar: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Master Fabricator & Metal Work Specialist",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image: "/courses/practical-skills.jpeg",
     price: 22.99,
@@ -2347,9 +2325,9 @@ export const courses: Course[] = [
     slug: "cellphone-laptop-repairs",
     description: "Micro-soldering, SMD component replacement, screen digitizer assembly, battery repair, & liquid damage recovery.",
     instructor: {
-      name: "Kudakwashe Chiwenga",
-      avatar: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Lead Hardware Repair Engineer",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image: "/courses/practical-skills.jpeg",
     price: 24.99,
@@ -2440,9 +2418,9 @@ export const courses: Course[] = [
     slug: "exam-preparation",
     description: "Active recall, spaced repetition, timed test strategies, memory techniques, & high-scoring exam tactics.",
     instructor: {
-      name: "Dr. Angela Dube",
-      avatar: "https://images.pexels.com/photos/3796217/pexels-photo-3796217.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Learning Strategy Lead",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image: "/courses/exam-preparations.jpeg",
     price: 14.99,
@@ -2523,10 +2501,9 @@ export const courses: Course[] = [
     description:
       "Pass your driving theory test first time with complete highway code coverage, hazard perception video clip strategy, road signs, & mock exams.",
     instructor: {
-      name: "Sgt. David Miller",
-      avatar:
-        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "Senior Driving Instructor & Road Safety Specialist",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image:
       "https://images.pexels.com/photos/13861/pexels-photo-13861.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -2682,10 +2659,9 @@ export const courses: Course[] = [
     description:
       "Pass your VID provisional driver's licence test first time: highway code, road signs, right of way rules, and timed mock exams.",
     instructor: {
-      name: "Tendai Mukwena",
-      avatar:
-        "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "VID-Accredited Driving Instructor",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image:
       "https://images.pexels.com/photos/13861/pexels-photo-13861.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -2771,9 +2747,8 @@ export const courses: Course[] = [
     description:
       "Practical phonics, storytelling, and literacy routines parents and early educators can use to build strong readers from ages 2-7.",
     instructor: {
-      name: "Rutendo Chikwava",
-      avatar:
-        "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
+      name: "Elias Maphosa",
+      avatar: "/e-maphosa.jpeg",
       title: "Early Childhood Literacy Specialist",
     },
     image:
@@ -2860,10 +2835,9 @@ export const courses: Course[] = [
     description:
       "Create polished video content with text-to-video AI tools: prompting for motion, consistency, voiceover, and fast social-ready edits.",
     instructor: {
-      name: "Farai Nyathi",
-      avatar:
-        "https://images.pexels.com/photos/2381069/pexels-photo-2381069.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "AI Content Creator & Video Strategist",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image:
       "https://images.pexels.com/photos/3062541/pexels-photo-3062541.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -2949,10 +2923,9 @@ export const courses: Course[] = [
     description:
       "Full O-Level mathematics syllabus coverage with worked examples, past-paper technique, and timed exam practice.",
     instructor: {
-      name: "Memory Gumbo",
-      avatar:
-        "https://images.pexels.com/photos/3772510/pexels-photo-3772510.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "O-Level Mathematics Teacher",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image:
       "https://images.pexels.com/photos/5212317/pexels-photo-5212317.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -2963,8 +2936,8 @@ export const courses: Course[] = [
     studentsCount: 2600,
     duration: "14 hours",
     level: "Intermediate",
-    category: "O Level",
-    subcategory: "Mathematics",
+    category: "Test Prep",
+    subcategory: "Exam Preparation",
     bestseller: true,
     featured: true,
     lastUpdated: "October 2026",
@@ -3038,10 +3011,9 @@ export const courses: Course[] = [
     description:
       "Pure Mathematics, Mechanics, and Statistics for A-Level, with worked past-paper questions and exam-focused technique.",
     instructor: {
-      name: "Memory Gumbo",
-      avatar:
-        "https://images.pexels.com/photos/3772510/pexels-photo-3772510.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      title: "A-Level Mathematics Teacher",
+      name: "SurePassIQ",
+      avatar: "/surepass.jpeg",
+      title: "Course Team",
     },
     image:
       "https://images.pexels.com/photos/6238297/pexels-photo-6238297.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -3052,8 +3024,8 @@ export const courses: Course[] = [
     studentsCount: 1320,
     duration: "18 hours",
     level: "Advanced",
-    category: "A Level",
-    subcategory: "Mathematics",
+    category: "Test Prep",
+    subcategory: "Exam Preparation",
     bestseller: false,
     featured: true,
     lastUpdated: "October 2026",

@@ -6,46 +6,42 @@ import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-[#f4f2ee] text-[#2d2f31]">
-      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="grid grid-cols-1 items-center gap-8 py-12 lg:grid-cols-12 lg:gap-12 lg:py-16">
-          {/* Left Column: Text & CTA */}
-          <div className="flex flex-col justify-center lg:col-span-6 lg:pr-6">
-            <span className="mb-4 text-xs font-bold uppercase tracking-widest text-[#2d2f31]/80">
-              ENTERPRISE-WIDE TRAINING
-            </span>
+    <section className="relative isolate overflow-hidden min-h-[480px] sm:min-h-[520px] lg:min-h-[560px]">
+      {/* Full-bleed background image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/surepass-hero.jpeg"
+          alt="SurePass IQ hero training"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+      </div>
 
-            <h1 className="mb-4 text-4xl font-bold tracking-tight text-[#1c1d1f] sm:text-5xl md:text-6xl lg:text-[56px] lg:leading-[1.15]">
-              Upskill your entire workforce
-            </h1>
+      {/* Content on top */}
+      <div className="relative mx-auto flex min-h-[480px] w-full max-w-[1440px] items-center px-4 py-12 sm:min-h-[520px] sm:px-6 lg:min-h-[560px] lg:px-12 lg:py-16">
+        <div className="max-w-xl animate-in fade-in slide-in-from-bottom-3 duration-700 ease-out-strong fill-mode-both motion-reduce:slide-in-from-bottom-0">
+          <span className="mb-4 inline-block text-xs font-bold uppercase tracking-widest text-black/80">
+            ENTERPRISE-WIDE TRAINING
+          </span>
 
-            <p className="mb-8 text-base text-[#2d2f31]/80 sm:text-lg md:text-xl font-normal leading-relaxed">
-              Keep your people engaged and help them grow.
-            </p>
+          <h1 className="mb-4 text-4xl font-bold tracking-tight text-black sm:text-5xl md:text-6xl lg:text-[56px] lg:leading-[1.15]">
+            Upskill your entire workforce
+          </h1>
 
-            <div>
-              <Button
-                asChild
-                size="lg"
-                className="h-12 rounded-none bg-[#1c1d1f] px-6 text-sm font-bold text-white transition-colors hover:bg-black"
-              >
-                <Link href="/business/demo">Request a demo</Link>
-              </Button>
-            </div>
-          </div>
+          <p className="mb-8 text-base text-black/85 sm:text-lg md:text-xl font-normal leading-relaxed">
+            Keep your people engaged and help them grow.
+          </p>
 
-          {/* Right Column: High Quality Pexels Workforce Image */}
-          <div className="relative lg:col-span-6 flex justify-end">
-            <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[5/4] overflow-hidden rounded-sm">
-              <Image
-                src="/surepass-hero.jpeg"
-                alt="SurePass IQ hero training"
-                fill
-                priority
-                className="object-cover object-center"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
+          <div>
+            <Button
+              asChild
+              size="lg"
+              className="h-12 rounded-none bg-black px-6 text-sm font-bold text-white hover:bg-black/85"
+            >
+              <Link href="/business/demo">Request a demo</Link>
+            </Button>
           </div>
         </div>
       </div>

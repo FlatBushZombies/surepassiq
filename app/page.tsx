@@ -6,6 +6,7 @@ import { PopularCoursesCarousel } from "@/components/home/popular-courses-carous
 import { AiEraSection } from "@/components/home/ai-era-section";
 import { SkillsTransformSection } from "@/components/home/skills-transform-section";
 import { PopularSkillsSection } from "@/components/home/popular-skills-section";
+import { StudentCTASection } from "@/components/home/student-cta-section";
 import { courses, type Course } from "@/constants";
 
 const TRENDING_FIRST_SLUGS = [
@@ -23,7 +24,6 @@ export default function HomePage() {
     ...pinnedTrending,
     ...courses.filter((course) => !TRENDING_FIRST_SLUGS.includes(course.slug)),
   ];
-  const popularCourses = courses.slice(0, 8);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -42,15 +42,13 @@ export default function HomePage() {
           />
         </div>
 
-        <div className="mx-auto max-w-7xl px-4 lg:px-6">
-          <PopularCoursesCarousel courses={popularCourses} />
-        </div>
-
         <AiEraSection />
 
         <SkillsTransformSection />
 
         <PopularSkillsSection />
+
+        <StudentCTASection />
       </main>
 
       <Footer />

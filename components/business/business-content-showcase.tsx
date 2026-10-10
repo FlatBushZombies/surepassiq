@@ -30,7 +30,7 @@ const contentCategories = [
 
 export function BusinessContentShowcase() {
   return (
-    <section className="py-20 lg:py-28" id="how-it-works">
+    <section className="overflow-hidden py-20 lg:py-28" id="how-it-works">
       <div className="mx-auto max-w-7xl px-4 lg:px-6">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           {/* Image */}
