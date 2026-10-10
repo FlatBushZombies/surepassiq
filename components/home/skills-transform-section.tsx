@@ -3,8 +3,9 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
@@ -39,6 +40,7 @@ const tabs: SkillsTab[] = [
 export function SkillsTransformSection() {
   const [activeTab, setActiveTab] = React.useState(0);
   const [api, setApi] = React.useState<CarouselApi>();
+  const [canScrollPrev, setCanScrollPrev] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
 
   const activeCategory = tabs[activeTab].label;
@@ -50,7 +52,10 @@ export function SkillsTransformSection() {
   React.useEffect(() => {
     if (!api) return;
 
-    const updateScrollButtons = () => setCanScrollNext(api.canScrollNext());
+    const updateScrollButtons = () => {
+      setCanScrollPrev(api.canScrollPrev());
+      setCanScrollNext(api.canScrollNext());
+    };
 
     queueMicrotask(updateScrollButtons);
     api.on("select", updateScrollButtons);
@@ -73,26 +78,53 @@ export function SkillsTransformSection() {
           supports your professional development.
         </p>
 
-        {/* Tabs */}
-        <div className="mt-8 flex gap-6 overflow-x-auto border-b border-border sm:gap-8">
-          {tabs.map((tab, index) => (
-            <button
-              key={tab.label}
-              type="button"
-              onClick={() => setActiveTab(index)}
-              className={cn(
-                "relative shrink-0 whitespace-nowrap pb-3 text-sm transition-colors duration-150 ease-out-strong sm:text-base",
-                index === activeTab
-                  ? "font-bold text-foreground"
-                  : "font-medium text-muted-foreground hover:text-foreground",
-              )}
-            >
-              {tab.label}
-              {index === activeTab && (
-                <span className="absolute inset-x-0 -bottom-px h-0.5 bg-foreground" />
-              )}
-            </button>
-          ))}
+        {/* Tabs + carousel controls */}
+        <div className="mt-8 flex items-end justify-between gap-4 border-b border-border">
+          <div className="flex gap-6 overflow-x-auto sm:gap-8">
+            {tabs.map((tab, index) => (
+              <button
+                key={tab.label}
+                type="button"
+                onClick={() => setActiveTab(index)}
+                className={cn(
+                  "relative shrink-0 whitespace-nowrap pb-3 text-sm transition-colors duration-150 ease-out-strong sm:text-base",
+                  index === activeTab
+                    ? "font-bold text-foreground"
+                    : "font-medium text-muted-foreground hover:text-foreground",
+                )}
+              >
+                {tab.label}
+                {index === activeTab && (
+                  <span className="absolute inset-x-0 -bottom-px h-0.5 bg-foreground" />
+                )}
+              </button>
+            ))}
+          </div>
+
+          {tabCourses.length > 0 && (
+            <div className="mb-2 flex shrink-0 items-center gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-9 w-9 rounded-full border-border bg-background shadow-xs hover:bg-accent disabled:opacity-40"
+                onClick={() => api?.scrollPrev()}
+                disabled={!canScrollPrev}
+                aria-label="Previous courses"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-9 w-9 rounded-full border-border bg-background shadow-xs hover:bg-accent disabled:opacity-40"
+                onClick={() => api?.scrollNext()}
+                disabled={!canScrollNext}
+                aria-label="Next courses"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* Cards */}
@@ -113,16 +145,6 @@ export function SkillsTransformSection() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              {canScrollNext && (
-                <button
-                  type="button"
-                  onClick={() => api?.scrollNext()}
-                  aria-label="Show more courses"
-                  className="absolute right-2 top-[92px] flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background text-foreground shadow-md transition-[background-color,transform] duration-150 ease-out-strong hover:bg-muted active:scale-95"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              )}
             </Carousel>
           ) : (
             <p className="py-12 text-center text-sm text-muted-foreground">

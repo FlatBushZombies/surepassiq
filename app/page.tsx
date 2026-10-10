@@ -34,7 +34,7 @@ export default function HomePage() {
 
         <CategoriesSection />
 
-        <div className="mx-auto max-w-7xl px-4 lg:px-6">
+        <div id="trending-courses" className="mx-auto max-w-7xl scroll-mt-20 px-4 lg:px-6">
           <PopularCoursesCarousel
             courses={trendingCourses}
             title="Trending courses"

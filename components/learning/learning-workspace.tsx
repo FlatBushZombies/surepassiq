@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import {
   Award,
   Bookmark,
@@ -491,14 +492,27 @@ export function LearningWorkspace({ course }: LearningWorkspaceProps) {
               {course.resources.map((resource) => (
                 <div
                   key={resource.id}
-                  className="rounded-2xl border border-border bg-muted/30 p-4"
+                  className="overflow-hidden rounded-2xl border border-border bg-muted/30"
                 >
-                  <div className="mb-2 flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-primary" />
-                    <p className="font-medium text-foreground">{resource.title}</p>
+                  {resource.imageUrl && (
+                    <div className="relative h-32 w-full">
+                      <Image
+                        src={resource.imageUrl}
+                        alt={resource.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                    </div>
+                  )}
+                  <div className="p-4">
+                    <div className="mb-2 flex items-center gap-2">
+                      <FileText className="h-4 w-4 text-primary" />
+                      <p className="font-medium text-foreground">{resource.title}</p>
+                    </div>
+                    <p className="mb-2 text-sm text-muted-foreground">{resource.description}</p>
+                    <Badge variant="outline">{resource.kind}</Badge>
                   </div>
-                  <p className="mb-2 text-sm text-muted-foreground">{resource.description}</p>
-                  <Badge variant="outline">{resource.kind}</Badge>
                 </div>
               ))}
             </div>

@@ -35,6 +35,7 @@ export interface CourseResource {
   title: string;
   kind: "worksheet" | "template" | "checklist" | "guide";
   description: string;
+  imageUrl?: string;
 }
 
 export interface PracticalLab {
@@ -2654,7 +2655,7 @@ export const courses: Course[] = [
   }),
   createCourse({
     id: "vid-provisional-prep",
-    title: "VID Provisional Prep",
+    title: "Driving Theory, Hazard Perception & VID Provisional Mastery",
     slug: "vid-provisional-prep",
     description:
       "Pass your VID provisional driver's licence test first time: highway code, road signs, right of way rules, and timed mock exams.",
@@ -2663,8 +2664,7 @@ export const courses: Course[] = [
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
-    image:
-      "https://images.pexels.com/photos/13861/pexels-photo-13861.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/driving.jpeg",
     price: 9.99,
     originalPrice: 49.99,
     rating: 4.8,
@@ -2679,38 +2679,49 @@ export const courses: Course[] = [
     lastUpdated: "October 2026",
     language: "English",
     whatYouWillLearn: [
-      "Know every road sign and signal tested on the VID provisional exam",
-      "Apply right-of-way and intersection rules with confidence",
-      "Understand vehicle controls, pre-drive checks, and safe following distance",
-      "Pass timed mock exams that mirror the real VID test format",
+      "Identify every category of road sign used on Zimbabwean roads under the Road Traffic Act [Chapter 13:11]",
+      "Apply right-of-way, robot, stop-street, and roundabout rules at Zimbabwean intersections with confidence",
+      "Work through a low-stakes Practice Test with an instant explanation after every question",
+      "Pass a full-length, timed Mock Test that mirrors the real VID provisional exam",
     ],
     requirements: ["No prior driving experience required"],
     targetAudience: ["First-time learner drivers", "Provisional licence applicants"],
-    skills: ["Road Signs", "Highway Code", "Defensive Driving Basics"],
+    skills: ["Road Signs", "Intersection Rules", "Highway Code", "VID Exam Technique"],
     modules: [
       {
         id: "m1",
-        title: "Road Signs & Signals",
-        summary: "Every sign category tested on the provisional exam.",
+        title: "Road Signs",
+        summary: "Every road sign category tested at VID, built around Zimbabwe's Road Traffic Act.",
         lessons: [
-          createLesson("l1", "Warning, Regulatory & Informatory Signs", "video", 18, "Recognise and respond to the full VID sign set.", ["Identify sign categories"]),
-          createLesson("l2", "Right of Way & Intersections", "reading", 14, "Who goes first at junctions, roundabouts, and crossings.", ["Apply right-of-way rules"]),
+          createLesson("l1", "Warning Signs", "video", 15, "Red-bordered triangular signs that flag hazards ahead, from bends to pedestrian crossings.", ["Recognise every warning sign shape and colour"]),
+          createLesson("l2", "Regulatory Signs", "video", 15, "Circular signs that prohibit or instruct, including speed limits and no-entry signs.", ["Distinguish prohibition signs from mandatory signs"]),
+          createLesson("l3", "Informatory & Guide Signs", "reading", 12, "Rectangular signs for directions, services, and route numbers.", ["Read directional and service signage correctly"]),
         ],
       },
       {
         id: "m2",
-        title: "Vehicle Control & Mock Exams",
-        summary: "Pre-drive checks and timed exam practice.",
+        title: "Intersection Rules",
+        summary: "Right of way at junctions, robots, stop streets, and roundabouts.",
         lessons: [
-          createLesson("l3", "Pre-Drive Vehicle Checks", "video", 12, "The checks examiners expect before you move off.", ["Run a full pre-drive check"]),
-          createLesson("l4", "Timed Provisional Mock Exam", "lab", 25, "Simulate the real test under time pressure.", ["Complete a full mock test"]),
+          createLesson("l4", "Right of Way at Uncontrolled Intersections", "video", 14, "Who gives way when there are no signs or robots.", ["Apply the give-way-to-the-right rule"]),
+          createLesson("l5", "Robots & Four-Way Stops", "reading", 14, "Reading traffic-light sequences and stop-street priority correctly.", ["Sequence a four-way stop correctly"]),
+          createLesson("l6", "Roundabouts", "video", 10, "Entering, circulating, and exiting a roundabout safely.", ["Navigate a roundabout with correct lane discipline"]),
+        ],
+      },
+      {
+        id: "m3",
+        title: "Practice Test & Mock Test",
+        summary: "Build confidence with low-stakes practice, then prove it under exam conditions.",
+        lessons: [
+          createLesson("l7", "Practice Test", "lab", 20, "Work through the question bank at your own pace — the correct answer and a full explanation are revealed after every question.", ["Score at least 80% on an untimed practice run"]),
+          createLesson("l8", "Mock Test", "lab", 25, "Sit the full question bank under VID exam time pressure, with no pausing, just like the real test.", ["Pass a timed mock under exam conditions"]),
         ],
       },
     ],
     assessment: {
       id: "a-vid",
       title: "VID Provisional Mock Test",
-      description: "A timed multiple-choice mock matching the real provisional exam format.",
+      description: "A timed multiple-choice mock covering road signs and intersection rules, matching the real provisional exam format.",
       passMark: 80,
       questions: [
         {
@@ -2734,10 +2745,72 @@ export const courses: Course[] = [
           correctOption: 1,
           explanation: "A minimum 2-second gap gives enough reaction time in good driving conditions.",
         },
+        {
+          id: "q4",
+          prompt: "A circular sign with a blue background (not red) typically means:",
+          options: ["A warning", "A mandatory instruction you must follow", "A place of interest", "A speed limit only"],
+          correctOption: 1,
+          explanation: "Blue circular signs are mandatory signs — they instruct drivers to perform a specific action, such as keep left or minimum speed.",
+        },
+        {
+          id: "q5",
+          prompt: "In Zimbabwe, what is the colloquial term commonly used for a traffic light?",
+          options: ["A beacon", "A robot", "A signal post", "A marker"],
+          correctOption: 1,
+          explanation: "Traffic lights are widely known as \"robots\" in Zimbabwe and across much of Southern Africa.",
+        },
+        {
+          id: "q6",
+          prompt: "At a four-way stop where two vehicles arrive at the same time, who proceeds first?",
+          options: ["The vehicle on the left", "The vehicle on the right", "The larger vehicle", "Whichever vehicle hoots first"],
+          correctOption: 1,
+          explanation: "When vehicles arrive simultaneously at a four-way stop, the vehicle to the right has priority.",
+        },
+        {
+          id: "q7",
+          prompt: "Which direction do vehicles travel around a roundabout in Zimbabwe?",
+          options: ["Clockwise", "Anti-clockwise", "Either direction", "Straight through only"],
+          correctOption: 0,
+          explanation: "Zimbabwe drives on the left, so traffic circulates clockwise around a roundabout, giving way to traffic already on the roundabout approaching from the right.",
+        },
+        {
+          id: "q8",
+          prompt: "A rectangular blue sign showing a route number and place name is an example of:",
+          options: ["A warning sign", "A regulatory sign", "An informatory (guide) sign", "A temporary works sign"],
+          correctOption: 2,
+          explanation: "Rectangular signs giving directions, distances, or place names are informatory (guide) signs.",
+        },
+        {
+          id: "q9",
+          prompt: "Who is responsible for administering the provisional driver's licence test in Zimbabwe?",
+          options: ["The local municipality", "The Vehicle Inspection Department (VID)", "The Zimbabwe Republic Police alone", "Private driving schools"],
+          correctOption: 1,
+          explanation: "The Vehicle Inspection Department (VID) administers driver testing and licensing under Zimbabwe's Road Traffic Act [Chapter 13:11].",
+        },
+        {
+          id: "q10",
+          prompt: "Unless a different limit is signed, what is the general speed limit in a built-up (urban) area in Zimbabwe?",
+          options: ["40 km/h", "60 km/h", "80 km/h", "100 km/h"],
+          correctOption: 1,
+          explanation: "Unless a lower or higher limit is signed, the general speed limit in built-up areas in Zimbabwe is 60 km/h.",
+        },
       ],
     },
     resources: [
-      { id: "r1", title: "VID Road Sign Reference Sheet", kind: "guide", description: "Every sign category with meaning and example." },
+      {
+        id: "r1",
+        title: "Zimbabwe Road Signs Reference Chart",
+        kind: "guide",
+        description: "Warning, regulatory, and informatory signs with their meaning, grouped exactly as tested at VID.",
+        imageUrl:
+          "https://images.pexels.com/photos/8516542/pexels-photo-8516542.jpeg?auto=compress&cs=tinysrgb&w=800",
+      },
+      {
+        id: "r2",
+        title: "Intersection Right-of-Way Cheatsheet",
+        kind: "checklist",
+        description: "A quick-reference flow for uncontrolled intersections, four-way stops, robots, and roundabouts.",
+      },
     ],
   }),
   createCourse({
@@ -2751,8 +2824,7 @@ export const courses: Course[] = [
       avatar: "/e-maphosa.jpeg",
       title: "Early Childhood Literacy Specialist",
     },
-    image:
-      "https://images.pexels.com/photos/8613089/pexels-photo-8613089.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/reading.jpeg",
     price: 11.99,
     originalPrice: 59.99,
     rating: 4.9,
@@ -2839,8 +2911,7 @@ export const courses: Course[] = [
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
-    image:
-      "https://images.pexels.com/photos/3062541/pexels-photo-3062541.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/AI-video-gen.jpeg",
     price: 17.99,
     originalPrice: 89.99,
     rating: 4.8,
@@ -2927,8 +2998,7 @@ export const courses: Course[] = [
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
-    image:
-      "https://images.pexels.com/photos/5212317/pexels-photo-5212317.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/maths.jpeg",
     price: 12.99,
     originalPrice: 64.99,
     rating: 4.9,
