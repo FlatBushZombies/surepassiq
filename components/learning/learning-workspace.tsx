@@ -289,6 +289,33 @@ export function LearningWorkspace({ course }: LearningWorkspaceProps) {
               </ul>
             </div>
 
+            {selectedLesson.media && selectedLesson.media.length > 0 && (
+              <div>
+                <p className="mb-3 text-sm font-semibold text-foreground">Study material</p>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {selectedLesson.media.map((item) => (
+                    <div
+                      key={item.imageUrl}
+                      className="overflow-hidden rounded-2xl border border-border bg-background"
+                    >
+                      <div className="relative aspect-square w-full bg-muted/40">
+                        <Image
+                          src={item.imageUrl}
+                          alt={item.caption}
+                          fill
+                          className="object-contain p-3"
+                          sizes="(max-width: 640px) 50vw, 200px"
+                        />
+                      </div>
+                      <p className="border-t border-border p-2 text-center text-xs font-medium text-muted-foreground">
+                        {item.caption}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="flex flex-wrap gap-3">
               <Button onClick={() => toggleLessonComplete(course.slug, selectedLesson.id)}>
                 {courseState?.completedLessonIds.includes(selectedLesson.id)
@@ -375,6 +402,18 @@ export function LearningWorkspace({ course }: LearningWorkspaceProps) {
                   <h4 className="text-xl font-extrabold leading-tight text-slate-950 dark:text-white sm:text-2xl">
                     {currentAssessmentQuestion.prompt}
                   </h4>
+
+                  {currentAssessmentQuestion.imageUrl && (
+                    <div className="relative mx-auto mt-4 aspect-square w-full max-w-[220px] overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900">
+                      <Image
+                        src={currentAssessmentQuestion.imageUrl}
+                        alt="Question reference"
+                        fill
+                        className="object-contain p-4"
+                        sizes="220px"
+                      />
+                    </div>
+                  )}
 
                   <div className="mt-6 space-y-3">
                     {currentAssessmentQuestion.options.map((option, optionIndex) => {

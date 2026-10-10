@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 import {
   BookOpen,
   CheckCircle2,
@@ -424,6 +425,18 @@ export function CourseNavigationTabs({ course }: CourseNavigationTabsProps) {
                     {currentMockQuestion.prompt}
                   </h4>
 
+                  {currentMockQuestion.imageUrl && (
+                    <div className="relative mx-auto mt-5 aspect-square w-full max-w-[240px] overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900">
+                      <Image
+                        src={currentMockQuestion.imageUrl}
+                        alt="Question reference"
+                        fill
+                        className="object-contain p-4"
+                        sizes="240px"
+                      />
+                    </div>
+                  )}
+
                   <div className="mt-8 space-y-3.5">
                     {currentMockQuestion.options.map((option, optionIndex) => {
                       const selected = mockSelectedOption === optionIndex;
@@ -568,6 +581,17 @@ export function CourseNavigationTabs({ course }: CourseNavigationTabsProps) {
                     <h4 className="text-base font-semibold text-card-foreground">
                       {idx + 1}. {q.prompt}
                     </h4>
+                    {q.imageUrl && (
+                      <div className="relative mt-3 aspect-square w-full max-w-[160px] overflow-hidden rounded-xl border border-border bg-muted/40">
+                        <Image
+                          src={q.imageUrl}
+                          alt="Question reference"
+                          fill
+                          className="object-contain p-3"
+                          sizes="160px"
+                        />
+                      </div>
+                    )}
                     <div className="mt-4 space-y-2.5">
                       {q.options.map((opt, optIdx) => (
                         <label

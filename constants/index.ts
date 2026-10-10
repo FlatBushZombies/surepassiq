@@ -1,3 +1,8 @@
+export interface LessonMedia {
+  imageUrl: string;
+  caption: string;
+}
+
 export interface CourseLesson {
   id: string;
   title: string;
@@ -5,6 +10,7 @@ export interface CourseLesson {
   durationMinutes: number;
   summary: string;
   objectives: string[];
+  media?: LessonMedia[];
 }
 
 export interface CourseModule {
@@ -20,6 +26,7 @@ export interface AssessmentQuestion {
   options: string[];
   correctOption: number;
   explanation: string;
+  imageUrl?: string;
 }
 
 export interface CourseAssessment {
@@ -233,8 +240,9 @@ function createLesson(
   durationMinutes: number,
   summary: string,
   objectives: string[],
+  media?: LessonMedia[],
 ): CourseLesson {
-  return { id, title, kind, durationMinutes, summary, objectives };
+  return { id, title, kind, durationMinutes, summary, objectives, media };
 }
 
 function createCourse(
@@ -2522,10 +2530,10 @@ export const courses: Course[] = [
     lastUpdated: "October 2026",
     language: "English",
     whatYouWillLearn: [
-      "Master all 14 official Highway Code topic areas for car and commercial drivers",
-      "Identify developing hazards early using CGI video hazard perception techniques",
-      "Understand stopping distances, road signs, traffic signals, and right-of-way rules",
-      "Pass unlimited timed mock tests matching real theory exam formats",
+      "Identify every Warning and Regulatory road sign used on Zimbabwean roads, studied from full-colour reference images",
+      "Apply right-of-way, robot, stop-street, and roundabout rules at Zimbabwean intersections",
+      "Spot developing hazards early using CGI hazard-perception video clip strategy",
+      "Work through an illustrated Practice Test, then pass a full-length, timed Mock Test",
     ],
     requirements: [
       "No prior driving experience required",
@@ -2537,44 +2545,98 @@ export const courses: Course[] = [
       "Driving Instructor Trainees",
     ],
     skills: [
-      "Highway Code",
+      "Road Signs",
+      "Intersection Rules",
       "Hazard Perception",
-      "Road Sign Recognition",
-      "Mock Exam Speed",
+      "Highway Code",
     ],
     modules: [
       {
         id: "m1",
-        title: "Highway Code & Essential Road Rules",
-        summary:
-          "Road signs, speed limits, vehicle safety, and right of way.",
+        title: "Road Signs",
+        summary: "Warning and regulatory signs studied from full reference images, exactly as tested.",
         lessons: [
           createLesson(
             "l1",
-            "Road Signs & Markings Mastery",
+            "Warning Signs",
             "video",
             20,
-            "Comprehensive breakdown of warning, regulatory, and info signs.",
-            ["Recognize 100+ road signs instantly"],
+            "Red-bordered triangular signs that flag hazards ahead — study each sign's image, name, and meaning.",
+            ["Recognise every warning sign shown in this lesson on sight"],
+            [
+              { imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_W301.svg", caption: "Traffic signal (robot) ahead" },
+              { imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_W306.svg", caption: "Pedestrian crossing ahead" },
+              { imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_W201.svg", caption: "Roundabout ahead" },
+              { imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_W204.svg", caption: "Sharp curve ahead" },
+              { imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_W310.svg", caption: "Cattle ahead" },
+              { imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_W357.svg", caption: "Elephants ahead" },
+              { imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_W308.svg", caption: "Children ahead" },
+            ],
           ),
           createLesson(
             "l2",
-            "Stopping Distances & Vehicle Handling",
-            "reading",
-            15,
-            "Dry, wet, and icy braking calculations.",
-            ["Calculate braking & thinking distances"],
+            "Regulatory & Control Signs",
+            "video",
+            20,
+            "Circular signs that prohibit or instruct, plus the stop and give-way control signs — study each sign's image, name, and meaning.",
+            ["Distinguish prohibition signs from mandatory and control signs on sight"],
+            [
+              { imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_R1.svg", caption: "Stop" },
+              { imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_R2.svg", caption: "Give way / Yield" },
+              { imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_R3.svg", caption: "No entry" },
+              { imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_R201-60.svg", caption: "Speed limit 60 km/h" },
+              { imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_R105.svg", caption: "Turn left (command)" },
+              { imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_R137.svg", caption: "Roundabout (mandatory direction)" },
+            ],
           ),
         ],
       },
       {
         id: "m2",
-        title: "Hazard Perception & Mock Exam Sprint",
-        summary:
-          "Spotting developing hazards and timing your clicks for top scores.",
+        title: "Intersection Rules",
+        summary: "Right of way at junctions, robots, stop streets, and roundabouts.",
         lessons: [
           createLesson(
             "l3",
+            "Right of Way at Uncontrolled Intersections",
+            "video",
+            14,
+            "Who gives way when there are no signs or robots.",
+            ["Apply the give-way-to-the-right rule"],
+          ),
+          createLesson(
+            "l4",
+            "Robots & Four-Way Stops",
+            "reading",
+            14,
+            "Reading traffic-light sequences and stop-street priority correctly.",
+            ["Sequence a four-way stop correctly"],
+          ),
+          createLesson(
+            "l5",
+            "Roundabouts",
+            "video",
+            12,
+            "Entering, circulating, and exiting a roundabout safely.",
+            ["Navigate a roundabout with correct lane discipline"],
+          ),
+        ],
+      },
+      {
+        id: "m3",
+        title: "Hazard Perception",
+        summary: "Stopping distances, vehicle handling, and spotting developing hazards.",
+        lessons: [
+          createLesson(
+            "l6",
+            "Stopping Distances & Vehicle Handling",
+            "reading",
+            15,
+            "How speed, road surface, and reaction time combine to change your stopping distance.",
+            ["Apply the 2-second (and 4-second in wet conditions) following-distance rule"],
+          ),
+          createLesson(
+            "l7",
             "CGI Hazard Clip Strategy",
             "lab",
             25,
@@ -2583,41 +2645,143 @@ export const courses: Course[] = [
           ),
         ],
       },
+      {
+        id: "m4",
+        title: "Practice Test & Mock Test",
+        summary: "Build confidence with low-stakes practice, then prove it under exam conditions.",
+        lessons: [
+          createLesson(
+            "l8",
+            "Practice Test",
+            "lab",
+            20,
+            "Work through the full question bank at your own pace — the correct answer and a full explanation are revealed after every question.",
+            ["Score at least 86% on an untimed practice run"],
+          ),
+          createLesson(
+            "l9",
+            "Mock Test",
+            "lab",
+            25,
+            "Sit the full question bank under exam time pressure, with no pausing, just like the real theory test.",
+            ["Pass a timed mock under exam conditions"],
+          ),
+        ],
+      },
     ],
     assessment: {
       id: "a-driving",
       title: "Official Driving Theory Mock Test Sprint",
       description:
-        "50-question mock test simulating real theory exam conditions with pass mark at 86%.",
+        "A mock test covering road signs, intersection rules, and hazard awareness, simulating real theory exam conditions.",
       passMark: 86,
       questions: [
         {
           id: "q1",
-          prompt:
-            "What is the overall stopping distance (thinking + braking) when traveling at 50 mph on a dry road?",
-          options: [
-            "36 metres (118 feet)",
-            "53 metres (175 feet)",
-            "73 metres (240 feet)",
-            "96 metres (315 feet)",
-          ],
+          prompt: "What does this sign mean?",
+          imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_R1.svg",
+          options: ["Give way", "Stop completely before proceeding", "No entry", "Speed limit ahead"],
           correctOption: 1,
-          explanation:
-            "At 50 mph, thinking distance is 15 metres (50 ft) and braking distance is 38 metres (125 ft), totaling 53 metres (175 ft).",
+          explanation: "This is the STOP sign — you must come to a complete stop before proceeding, even if the road looks clear.",
         },
         {
           id: "q2",
-          prompt:
-            "What should you do when approaching a pelican crossing when the amber light is flashing?",
-          options: [
-            "Stop and wait for the green light regardless of pedestrians",
-            "Give way to any pedestrians on the crossing, but proceed if clear",
-            "Accelerate quickly before pedestrians enter",
-            "Sound your horn to warn pedestrians",
-          ],
+          prompt: "What does this sign mean?",
+          imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_R2.svg",
+          options: ["Stop completely", "Give way to traffic on the road you are joining", "No overtaking", "Roundabout ahead"],
           correctOption: 1,
-          explanation:
-            "A flashing amber light at a pelican crossing means you must give way to pedestrians already crossing, but if it is clear you may proceed.",
+          explanation: "The Give Way (Yield) sign means you must slow down and give way to traffic on the road you are entering, stopping only if necessary.",
+        },
+        {
+          id: "q3",
+          prompt: "What does this warning sign mean?",
+          imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_W301.svg",
+          options: ["Hospital ahead", "Traffic signal (robot) ahead", "Fuel station ahead", "School ahead"],
+          correctOption: 1,
+          explanation: "This warning sign tells drivers that a traffic signal (commonly called a \"robot\") is ahead, so be ready to stop.",
+        },
+        {
+          id: "q4",
+          prompt: "What does this warning sign mean?",
+          imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_W310.svg",
+          options: ["Game reserve entrance", "Cattle may be on the road ahead", "Farm produce for sale", "No livestock allowed"],
+          correctOption: 1,
+          explanation: "This warning sign alerts drivers that cattle may be crossing or wandering onto the road ahead — a common hazard on rural Zimbabwean roads.",
+        },
+        {
+          id: "q5",
+          prompt: "What does this sign mean?",
+          imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_R3.svg",
+          options: ["One-way street", "No entry for all vehicles", "No parking", "Road closed for repairs"],
+          correctOption: 1,
+          explanation: "The No Entry sign prohibits all vehicles from entering that road or lane.",
+        },
+        {
+          id: "q6",
+          prompt: "What does this warning sign mean?",
+          imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_W201.svg",
+          options: ["Sharp left bend", "Roundabout ahead", "Dual carriageway ends", "Road narrows"],
+          correctOption: 1,
+          explanation: "This warning sign tells drivers a roundabout is ahead, so slow down and prepare to give way to traffic already on it.",
+        },
+        {
+          id: "q7",
+          prompt: "At an uncontrolled intersection with no signs or robots, who has right of way?",
+          options: ["The faster vehicle", "The vehicle approaching from the right", "The larger vehicle", "Whoever arrives first regardless of position"],
+          correctOption: 1,
+          explanation: "Without signs or signals, the vehicle approaching from the right generally has right of way.",
+        },
+        {
+          id: "q8",
+          prompt: "At a four-way stop where two vehicles arrive at the same time, who proceeds first?",
+          options: ["The vehicle on the left", "The vehicle on the right", "The larger vehicle", "Whichever vehicle hoots first"],
+          correctOption: 1,
+          explanation: "When vehicles arrive simultaneously at a four-way stop, the vehicle to the right has priority.",
+        },
+        {
+          id: "q9",
+          prompt: "What does this sign mean?",
+          imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_R201-60.svg",
+          options: ["Minimum speed 60 km/h", "Maximum speed limit of 60 km/h", "Distance to next town is 60 km", "Route number 60"],
+          correctOption: 1,
+          explanation: "A circular sign with a red border showing a number states the maximum speed limit in km/h — here, 60 km/h.",
+        },
+        {
+          id: "q10",
+          prompt: "You are approaching a robot (traffic light) and the amber light shows. What should you do?",
+          options: ["Accelerate through before it turns red", "Stop if you can do so safely; otherwise proceed with caution", "Always stop immediately no matter what", "Sound your horn and proceed"],
+          correctOption: 1,
+          explanation: "Amber means stop if it is safe to do so. Only proceed if stopping suddenly would be unsafe.",
+        },
+        {
+          id: "q11",
+          prompt: "What does this warning sign, commonly seen near game parks and conservancies, mean?",
+          imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_W357.svg",
+          options: ["Road works ahead", "Elephants may cross the road ahead", "No entry for heavy vehicles", "Speed camera ahead"],
+          correctOption: 1,
+          explanation: "This warning sign alerts drivers that elephants may cross the road ahead — common near Zimbabwe's game parks and conservancies.",
+        },
+        {
+          id: "q12",
+          prompt: "Which of the following increases your overall stopping distance?",
+          options: ["Driving at a lower speed", "A wet or slippery road surface", "Fully inflated, well-treaded tyres", "Being fully alert"],
+          correctOption: 1,
+          explanation: "A wet or slippery surface reduces tyre grip and increases braking distance, lengthening your overall stopping distance.",
+        },
+        {
+          id: "q13",
+          prompt: "In a hazard-perception video clip, when should you click?",
+          options: ["At the very start of every clip", "As soon as a hazard begins to develop", "Only after the hazard has fully occurred", "Only if a vehicle is involved"],
+          correctOption: 1,
+          explanation: "You score points for clicking as soon as a hazard starts to develop — clicking too early or too late loses marks.",
+        },
+        {
+          id: "q14",
+          prompt: "What does this sign instruct drivers to do?",
+          imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_R137.svg",
+          options: ["Avoid the roundabout ahead", "Proceed around the roundabout in the direction shown", "Stop before the roundabout", "Give way to pedestrians only"],
+          correctOption: 1,
+          explanation: "This mandatory sign is placed at a roundabout to instruct drivers to proceed in the direction of the arrows.",
         },
       ],
     },
@@ -2626,7 +2790,8 @@ export const courses: Course[] = [
         id: "r1",
         title: "Complete Highway Code Road Signs Cheatsheet",
         kind: "guide",
-        description: "Visual reference poster for all traffic signs.",
+        description: "Visual reference poster for warning, regulatory, and control signs.",
+        imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/SADC_road_sign_W308.svg",
       },
       {
         id: "r2",

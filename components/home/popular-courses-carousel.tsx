@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { CourseCard } from "@/components/courses/course-card";
+import { SkillCourseCard } from "@/components/courses/skill-course-card";
 import {
   Carousel,
   CarouselContent,
@@ -98,7 +98,7 @@ export function PopularCoursesCarousel({
               className="pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
             >
               <div className="h-full">
-                <CourseCard course={course} />
+                <SkillCourseCard course={course} />
               </div>
             </CarouselItem>
           ))}
