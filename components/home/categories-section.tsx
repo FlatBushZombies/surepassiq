@@ -9,7 +9,8 @@ import { Reveal } from "@/components/ui/reveal";
 interface VisualCategory {
   id: string;
   title: string;
-  href: string;
+  categorySlug: string;
+  topic?: string;
   image: string;
 }
 
@@ -17,40 +18,55 @@ const visualCategories: VisualCategory[] = [
   {
     id: "generative-ai",
     title: "Generative AI",
-    href: "/course/generative-ai",
+    categorySlug: "ai-data",
+    topic: "Generative AI",
     image: "/courses/gen-AI.jpeg",
   },
   {
     id: "it-certifications",
     title: "IT Certifications",
-    href: "/course/it-certifications",
+    categorySlug: "it-software",
+    topic: "IT Certifications",
     image: "/courses/IT-certifications.jpeg",
   },
   {
     id: "prompt-engineering",
     title: "Prompt Engineering",
-    href: "/course/prompt-engineering",
+    categorySlug: "ai-data",
+    topic: "Prompt Engineering",
     image: "/courses/prompt-engineering.jpeg",
   },
   {
     id: "ai-agents",
     title: "AI Agents",
-    href: "/course/ai-agents",
+    categorySlug: "ai-data",
+    topic: "AI Agents",
     image: "/courses/AI-agents.jpeg",
   },
   {
     id: "practical-skills",
     title: "Practical skills",
-    href: "/categories/practical-trades",
+    categorySlug: "practical-trades",
     image: "/courses/practical-skills.jpeg",
   },
   {
     id: "exam-preparation",
     title: "Exam preparation",
-    href: "/course/exam-preparation",
+    categorySlug: "test-prep",
+    topic: "Exam Preparation",
     image: "/courses/exam-preparations.jpeg",
   },
 ];
+
+function getHref(category: VisualCategory) {
+  if (!category.topic) {
+    return `/categories/${category.categorySlug}`;
+  }
+  return {
+    pathname: `/categories/${category.categorySlug}`,
+    query: { topic: category.topic },
+  };
+}
 
 const ITEMS_PER_PAGE = 3;
 
@@ -102,26 +118,29 @@ export function CategoriesSection() {
                       {page.map((category) => (
                         <Link
                           key={category.id}
-                          href={category.href}
-                          className="group flex w-full flex-col rounded-[22px] transition-transform duration-300 ease-out-strong hover:-translate-y-1"
+                          href={getHref(category)}
+                          className="group relative block h-[320px] w-full overflow-hidden rounded-[22px] bg-muted transition-transform duration-300 ease-out-strong hover:-translate-y-1 sm:h-[360px] lg:h-[380px]"
                         >
                           {/* Full-bleed image */}
-                          <div className="relative h-[320px] w-full overflow-hidden rounded-[22px] bg-muted sm:h-[360px] lg:h-[380px]">
-                            <Image
-                              src={category.image}
-                              alt={category.title}
-                              fill
-                              className="object-cover transition-transform duration-300 ease-out-strong group-hover:scale-105"
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            />
-                          </div>
+                          <Image
+                            src={category.image}
+                            alt={category.title}
+                            fill
+                            className="object-cover transition-transform duration-300 ease-out-strong group-hover:scale-105"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          />
 
-                          {/* Bottom label */}
-                          <div className="mt-2.5 flex items-center justify-between rounded-2xl border border-border bg-card p-4 shadow-sm transition-colors duration-150 ease-out-strong group-hover:border-foreground/20">
-                            <span className="text-sm font-bold text-card-foreground sm:text-base">
+                          {/* Legibility gradient */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+
+                          {/* Title overlay */}
+                          <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 p-4">
+                            <span className="text-base font-bold text-white sm:text-lg">
                               {category.title}
                             </span>
-                            <ArrowRight className="h-4 w-4 text-card-foreground transition-transform duration-150 ease-out-strong group-hover:translate-x-1" />
+                            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-foreground transition-transform duration-150 ease-out-strong group-hover:translate-x-1">
+                              <ArrowRight className="h-4 w-4" />
+                            </span>
                           </div>
                         </Link>
                       ))}

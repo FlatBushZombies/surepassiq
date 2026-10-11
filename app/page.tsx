@@ -10,10 +10,12 @@ import { StudentCTASection } from "@/components/home/student-cta-section";
 import { courses, type Course } from "@/constants";
 
 const TRENDING_FIRST_SLUGS = [
-  "vid-provisional-prep",
-  "early-child-reading-development",
-  "ai-video-generation",
-  "olevel-maths",
+  "plumbing-practical",
+  "fence-installation-security-fencing",
+  "aluminum-fabrication",
+  "cellphone-laptop-repairs",
+  "cctv-security-installation",
+  "gas-safety-installation",
 ];
 
 export default function HomePage() {

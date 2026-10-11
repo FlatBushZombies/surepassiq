@@ -131,3 +131,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Hides the scrollbar on horizontally-scrollable rows (e.g. tab strips)
+   while keeping the element fully scrollable via drag/touch/wheel. */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

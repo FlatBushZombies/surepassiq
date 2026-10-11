@@ -29,10 +29,6 @@ const tabs: SkillsTab[] = [
   { label: "Child Development", match: (c) => c.category === "Child Development" },
   { label: "Driving", match: (c) => c.category === "Driving" },
   { label: "AI Video Generation", match: (c) => c.category === "AI Video Generation" },
-  {
-    label: "Exam Preparation",
-    match: (c) => c.category === "Test Prep" && c.subcategory === "Exam Preparation",
-  },
 ];
 
 export function SkillsTransformSection() {
@@ -78,7 +74,7 @@ export function SkillsTransformSection() {
 
         {/* Tabs + carousel controls */}
         <div className="mt-8 flex items-end justify-between gap-4 border-b border-border">
-          <div className="flex gap-6 overflow-x-auto sm:gap-8">
+          <div className="scrollbar-hide flex gap-6 overflow-x-auto sm:gap-8">
             {tabs.map((tab, index) => (
               <button
                 key={tab.label}

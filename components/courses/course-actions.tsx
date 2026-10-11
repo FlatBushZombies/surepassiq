@@ -2,15 +2,16 @@
 
 import { startTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Heart, PlayCircle } from "lucide-react";
+import { Heart, PlayCircle, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLearner } from "@/components/learning/learner-provider";
 
 interface CourseActionsProps {
   courseSlug: string;
+  isPractical?: boolean;
 }
 
-export function CourseActions({ courseSlug }: CourseActionsProps) {
+export function CourseActions({ courseSlug, isPractical = false }: CourseActionsProps) {
   const router = useRouter();
   const { enrollInCourse, getCourseProgress, state, toggleWishlist } = useLearner();
 
@@ -25,18 +26,29 @@ export function CourseActions({ courseSlug }: CourseActionsProps) {
     });
   }
 
+  function handleRegister() {
+    enrollInCourse(courseSlug);
+  }
+
   return (
     <div className="space-y-3">
-      <Button size="lg" className="w-full text-base font-semibold" onClick={handleStartLearning}>
-        <PlayCircle className="mr-2 h-4 w-4" />
-        {isEnrolled
-          ? progress >= 100
-            ? "Review course"
-            : progress > 0
-              ? "Continue learning"
-              : "Start learning"
-          : "Enroll and start learning"}
-      </Button>
+      {isPractical ? (
+        <Button size="lg" className="w-full text-base font-semibold" onClick={handleRegister}>
+          <UserPlus className="mr-2 h-4 w-4" />
+          {isEnrolled ? "Registered" : "Register now"}
+        </Button>
+      ) : (
+        <Button size="lg" className="w-full text-base font-semibold" onClick={handleStartLearning}>
+          <PlayCircle className="mr-2 h-4 w-4" />
+          {isEnrolled
+            ? progress >= 100
+              ? "Review course"
+              : progress > 0
+                ? "Continue learning"
+                : "Start learning"
+            : "Enroll and start learning"}
+        </Button>
+      )}
 
       <div className="flex gap-2">
         <Button

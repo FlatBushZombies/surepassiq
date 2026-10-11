@@ -16,6 +16,7 @@ import { Header } from "@/components/layout/header";
 import { CourseGrid } from "@/components/courses/course-grid";
 import { CourseActions } from "@/components/courses/course-actions";
 import { CourseNavigationTabs } from "@/components/courses/course-navigation-tabs";
+import { PracticalCourseSummary } from "@/components/courses/practical-course-summary";
 import { courses } from "@/constants";
 import { getCourseCategorySlug } from "@/lib/catalog";
 
@@ -34,6 +35,7 @@ export default async function CoursePage(props: CoursePageProps) {
   const relatedCourses = courses
     .filter((item) => item.category === course.category && item.slug !== course.slug)
     .slice(0, 4);
+  const isPractical = course.category === "Practical Trades";
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -124,22 +126,31 @@ export default async function CoursePage(props: CoursePageProps) {
                     </p>
                   </div>
 
-                  <CourseActions courseSlug={course.slug} />
+                  <CourseActions courseSlug={course.slug} isPractical={isPractical} />
 
                   <div className="space-y-3 border-t border-border pt-5 text-sm text-muted-foreground">
                     <p className="font-semibold text-card-foreground">What this course includes</p>
                     <p className="inline-flex items-center gap-2">
                       <BookOpenText className="h-4 w-4" />
-                      {course.lectures} guided lessons across {course.modules.length} modules
+                      {course.lectures} {isPractical ? "hands-on" : "guided"} lessons across {course.modules.length} modules
                     </p>
-                    <p className="inline-flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4" />
-                      Mock tests & Timed exam simulation
-                    </p>
-                    <p className="inline-flex items-center gap-2">
-                      <Award className="h-4 w-4" />
-                      Completion certificate when lessons and assessment are complete
-                    </p>
+                    {isPractical ? (
+                      <p className="inline-flex items-center gap-2">
+                        <Award className="h-4 w-4" />
+                        In-person, practical skills training
+                      </p>
+                    ) : (
+                      <>
+                        <p className="inline-flex items-center gap-2">
+                          <CheckCircle2 className="h-4 w-4" />
+                          Mock tests & Timed exam simulation
+                        </p>
+                        <p className="inline-flex items-center gap-2">
+                          <Award className="h-4 w-4" />
+                          Completion certificate when lessons and assessment are complete
+                        </p>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -164,10 +175,14 @@ export default async function CoursePage(props: CoursePageProps) {
                 </div>
               </section>
 
-              {/* Universal Course Navigation Tabs (Modules, Mock Tests, Timed Test, Practical Labs, Resources) */}
-              <section id="course-navigation">
-                <CourseNavigationTabs course={course} />
-              </section>
+              {isPractical ? (
+                <PracticalCourseSummary course={course} />
+              ) : (
+                /* Universal Course Navigation Tabs (Modules, Mock Tests, Timed Test, Practical Labs, Resources) */
+                <section id="course-navigation">
+                  <CourseNavigationTabs course={course} />
+                </section>
+              )}
             </div>
 
             <aside className="space-y-6">
