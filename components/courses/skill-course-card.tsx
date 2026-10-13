@@ -6,7 +6,17 @@ import { Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Course } from "@/constants";
 
-export function SkillCourseCard({ course }: { course: Course }) {
+interface SkillCourseCardProps {
+  course: Course;
+  certifiedLabel?: boolean;
+  reviewsLabel?: string;
+}
+
+export function SkillCourseCard({
+  course,
+  certifiedLabel = false,
+  reviewsLabel,
+}: SkillCourseCardProps) {
   return (
     <Link
       href={`/course/${course.slug}`}
@@ -32,7 +42,7 @@ export function SkillCourseCard({ course }: { course: Course }) {
         <div className="mt-2 flex flex-wrap items-center gap-2">
           {course.bestseller && (
             <Badge className="rounded-sm bg-[#eceb98] px-1.5 py-0.5 text-[10px] font-bold uppercase text-[#3d3c0a] hover:bg-[#eceb98]">
-              Bestseller
+              {certifiedLabel ? "Certified" : "Bestseller"}
             </Badge>
           )}
           <span className="flex items-center gap-1 rounded-sm border border-border px-1.5 py-0.5 text-xs font-bold text-foreground">
@@ -40,7 +50,7 @@ export function SkillCourseCard({ course }: { course: Course }) {
             {course.rating.toFixed(1)}
           </span>
           <span className="rounded-sm border border-border px-1.5 py-0.5 text-xs text-muted-foreground">
-            {course.reviewsCount.toLocaleString()} ratings
+            {reviewsLabel ?? `${course.reviewsCount.toLocaleString()} ratings`}
           </span>
         </div>
 

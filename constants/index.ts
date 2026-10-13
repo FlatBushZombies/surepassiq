@@ -1678,7 +1678,8 @@ export const courses: Course[] = [
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
-    image: "/courses/AI-agents.jpeg",
+    image:
+      "https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=800",
     price: 21.99,
     originalPrice: 119.99,
     rating: 4.9,
@@ -2348,14 +2349,14 @@ export const courses: Course[] = [
   }),
   createCourse({
     id: "early-child-reading-development",
-    title: "Early Child Reading Development",
+    title: "Early Child Reading Development and Remedial",
     slug: "early-child-reading-development",
     description:
       "Practical phonics, storytelling, and literacy routines parents and early educators can use to build strong readers from ages 2-7.",
     instructor: {
-      name: "Elias P Maposa",
+      name: "Elias P Maposa, SurePass Literacy Specialist",
       avatar: "/e-maphosa.jpeg",
-      title: "SurePass Literacy Specialist",
+      title: "",
     },
     image: "/reading.jpeg",
     price: 11.99,
@@ -2894,4 +2895,15 @@ export const stats = [
 export const navLinks = [
   { label: "My Learning", href: "/my-learning" },
   { label: "Community", href: "/community" },
+];
+
+export const trendingCourseSlugs = [
+  "early-child-reading-development",
+  "driving-theory-hazard-perception",
+  "plumbing-practical",
+  "fence-installation-security-fencing",
+  "aluminum-fabrication",
+  "cellphone-laptop-repairs",
+  "cctv-security-installation",
+  "gas-safety-installation",
 ];

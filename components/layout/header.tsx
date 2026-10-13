@@ -8,7 +8,6 @@ import {
   Bell,
   BookOpen,
   ChevronDown,
-  Heart,
   Menu,
   Search,
   ShoppingCart,
@@ -104,7 +103,7 @@ export function Header() {
           </Button>
           <Button variant="ghost" size="icon" className="relative h-10 w-10" asChild>
             <Link href="/wishlist" aria-label="Wishlist">
-              <Heart className="h-5 w-5" />
+              <ShoppingCart className="h-5 w-5" />
             </Link>
           </Button>
           <Button variant="ghost" size="icon" className="relative h-10 w-10" asChild>
@@ -179,18 +178,6 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Search */}
-      <div className="border-t border-border px-4 py-3 lg:hidden">
-        <form className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            type="search"
-            placeholder="Search for anything"
-            className="h-10 w-full rounded-xl border border-border bg-muted/40 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus-visible:border-foreground focus-visible:bg-background focus-visible:ring-0"
-          />
-        </form>
-      </div>
-
       {/* Mobile Menu */}
       <div
         className={cn(
@@ -199,6 +186,16 @@ export function Header() {
         )}
       >
         <nav className="flex flex-col p-4">
+          {/* Mobile Search */}
+          <form className="relative mb-4">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="Search for anything"
+              className="h-10 w-full rounded-xl border border-border bg-muted/40 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus-visible:border-foreground focus-visible:bg-background focus-visible:ring-0"
+            />
+          </form>
+
           {/* Categories removed from mobile menu */}
 
           <div className="mb-4 space-y-1 border-b border-border pb-4">

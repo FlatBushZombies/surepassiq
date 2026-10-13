@@ -34,6 +34,7 @@ const columns: { title: string; skills: SkillLink[] }[] = [
     title: "Exam Preparation",
     skills: [
       { label: "Driving Theory", categorySlug: "test-prep", topic: "Driving Theory" },
+      { label: "O Level Mathematics", categorySlug: "test-prep", topic: "Exam Preparation" },
     ],
   },
   {

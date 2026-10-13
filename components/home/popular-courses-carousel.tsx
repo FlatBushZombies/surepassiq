@@ -16,13 +16,18 @@ interface PopularCoursesCarouselProps {
   courses: Course[];
   title?: string;
   subtitle?: string;
+  certifiedLabel?: boolean;
+  availabilityLabel?: boolean;
 }
 
 export function PopularCoursesCarousel({
   courses,
   title = "Most popular courses",
   subtitle = "Popular picks from our early learner community",
+  certifiedLabel = false,
+  availabilityLabel = false,
 }: PopularCoursesCarouselProps) {
+  const reviewsLabel = availabilityLabel ? "Available" : undefined;
   const [api, setApi] = React.useState<CarouselApi>();
   const [canScrollPrev, setCanScrollPrev] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
@@ -98,7 +103,11 @@ export function PopularCoursesCarousel({
               className="pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
             >
               <div className="h-full">
-                <SkillCourseCard course={course} />
+                <SkillCourseCard
+                  course={course}
+                  certifiedLabel={certifiedLabel}
+                  reviewsLabel={reviewsLabel}
+                />
               </div>
             </CarouselItem>
           ))}

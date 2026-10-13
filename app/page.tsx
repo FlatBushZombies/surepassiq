@@ -7,21 +7,10 @@ import { AiEraSection } from "@/components/home/ai-era-section";
 import { SkillsTransformSection } from "@/components/home/skills-transform-section";
 import { PopularSkillsSection } from "@/components/home/popular-skills-section";
 import { StudentCTASection } from "@/components/home/student-cta-section";
-import { courses, type Course } from "@/constants";
-
-const AVAILABLE_COURSE_SLUGS = [
-  "early-child-reading-development",
-  "driving-theory-hazard-perception",
-  "plumbing-practical",
-  "fence-installation-security-fencing",
-  "aluminum-fabrication",
-  "cellphone-laptop-repairs",
-  "cctv-security-installation",
-  "gas-safety-installation",
-];
+import { courses, trendingCourseSlugs, type Course } from "@/constants";
 
 export default function HomePage() {
-  const trendingCourses = AVAILABLE_COURSE_SLUGS.map((slug) =>
+  const trendingCourses = trendingCourseSlugs.map((slug) =>
     courses.find((course) => course.slug === slug),
   ).filter((course): course is Course => Boolean(course));
 
@@ -37,7 +26,9 @@ export default function HomePage() {
         <div id="trending-courses" className="mx-auto max-w-7xl scroll-mt-20 px-4 lg:px-6">
           <PopularCoursesCarousel
             courses={trendingCourses}
-            title="Available courses"
+            title="Trending Courses"
+            certifiedLabel
+            availabilityLabel
           />
         </div>
 

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/carousel";
 import { Reveal } from "@/components/ui/reveal";
 import { SkillCourseCard } from "@/components/courses/skill-course-card";
-import { courses, type Course } from "@/constants";
+import { courses, trendingCourseSlugs, type Course } from "@/constants";
 import { cn } from "@/lib/utils";
 
 interface SkillsTab {
@@ -37,7 +37,10 @@ export function SkillsTransformSection() {
 
   const activeCategory = tabs[activeTab].label;
   const tabCourses = React.useMemo(
-    () => courses.filter((course) => tabs[activeTab].match(course)),
+    () =>
+      courses.filter(
+        (course) => tabs[activeTab].match(course) && course.slug !== "prompt-engineering",
+      ),
     [activeTab],
   );
 
@@ -132,7 +135,12 @@ export function SkillsTransformSection() {
                     key={course.id}
                     className="basis-full pl-4 sm:basis-1/2 lg:basis-1/4"
                   >
-                    <SkillCourseCard course={course} />
+                    <SkillCourseCard
+                      course={course}
+                      reviewsLabel={
+                        trendingCourseSlugs.includes(course.slug) ? "Available" : "Coming Soon"
+                      }
+                    />
                   </CarouselItem>
                 ))}
               </CarouselContent>

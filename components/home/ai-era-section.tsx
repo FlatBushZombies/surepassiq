@@ -79,12 +79,12 @@ export function AiEraSection() {
             </div>
 
             {/* Right Column: Career Image */}
-            <div className="lg:col-span-6 relative h-[420px] sm:h-[480px] lg:h-[560px] w-full overflow-hidden rounded-[24px] bg-[#1a1b26] shadow-lg">
+            <div className="lg:col-span-6 relative aspect-[1180/753] w-full overflow-hidden rounded-[24px] bg-[#1a1b26] shadow-lg lg:aspect-auto lg:h-[420px]">
               <Image
                 src="/AI-Era.png"
                 alt="Reimagine your career in the AI era"
                 fill
-                className="object-cover object-center"
+                className="object-contain object-center"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
