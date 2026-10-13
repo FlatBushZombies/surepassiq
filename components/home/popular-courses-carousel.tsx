@@ -106,6 +106,7 @@ export function PopularCoursesCarousel({
                 <SkillCourseCard
                   course={course}
                   certifiedLabel={certifiedLabel}
+                  alwaysShowCertifiedBadge={certifiedLabel}
                   reviewsLabel={reviewsLabel}
                 />
               </div>

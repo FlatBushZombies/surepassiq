@@ -9,12 +9,14 @@ import type { Course } from "@/constants";
 interface SkillCourseCardProps {
   course: Course;
   certifiedLabel?: boolean;
+  alwaysShowCertifiedBadge?: boolean;
   reviewsLabel?: string;
 }
 
 export function SkillCourseCard({
   course,
   certifiedLabel = false,
+  alwaysShowCertifiedBadge = false,
   reviewsLabel,
 }: SkillCourseCardProps) {
   return (
@@ -40,7 +42,7 @@ export function SkillCourseCard({
         </p>
 
         <div className="mt-2 flex flex-wrap items-center gap-2">
-          {course.bestseller && (
+          {(course.bestseller || alwaysShowCertifiedBadge) && (
             <Badge className="rounded-sm bg-[#eceb98] px-1.5 py-0.5 text-[10px] font-bold uppercase text-[#3d3c0a] hover:bg-[#eceb98]">
               {certifiedLabel ? "Certified" : "Bestseller"}
             </Badge>

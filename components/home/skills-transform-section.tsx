@@ -137,6 +137,7 @@ export function SkillsTransformSection() {
                   >
                     <SkillCourseCard
                       course={course}
+                      certifiedLabel
                       reviewsLabel={
                         trendingCourseSlugs.includes(course.slug) ? "Available" : "Coming Soon"
                       }
