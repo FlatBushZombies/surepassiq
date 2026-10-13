@@ -24,11 +24,9 @@ const tabs: SkillsTab[] = [
   { label: "Business", match: (c) => c.category === "Business" },
   { label: "Design", match: (c) => c.category === "Design" },
   { label: "Marketing", match: (c) => c.category === "Marketing" },
-  { label: "IT & Software", match: (c) => c.category === "IT & Software" },
   { label: "Personal Development", match: (c) => c.category === "Personal Development" },
   { label: "Child Development", match: (c) => c.category === "Child Development" },
-  { label: "Driving", match: (c) => c.category === "Driving" },
-  { label: "AI Video Generation", match: (c) => c.category === "AI Video Generation" },
+  { label: "Exam Preparation", match: (c) => c.category === "Test Prep" },
 ];
 
 export function SkillsTransformSection() {
@@ -68,8 +66,7 @@ export function SkillsTransformSection() {
           Skills to transform your career and life
         </h2>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
-          From critical workplace skills to technical topics, Surepass IQ
-          supports your professional development.
+          SurePass IQ assists in your professional development by offering resources on both essential workplace skills and technical subjects.
         </p>
 
         {/* Tabs + carousel controls */}

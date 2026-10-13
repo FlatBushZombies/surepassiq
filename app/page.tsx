@@ -9,7 +9,9 @@ import { PopularSkillsSection } from "@/components/home/popular-skills-section";
 import { StudentCTASection } from "@/components/home/student-cta-section";
 import { courses, type Course } from "@/constants";
 
-const TRENDING_FIRST_SLUGS = [
+const AVAILABLE_COURSE_SLUGS = [
+  "early-child-reading-development",
+  "driving-theory-hazard-perception",
   "plumbing-practical",
   "fence-installation-security-fencing",
   "aluminum-fabrication",
@@ -19,13 +21,9 @@ const TRENDING_FIRST_SLUGS = [
 ];
 
 export default function HomePage() {
-  const pinnedTrending = TRENDING_FIRST_SLUGS.map((slug) =>
+  const trendingCourses = AVAILABLE_COURSE_SLUGS.map((slug) =>
     courses.find((course) => course.slug === slug),
   ).filter((course): course is Course => Boolean(course));
-  const trendingCourses = [
-    ...pinnedTrending,
-    ...courses.filter((course) => !TRENDING_FIRST_SLUGS.includes(course.slug)),
-  ];
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -39,8 +37,7 @@ export default function HomePage() {
         <div id="trending-courses" className="mx-auto max-w-7xl scroll-mt-20 px-4 lg:px-6">
           <PopularCoursesCarousel
             courses={trendingCourses}
-            title="Trending courses"
-            subtitle="What learners are starting right now"
+            title="Available courses"
           />
         </div>
 

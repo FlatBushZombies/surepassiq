@@ -16,45 +16,57 @@ interface VisualCategory {
 
 const visualCategories: VisualCategory[] = [
   {
-    id: "generative-ai",
-    title: "Generative AI",
+    id: "gen-ai",
+    title: "Gen AI",
     categorySlug: "ai-data",
-    topic: "Generative AI",
-    image: "/courses/gen-AI.jpeg",
+    image: "/categories/gen-ai.jpeg",
   },
   {
-    id: "it-certifications",
-    title: "IT Certifications",
-    categorySlug: "it-software",
-    topic: "IT Certifications",
-    image: "/courses/IT-certifications.jpeg",
+    id: "exam-preparation",
+    title: "Exam Preparation",
+    categorySlug: "test-prep",
+    topic: "Exam Preparation",
+    image: "/categories/exam-preparation.jpeg",
+  },
+  {
+    id: "microsoft-excel",
+    title: "Microsoft Excel",
+    categorySlug: "ai-data",
+    topic: "Data Literacy",
+    image: "https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     id: "prompt-engineering",
     title: "Prompt Engineering",
     categorySlug: "ai-data",
     topic: "Prompt Engineering",
-    image: "/courses/prompt-engineering.jpeg",
+    image: "/categories/prompt-engineering.jpeg",
+  },
+  {
+    id: "ai-tools",
+    title: "AI Tools",
+    categorySlug: "ai-data",
+    topic: "AI Fundamentals",
+    image: "/categories/ai-tools.jpeg",
+  },
+  {
+    id: "practical-trades",
+    title: "Practical Trades",
+    categorySlug: "practical-trades",
+    image: "/categories/practical-trades.jpeg",
+  },
+  {
+    id: "machine-learning",
+    title: "Machine Learning",
+    categorySlug: "ai-data",
+    image: "/categories/machine-learning.jpeg",
   },
   {
     id: "ai-agents",
     title: "AI Agents",
     categorySlug: "ai-data",
     topic: "AI Agents",
-    image: "/courses/AI-agents.jpeg",
-  },
-  {
-    id: "practical-skills",
-    title: "Practical skills",
-    categorySlug: "practical-trades",
-    image: "/courses/practical-skills.jpeg",
-  },
-  {
-    id: "exam-preparation",
-    title: "Exam preparation",
-    categorySlug: "test-prep",
-    topic: "Exam Preparation",
-    image: "/courses/exam-preparations.jpeg",
+    image: "/categories/ai-agents.jpeg",
   },
 ];
 
@@ -96,10 +108,10 @@ export function CategoriesSection() {
             {/* Left Text Block */}
             <div className="flex flex-col justify-center lg:col-span-4">
               <h2 className="text-3xl font-bold leading-[1.2] tracking-tight text-foreground sm:text-4xl lg:text-[38px]">
-                Learn <em className="font-normal italic">essential</em> career and life skills
+                Learn <em className="font-normal italic">essential</em> career and practical skills
               </h2>
               <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground sm:text-base">
-                Surepass IQ helps you build in-demand skills fast and advance your career in a changing job market.
+                Surepass enables you to quickly develop in-demand skills and advance your career in a constantly evolving job market.
               </p>
             </div>
 

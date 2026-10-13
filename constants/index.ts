@@ -219,20 +219,6 @@ const categorySeeds: CategorySeed[] = [
     icon: "Child",
     subcategories: ["Early Childhood", "Reading Development", "Parenting Skills"],
   },
-  {
-    id: "10",
-    name: "Driving",
-    slug: "driving",
-    icon: "Car",
-    subcategories: ["Provisional License", "Hazard Perception"],
-  },
-  {
-    id: "11",
-    name: "AI Video Generation",
-    slug: "ai-video-generation",
-    icon: "Video",
-    subcategories: ["Text-to-Video", "AI Editing"],
-  },
 ];
 
 function createLesson(
@@ -267,7 +253,7 @@ export const courses: Course[] = [
     description:
       "Build confidence with modern AI tools, core terminology, safe prompting habits, and practical ways to save time at work.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -455,205 +441,13 @@ export const courses: Course[] = [
     ],
   }),
   createCourse({
-    id: "2",
-    title: "Prompt Engineering for Teams",
-    slug: "prompt-engineering-for-teams",
-    description:
-      "Create reusable prompt systems for operations, customer support, and internal communication workflows.",
-    instructor: {
-      name: "SurePassIQ",
-      avatar: "/surepass.jpeg",
-      title: "Course Team",
-    },
-    image:
-      "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800",
-    price: 14.99,
-    originalPrice: 89.99,
-    rating: 4.8,
-    reviewsCount: 144,
-    studentsCount: 920,
-    duration: "7 hours",
-    level: "Intermediate",
-    category: "AI & Data",
-    subcategory: "Prompt Engineering",
-    bestseller: true,
-    lastUpdated: "April 2026",
-    language: "English",
-    whatYouWillLearn: [
-      "Design prompt templates teams can reuse across departments",
-      "Set tone, structure, and quality rules for AI-generated content",
-      "Create prompt libraries for support, reporting, and coordination work",
-      "Evaluate prompts using output quality rubrics",
-      "Reduce rework by standardising instructions and examples",
-    ],
-    requirements: [
-      "Comfort using at least one AI chat tool",
-      "Basic understanding of workplace workflows",
-    ],
-    targetAudience: [
-      "Team leads standardising AI use",
-      "Operations and support managers",
-      "Knowledge workers building internal prompt libraries",
-    ],
-    skills: [
-      "Prompt systems",
-      "Workflow standardisation",
-      "Quality control",
-      "AI governance",
-    ],
-    modules: [
-      {
-        id: "m1",
-        title: "From individual prompts to team systems",
-        summary: "Turn isolated prompt experiments into a repeatable team capability.",
-        lessons: [
-          createLesson(
-            "l1",
-            "Prompt patterns that scale",
-            "video",
-            15,
-            "See how examples, constraints, and templates make outputs easier to trust.",
-            [
-              "Create consistent prompts across repeat tasks",
-              "Document patterns that teammates can reuse",
-            ],
-          ),
-          createLesson(
-            "l2",
-            "Writing with examples",
-            "lab",
-            21,
-            "Build few-shot prompts for customer responses and report summaries.",
-            [
-              "Use examples to improve style consistency",
-              "Reduce ambiguity with worked samples",
-            ],
-          ),
-          createLesson(
-            "l3",
-            "Prompt quality rubric",
-            "reading",
-            12,
-            "Review a rubric for accuracy, clarity, tone, and actionability.",
-            [
-              "Score prompt outputs consistently",
-              "Spot weak signals before publishing outputs",
-            ],
-          ),
-        ],
-      },
-      {
-        id: "m2",
-        title: "Operational prompt libraries",
-        summary: "Package prompts into reusable team assets.",
-        lessons: [
-          createLesson(
-            "l4",
-            "Support response templates",
-            "video",
-            14,
-            "Create prompt templates for escalation, triage, and polite resolution.",
-            [
-              "Set response tone and escalation rules",
-              "Handle exceptions with structured context",
-            ],
-          ),
-          createLesson(
-            "l5",
-            "Internal reporting prompts",
-            "lab",
-            25,
-            "Design prompts that transform meeting notes into action-focused reports.",
-            [
-              "Generate concise internal reports",
-              "Control summaries by audience and level of detail",
-            ],
-          ),
-          createLesson(
-            "l6",
-            "Prompt library handoff",
-            "reflection",
-            11,
-            "Capture naming, ownership, and review rules for your first prompt library.",
-            [
-              "Document prompt ownership",
-              "Create a maintenance plan for prompt templates",
-            ],
-          ),
-        ],
-      },
-    ],
-    assessment: {
-      id: "a2",
-      title: "Prompt Systems Assessment",
-      description:
-        "Check whether you can design prompts that teams can adopt and review consistently.",
-      passMark: 70,
-      questions: [
-        {
-          id: "q1",
-          prompt: "What makes a prompt reusable across a team?",
-          options: [
-            "It is short and vague so everyone can interpret it differently.",
-            "It includes context, expected output format, and review criteria.",
-            "It only works for one person who wrote it.",
-            "It avoids examples to save time.",
-          ],
-          correctOption: 1,
-          explanation:
-            "Reusable prompts work best when they include shared context and explicit success criteria.",
-        },
-        {
-          id: "q2",
-          prompt: "Why are examples valuable in a team prompt library?",
-          options: [
-            "They replace the need for context completely.",
-            "They make prompts longer without adding much value.",
-            "They help the model infer the desired style and structure.",
-            "They guarantee zero hallucinations.",
-          ],
-          correctOption: 2,
-          explanation:
-            "Examples improve consistency by showing the model the kind of output expected.",
-        },
-        {
-          id: "q3",
-          prompt: "Which governance rule improves a prompt library most?",
-          options: [
-            "No one owns any prompt so updates happen naturally.",
-            "Each prompt has an owner and a review date.",
-            "All prompts are final after first publication.",
-            "Users should never document changes.",
-          ],
-          correctOption: 1,
-          explanation:
-            "Ownership and review cycles keep prompt libraries accurate as workflows evolve.",
-        },
-      ],
-    },
-    resources: [
-      {
-        id: "r1",
-        title: "Prompt library template",
-        kind: "template",
-        description: "A structured template for naming, versioning, and testing team prompts.",
-      },
-      {
-        id: "r2",
-        title: "Output review rubric",
-        kind: "guide",
-        description: "A rubric for scoring accuracy, clarity, tone, and actionability.",
-      },
-    ],
-  }),
-  createCourse({
     id: "3",
     title: "Data Analysis with Excel and Power BI",
     slug: "data-analysis-excel-power-bi",
     description:
       "Clean data, build dashboards, and communicate business insights clearly using Excel and Power BI.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -840,7 +634,7 @@ export const courses: Course[] = [
     description:
       "Map repeatable tasks, automate handoffs, and use AI tools to reduce low-value operational work.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -1032,7 +826,7 @@ export const courses: Course[] = [
     description:
       "Use research, flows, wireframes, and prototype testing to design products people can actually use.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -1224,7 +1018,7 @@ export const courses: Course[] = [
     description:
       "Plan campaigns, create content systems, and use analytics to improve marketing performance.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -1416,7 +1210,7 @@ export const courses: Course[] = [
     description:
       "Understand security risks, strengthen daily habits, and respond well to common cyber threats at work.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -1608,7 +1402,7 @@ export const courses: Course[] = [
     description:
       "Lead with clarity, coach with empathy, and improve team communication during growth, change, and pressure.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -1794,197 +1588,12 @@ export const courses: Course[] = [
     ],
   }),
   createCourse({
-    id: "gen-ai-essential",
-    title: "Generative AI",
-    slug: "generative-ai",
-    description: "Master LLMs, ChatGPT, Claude, diffusion models, fine-tuning, and generative application development.",
-    instructor: {
-      name: "SurePassIQ",
-      avatar: "/surepass.jpeg",
-      title: "Course Team",
-    },
-    image: "/courses/gen-AI.jpeg",
-    price: 19.99,
-    originalPrice: 99.99,
-    rating: 4.9,
-    reviewsCount: 340,
-    studentsCount: 2150,
-    duration: "10 hours",
-    level: "All Levels",
-    category: "AI & Data",
-    subcategory: "Generative AI",
-    bestseller: true,
-    featured: true,
-    lastUpdated: "October 2026",
-    language: "English",
-    whatYouWillLearn: [
-      "Understand LLM architecture, attention mechanisms, and tokenization",
-      "Build Retrieval-Augmented Generation (RAG) pipelines with vector DBs",
-      "Master image and multimodal generation with Midjourney & Stable Diffusion",
-      "Fine-tune open-weight models for specialized enterprise tasks",
-    ],
-    requirements: ["Basic computer literacy", "No prior coding required"],
-    targetAudience: ["Professionals", "Developers", "Creatives", "Tech Enthusiasts"],
-    skills: ["Generative AI", "LLMs", "RAG Pipelines", "Prompt Engineering"],
-    modules: [
-      {
-        id: "m1",
-        title: "Generative AI Core Principles",
-        summary: "Foundations of Large Language Models and Generative Architecture.",
-        lessons: [
-          createLesson("l1", "Transformer Architecture & Attention", "video", 20, "How transformer models process text.", ["Understand self-attention"]),
-          createLesson("l2", "Tokens, Context Windows & Temperature", "reading", 15, "Controlling output creativity.", ["Master temperature settings"]),
-        ],
-      },
-      {
-        id: "m2",
-        title: "Enterprise RAG & Fine-Tuning",
-        summary: "Connecting LLMs to custom knowledge bases.",
-        lessons: [
-          createLesson("l3", "Building a RAG Pipeline", "lab", 30, "Connect vector databases with LLMs.", ["Construct vector index"]),
-        ],
-      },
-    ],
-    assessment: {
-      id: "a-genai",
-      title: "Generative AI Knowledge & Mock Test",
-      description: "Evaluate your understanding of LLMs, context windows, and RAG systems.",
-      passMark: 75,
-      questions: [
-        {
-          id: "q1",
-          prompt: "What is the primary function of Retrieval-Augmented Generation (RAG)?",
-          options: [
-            "To retrain the model weights from scratch",
-            "To supply external ground-truth documents into the prompt context",
-            "To compress text files automatically",
-            "To generate random images",
-          ],
-          correctOption: 1,
-          explanation: "RAG retrieves relevant external facts and injects them into the prompt context to ground the response.",
-        },
-        {
-          id: "q2",
-          prompt: "Which parameter controls the randomness/creativity of LLM text generation?",
-          options: ["Learning Rate", "Temperature", "Batch Size", "Epochs"],
-          correctOption: 1,
-          explanation: "Higher temperature increases output diversity, while lower temperature makes outputs more deterministic.",
-        },
-      ],
-    },
-    resources: [
-      { id: "r1", title: "Generative AI Architecture Cheatsheet", kind: "guide", description: "Comprehensive diagram of RAG, vector databases, and prompt flows." },
-    ],
-    practicalLabs: [
-      {
-        id: "lab-genai",
-        title: "Building an Enterprise RAG Assistant",
-        durationMinutes: 45,
-        description: "Set up a vector database, embed technical documents, and query them with a generative LLM.",
-        toolsNeeded: ["Python / Node Environment", "Vector Database (Chroma / Pinecone)", "API Key"],
-        steps: [
-          "Chunk source text documents into 500-token segments with overlap.",
-          "Generate text embeddings and store them in the vector database.",
-          "Formulate retrieval query and fetch top 3 matching chunks.",
-          "Pass retrieved context into the LLM system prompt and evaluate answer accuracy.",
-        ],
-        safetyTips: ["Ensure non-public enterprise data is masked before sending to public endpoints."],
-      },
-    ],
-  }),
-  createCourse({
-    id: "it-cert-essential",
-    title: "IT Certifications",
-    slug: "it-certifications",
-    description: "Comprehensive exam prep & hands-on practice for CompTIA Security+, A+, AWS Cloud Practitioner, & CCNA.",
-    instructor: {
-      name: "SurePassIQ",
-      avatar: "/surepass.jpeg",
-      title: "Course Team",
-    },
-    image: "/courses/IT-certifications.jpeg",
-    price: 24.99,
-    originalPrice: 129.99,
-    rating: 4.8,
-    reviewsCount: 412,
-    studentsCount: 3100,
-    duration: "16 hours",
-    level: "All Levels",
-    category: "IT & Software",
-    subcategory: "IT Certifications",
-    bestseller: true,
-    featured: true,
-    lastUpdated: "October 2026",
-    language: "English",
-    whatYouWillLearn: [
-      "Master core networking protocols, OSI model, and IP subnetting",
-      "Implement zero-trust security, firewalls, and encryption standards",
-      "Pass CompTIA Security+, A+, and AWS Certified Solutions Architect exams",
-      "Configure virtual cloud infrastructure and security groups",
-    ],
-    requirements: ["Basic computer knowledge"],
-    targetAudience: ["IT Technicians", "System Admins", "Cloud Candidates", "Students"],
-    skills: ["Cybersecurity", "Networking", "AWS Cloud", "System Admin"],
-    modules: [
-      {
-        id: "m1",
-        title: "Network & Security Fundamentals",
-        summary: "OSI layers, TCP/IP, subnets, and threat vectors.",
-        lessons: [
-          createLesson("l1", "OSI Model & Port Numbers", "video", 25, "Master common ports and protocol layers.", ["Memorize key ports"]),
-          createLesson("l2", "Zero-Trust Architecture", "reading", 20, "Principles of least privilege.", ["Understand access controls"]),
-        ],
-      },
-    ],
-    assessment: {
-      id: "a-itcert",
-      title: "IT Certification Exam Practice",
-      description: "Timed and mock questions modeled on CompTIA and AWS exams.",
-      passMark: 80,
-      questions: [
-        {
-          id: "q1",
-          prompt: "Which protocol operates on port 443 by default?",
-          options: ["HTTP", "HTTPS", "SSH", "FTP"],
-          correctOption: 1,
-          explanation: "HTTPS uses TCP port 443 for encrypted TLS/SSL web traffic.",
-        },
-        {
-          id: "q2",
-          prompt: "Which cloud service model provides OS management while abstracting hardware?",
-          options: ["IaaS", "PaaS", "SaaS", "FaaS"],
-          correctOption: 1,
-          explanation: "PaaS (Platform as a Service) provides runtimes and OS management while abstracting physical hardware.",
-        },
-      ],
-    },
-    resources: [
-      { id: "r1", title: "CompTIA Port & Protocol Reference Sheet", kind: "guide", description: "Quick memory chart for common networking ports." },
-    ],
-    practicalLabs: [
-      {
-        id: "lab-itcert",
-        title: "Virtual Subnetting & Security Group Configuration",
-        durationMinutes: 40,
-        description: "Configure a Virtual Private Cloud (VPC) with public and private subnets, NAT gateways, and firewall rules.",
-        toolsNeeded: ["AWS Console or Local Simulator", "Command Prompt / Terminal", "SSH Client"],
-        steps: [
-          "Create a VPC with CIDR block 10.0.0.0/16.",
-          "Subnet into public (10.0.1.0/24) and private (10.0.2.0/24) zones.",
-          "Attach an Internet Gateway to the public route table.",
-          "Restrict ingress traffic on the security group to SSH (port 22) and HTTPS (port 443).",
-        ],
-        safetyTips: ["Never expose database ports (e.g. 3306, 5432) directly to 0.0.0.0/0."],
-      },
-    ],
-  }),
-  createCourse({
     id: "prompt-eng-essential",
     title: "Prompt Engineering",
     slug: "prompt-engineering",
     description: "Systematic prompt design, few-shot techniques, chain-of-thought, and automated prompt engineering.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -2061,11 +1670,11 @@ export const courses: Course[] = [
   }),
   createCourse({
     id: "ai-agents-essential",
-    title: "AI Agents",
+    title: "AI Agents for Business",
     slug: "ai-agents",
     description: "Design autonomous AI agents, tool integration, multi-agent frameworks (CrewAI, AutoGen, LangChain).",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -2143,11 +1752,11 @@ export const courses: Course[] = [
   }),
   createCourse({
     id: "plumbing-essential",
-    title: "Plumbing",
+    title: "Plumbing and drainage works training",
     slug: "plumbing-practical",
     description: "Hands-on training in pipe fitting, copper soldering, water pressure systems, drainage, & leak repair.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -2247,11 +1856,11 @@ export const courses: Course[] = [
   }),
   createCourse({
     id: "alum-essential",
-    title: "Aluminum Fabrication & Welding",
+    title: "Aluminum fabrication & welding training",
     slug: "aluminum-fabrication",
     description: "Architectural aluminum cutting, TIG welding, window & door frame assembly, mitering, & structural joining.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -2332,11 +1941,11 @@ export const courses: Course[] = [
   }),
   createCourse({
     id: "repairs-essential",
-    title: "Electronic Repairs",
+    title: "Electronics Repairs training",
     slug: "cellphone-laptop-repairs",
     description: "Micro-soldering, SMD component replacement, screen digitizer assembly, battery repair, & liquid damage recovery.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -2424,95 +2033,13 @@ export const courses: Course[] = [
     ],
   }),
   createCourse({
-    id: "examprep-essential",
-    title: "Exam preparation",
-    slug: "exam-preparation",
-    description: "Active recall, spaced repetition, timed test strategies, memory techniques, & high-scoring exam tactics.",
-    instructor: {
-      name: "SurePassIQ",
-      avatar: "/surepass.jpeg",
-      title: "Course Team",
-    },
-    image: "/courses/exam-preparations.jpeg",
-    price: 14.99,
-    originalPrice: 79.99,
-    rating: 4.9,
-    reviewsCount: 310,
-    studentsCount: 2800,
-    duration: "7 hours",
-    level: "All Levels",
-    category: "Test Prep",
-    subcategory: "Exam Preparation",
-    bestseller: true,
-    featured: true,
-    lastUpdated: "October 2026",
-    language: "English",
-    whatYouWillLearn: [
-      "Master Anki-style spaced repetition and active recall flashcard systems",
-      "Apply the 2-Pass Method for timed multiple-choice and essay exams",
-      "Overcome exam anxiety and maintain focus during high-stakes testing",
-      "Construct personalized 30-day master study routines for any certification",
-    ],
-    requirements: ["Any upcoming exam or test"],
-    targetAudience: ["Students", "Certification Candidates", "Professionals"],
-    skills: ["Active Recall", "Spaced Repetition", "Test Tactics", "Time Management"],
-    modules: [
-      {
-        id: "m1",
-        title: "Scientific Study Systems",
-        summary: "Why re-reading fails and active retrieval succeeds.",
-        lessons: [
-          createLesson("l1", "Active Recall vs Passive Review", "video", 18, "Evidence-based memory retention.", ["Implement active recall"]),
-        ],
-      },
-    ],
-    assessment: {
-      id: "a-examprep",
-      title: "Master Test-Taking Strategy Assessment",
-      description: "Test your mastery of time management, process of elimination, and active study planning.",
-      passMark: 75,
-      questions: [
-        {
-          id: "q1",
-          prompt: "What is the recommended strategy when encountering a very difficult question on a timed exam?",
-          options: [
-            "Spend 10 minutes solving it before moving on",
-            "Flag it, make an educated initial pick, and return to it during Pass 2 if time permits",
-            "Leave it completely blank immediately",
-            "Guess randomly without reading the options",
-          ],
-          correctOption: 1,
-          explanation: "The 2-Pass method secures easy points first and prevents getting stuck on time-consuming questions.",
-        },
-      ],
-    },
-    resources: [
-      { id: "r1", title: "30-Day Master Exam Study Planner", kind: "worksheet", description: "Printable schedule template for spaced repetition study blocks." },
-    ],
-    practicalLabs: [
-      {
-        id: "lab-examprep-1",
-        title: "Constructing Your Personalized 30-Day Spaced Repetition Study Schedule",
-        durationMinutes: 30,
-        description: "Map your target exam syllabus into active recall modules, set revision intervals, and perform a 15-minute simulated test sprint.",
-        toolsNeeded: ["Study Planner Template", "Timer / Stopwatch"],
-        steps: [
-          "Break total course topics into 10 bite-sized study blocks.",
-          "Schedule initial review on Day 1, followed by active recall checks on Day 3, Day 7, Day 14, and Day 28.",
-          "Draft 20 flashcard questions focusing on weak topics.",
-          "Run a 15-minute timed test sprint and calculate accuracy rate.",
-        ],
-      },
-    ],
-  }),
-  createCourse({
     id: "driving-essential",
-    title: "Driving Theory & Hazard Perception Mastery",
+    title: "Driving Theory, Hazard Perception & VID Provisional Mastery",
     slug: "driving-theory-hazard-perception",
     description:
       "Pass your driving theory test first time with complete highway code coverage, hazard perception video clip strategy, road signs, & mock exams.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -2524,7 +2051,7 @@ export const courses: Course[] = [
     studentsCount: 4100,
     duration: "9 hours",
     level: "All Levels",
-    category: "Driving",
+    category: "Test Prep",
     subcategory: "Driving Theory",
     bestseller: true,
     featured: true,
@@ -2826,9 +2353,9 @@ export const courses: Course[] = [
     description:
       "Practical phonics, storytelling, and literacy routines parents and early educators can use to build strong readers from ages 2-7.",
     instructor: {
-      name: "Elias Maphosa",
+      name: "Elias P Maposa",
       avatar: "/e-maphosa.jpeg",
-      title: "Early Childhood Literacy Specialist",
+      title: "SurePass Literacy Specialist",
     },
     image: "/reading.jpeg",
     price: 11.99,
@@ -2913,7 +2440,7 @@ export const courses: Course[] = [
     description:
       "Create polished video content with text-to-video AI tools: prompting for motion, consistency, voiceover, and fast social-ready edits.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -2925,7 +2452,7 @@ export const courses: Course[] = [
     studentsCount: 1680,
     duration: "7 hours",
     level: "Beginner",
-    category: "AI Video Generation",
+    category: "AI & Data",
     subcategory: "Text-to-Video",
     bestseller: true,
     featured: true,
@@ -3000,7 +2527,7 @@ export const courses: Course[] = [
     description:
       "Full O-Level mathematics syllabus coverage with worked examples, past-paper technique, and timed exam practice.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -3081,100 +2608,12 @@ export const courses: Course[] = [
     ],
   }),
   createCourse({
-    id: "alevel-mathematics",
-    title: "A'level Mathematics",
-    slug: "alevel-mathematics",
-    description:
-      "Pure Mathematics, Mechanics, and Statistics for A-Level, with worked past-paper questions and exam-focused technique.",
-    instructor: {
-      name: "SurePassIQ",
-      avatar: "/surepass.jpeg",
-      title: "Course Team",
-    },
-    image:
-      "https://images.pexels.com/photos/6238297/pexels-photo-6238297.jpeg?auto=compress&cs=tinysrgb&w=800",
-    price: 15.99,
-    originalPrice: 74.99,
-    rating: 4.8,
-    reviewsCount: 176,
-    studentsCount: 1320,
-    duration: "18 hours",
-    level: "Advanced",
-    category: "Test Prep",
-    subcategory: "Exam Preparation",
-    bestseller: false,
-    featured: true,
-    lastUpdated: "October 2026",
-    language: "English",
-    whatYouWillLearn: [
-      "Work confidently with calculus, algebra, and functions at A-Level depth",
-      "Apply mechanics principles to motion and forces problems",
-      "Interpret and calculate core statistics measures",
-      "Structure full-mark answers for long exam-style questions",
-    ],
-    requirements: ["O-Level mathematics or equivalent"],
-    targetAudience: ["A-Level students", "University entrance candidates"],
-    skills: ["Calculus", "Mechanics", "Statistics", "Exam Technique"],
-    modules: [
-      {
-        id: "m1",
-        title: "Pure Mathematics",
-        summary: "Functions, calculus, and algebraic technique.",
-        lessons: [
-          createLesson("l1", "Differentiation & Integration Essentials", "video", 24, "Core calculus techniques for A-Level.", ["Differentiate and integrate standard functions"]),
-          createLesson("l2", "Functions, Graphs & Transformations", "reading", 18, "Reading and sketching function behaviour.", ["Sketch transformed graphs"]),
-        ],
-      },
-      {
-        id: "m2",
-        title: "Mechanics & Statistics",
-        summary: "Applied maths topics and exam-style practice.",
-        lessons: [
-          createLesson("l3", "Forces, Motion & Kinematics", "video", 22, "Core mechanics problems step by step.", ["Solve kinematics problems"]),
-          createLesson("l4", "Statistics & Timed Paper Practice", "lab", 28, "Distributions, hypothesis basics, and a full timed paper.", ["Complete a timed past paper"]),
-        ],
-      },
-    ],
-    assessment: {
-      id: "a-alevelmaths",
-      title: "A-Level Maths Progress Test",
-      description: "A mixed-topic check covering pure maths, mechanics, and statistics.",
-      passMark: 75,
-      questions: [
-        {
-          id: "q1",
-          prompt: "The derivative of x³ with respect to x is:",
-          options: ["x²", "3x²", "3x³", "x⁴/4"],
-          correctOption: 1,
-          explanation: "Using the power rule, the derivative of xⁿ is n·xⁿ⁻¹, so the derivative of x³ is 3x².",
-        },
-        {
-          id: "q2",
-          prompt: "In mechanics, the rate of change of velocity with respect to time is called:",
-          options: ["Displacement", "Acceleration", "Momentum", "Force"],
-          correctOption: 1,
-          explanation: "Acceleration is defined as the rate of change of velocity with respect to time.",
-        },
-        {
-          id: "q3",
-          prompt: "The mean of the data set 4, 6, 8, 10, 12 is:",
-          options: ["6", "7", "8", "9"],
-          correctOption: 2,
-          explanation: "The sum (40) divided by the count (5) gives a mean of 8.",
-        },
-      ],
-    },
-    resources: [
-      { id: "r1", title: "A-Level Formula Booklet", kind: "guide", description: "Core formulae for pure maths, mechanics, and statistics." },
-    ],
-  }),
-  createCourse({
     id: "fencing-essential",
-    title: "Fence Installation and Security Fencing Training",
+    title: "Security Fence installation and training",
     slug: "fence-installation-security-fencing",
     description: "Hands-on training in diamond mesh, palisade, and electric security fencing: post setting, tensioning, and perimeter security standards.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -3253,7 +2692,7 @@ export const courses: Course[] = [
     slug: "cctv-security-installation",
     description: "Hands-on training in CCTV camera installation, cabling, DVR/NVR setup, and basic alarm system integration.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },
@@ -3332,7 +2771,7 @@ export const courses: Course[] = [
     slug: "gas-safety-installation",
     description: "Hands-on training in LPG gas installation, leak testing, regulator fitting, and gas appliance safety checks.",
     instructor: {
-      name: "SurePassIQ",
+      name: "SurePass Certified Instructor",
       avatar: "/surepass.jpeg",
       title: "Course Team",
     },

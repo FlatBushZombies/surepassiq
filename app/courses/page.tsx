@@ -14,18 +14,16 @@ export default async function CoursesPage(props: CoursesPageProps) {
   const searchParams = await props.searchParams;
   const activeSlug = typeof searchParams.slug === "string" ? searchParams.slug : undefined;
   
-  // Find active course or default to the first essential course (Generative AI)
-  const activeCourse = courses.find((c) => c.slug === activeSlug) || courses.find((c) => c.slug === "generative-ai") || courses[0];
+  // Find active course or default to the first essential course
+  const activeCourse = courses.find((c) => c.slug === activeSlug) || courses.find((c) => c.slug === "prompt-engineering") || courses[0];
 
   const essentialCourses = [
-    { title: "Generative AI", slug: "generative-ai" },
-    { title: "IT Certifications", slug: "it-certifications" },
     { title: "Prompt Engineering", slug: "prompt-engineering" },
-    { title: "AI Agents", slug: "ai-agents" },
-    { title: "Plumbing practical", slug: "plumbing-practical" },
-    { title: "Aluminum fabrication", slug: "aluminum-fabrication" },
-    { title: "Cellphone & laptop repairs", slug: "cellphone-laptop-repairs" },
-    { title: "Exam preparation", slug: "exam-preparation" },
+    { title: "AI Agents for Business", slug: "ai-agents" },
+    { title: "Plumbing and drainage works training", slug: "plumbing-practical" },
+    { title: "Aluminum fabrication & welding training", slug: "aluminum-fabrication" },
+    { title: "Electronics Repairs training", slug: "cellphone-laptop-repairs" },
+    { title: "O'level Maths", slug: "olevel-maths" },
   ];
 
   return (

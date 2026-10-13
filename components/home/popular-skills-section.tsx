@@ -16,25 +16,24 @@ function getHref(skill: SkillLink) {
 }
 
 const spotlight: SkillLink = {
-  label: "Generative AI",
+  label: "Prompt Engineering",
   categorySlug: "ai-data",
-  topic: "Generative AI",
+  topic: "Prompt Engineering",
 };
 
 const columns: { title: string; skills: SkillLink[] }[] = [
   {
     title: "AI & Data",
     skills: [
-      { label: "Prompt Engineering", categorySlug: "ai-data", topic: "Prompt Engineering" },
       { label: "AI Agents", categorySlug: "ai-data", topic: "AI Agents" },
       { label: "AI Fundamentals", categorySlug: "ai-data", topic: "AI Fundamentals" },
+      { label: "AI Video Generation", categorySlug: "ai-data", topic: "Text-to-Video" },
     ],
   },
   {
-    title: "Career Certifications",
+    title: "Exam Preparation",
     skills: [
-      { label: "IT Certifications", categorySlug: "it-software", topic: "IT Certifications" },
-      { label: "Driving Theory", categorySlug: "driving", topic: "Driving Theory" },
+      { label: "Driving Theory", categorySlug: "test-prep", topic: "Driving Theory" },
     ],
   },
   {
@@ -42,7 +41,7 @@ const columns: { title: string; skills: SkillLink[] }[] = [
     skills: [
       { label: "Plumbing", categorySlug: "practical-trades", topic: "Plumbing" },
       { label: "Aluminum Fabrication", categorySlug: "practical-trades", topic: "Aluminum Fabrication" },
-      { label: "Cellphone & Laptop Repairs", categorySlug: "practical-trades", topic: "Cellphone & Laptop Repairs" },
+      { label: "Electronics Repair", categorySlug: "practical-trades", topic: "Electronic Repairs" },
     ],
   },
   {
@@ -50,7 +49,6 @@ const columns: { title: string; skills: SkillLink[] }[] = [
     skills: [
       { label: "Operations", categorySlug: "business", topic: "Operations" },
       { label: "Leadership", categorySlug: "personal-development", topic: "Leadership" },
-      { label: "Cybersecurity", categorySlug: "it-software", topic: "Cybersecurity" },
     ],
   },
   {

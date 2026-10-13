@@ -31,7 +31,7 @@ export function HeroSection() {
           </h1>
 
           <p className="mb-8 text-base text-black/85 sm:text-lg md:text-xl font-normal leading-relaxed">
-            Keep yourself engaged and stand out.
+            Stay engaged and distinguish yourself.
           </p>
 
           <div>

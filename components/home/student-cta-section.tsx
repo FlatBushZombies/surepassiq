@@ -28,7 +28,7 @@ export function StudentCTASection() {
             <Button
               size="lg"
               variant="outline"
-              className="h-12 rounded-none border-white bg-transparent px-8 text-sm font-bold text-white hover:bg-primary/10"
+              className="h-12 rounded-none border-white bg-transparent px-8 text-sm font-bold text-white hover:border-white hover:bg-transparent hover:text-white"
               asChild
             >
               <Link href="/categories">Browse courses</Link>
