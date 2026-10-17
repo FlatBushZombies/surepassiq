@@ -6,8 +6,10 @@ import {
   BookOpenText,
   CheckCircle2,
   Clock,
+  FileText,
   Globe,
   Laptop,
+  PlayCircle,
   Star,
   Users,
 } from "lucide-react";
@@ -48,7 +50,7 @@ export default async function CoursePage(props: CoursePageProps) {
         <section className="mx-auto max-w-7xl px-4 py-10 lg:px-6 lg:py-12">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
             <div className="space-y-10">
-              {/* Hero panel — same grid row as the enroll card, so the card sits above the fold like Udemy's */}
+              {/* Hero — dark panel, same grid row as the enroll card so it sits above the fold like Udemy's */}
               <div className="rounded-3xl bg-foreground p-6 text-background sm:p-8 lg:p-10">
                 <nav className="mb-4 flex items-center gap-2 text-sm text-background/70">
                   <Link href="/" className="hover:text-background">
@@ -65,7 +67,12 @@ export default async function CoursePage(props: CoursePageProps) {
                   <span className="text-background">{course.subcategory}</span>
                 </nav>
 
-                <div className="flex flex-wrap gap-2">
+                <h1 className="text-4xl font-bold leading-tight">{course.title}</h1>
+                <p className="mt-4 text-lg text-background/75">
+                  {course.description}
+                </p>
+
+                <div className="mt-4 flex flex-wrap gap-2">
                   {course.bestseller && <Badge>Certified</Badge>}
                   {course.featured && <Badge variant="secondary">Featured path</Badge>}
                   <Badge variant="outline" className="border-background/20 text-background">
@@ -73,12 +80,12 @@ export default async function CoursePage(props: CoursePageProps) {
                   </Badge>
                 </div>
 
-                <h1 className="mt-5 text-4xl font-bold leading-tight">{course.title}</h1>
-                <p className="mt-4 text-lg text-background/75">
-                  {course.description}
+                <p className="mt-4 text-sm text-background/70">
+                  Created by{" "}
+                  <span className="font-semibold text-background">{course.instructor.name}</span>
                 </p>
 
-                <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-background/70">
+                <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-background/70">
                   <span className="inline-flex items-center gap-1">
                     <Star className="h-4 w-4 fill-current text-yellow-400" />
                     {course.rating.toFixed(1)} ({course.reviewsCount.toLocaleString()} reviews)
@@ -97,21 +104,6 @@ export default async function CoursePage(props: CoursePageProps) {
                   </span>
                   <span>Last updated {course.lastUpdated}</span>
                 </div>
-
-                <div className="mt-8 flex items-center gap-4">
-                  <Image
-                    src={course.instructor.avatar}
-                    alt={course.instructor.name}
-                    width={56}
-                    height={56}
-                    className="rounded-full"
-                  />
-                  <div>
-                    <p className="text-sm text-background/65">Instructor</p>
-                    <p className="font-semibold text-background">{course.instructor.name}</p>
-                    <p className="text-sm text-background/65">{course.instructor.title}</p>
-                  </div>
-                </div>
               </div>
 
               <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
@@ -125,6 +117,47 @@ export default async function CoursePage(props: CoursePageProps) {
                       <span className="text-card-foreground">{item}</span>
                     </div>
                   ))}
+                </div>
+              </section>
+
+              <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
+                <h2 className="text-xl font-semibold text-card-foreground">This course includes</h2>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  <p className="inline-flex items-center gap-2 text-sm text-card-foreground">
+                    <BookOpenText className="h-4 w-4 text-muted-foreground" />
+                    {course.lectures} {isPractical ? "hands-on" : "guided"} lessons across {course.modules.length} modules
+                  </p>
+                  <p className="inline-flex items-center gap-2 text-sm text-card-foreground">
+                    <Clock className="h-4 w-4 text-muted-foreground" />
+                    {course.duration} of content
+                  </p>
+                  {course.resources.length > 0 && (
+                    <p className="inline-flex items-center gap-2 text-sm text-card-foreground">
+                      <FileText className="h-4 w-4 text-muted-foreground" />
+                      {course.resources.length} downloadable resources
+                    </p>
+                  )}
+                  <p className="inline-flex items-center gap-2 text-sm text-card-foreground">
+                    <Laptop className="h-4 w-4 text-muted-foreground" />
+                    Access on any device
+                  </p>
+                  {isPractical ? (
+                    <p className="inline-flex items-center gap-2 text-sm text-card-foreground">
+                      <Award className="h-4 w-4 text-muted-foreground" />
+                      In-person, practical skills training
+                    </p>
+                  ) : (
+                    <>
+                      <p className="inline-flex items-center gap-2 text-sm text-card-foreground">
+                        <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
+                        Mock tests & timed exam simulation
+                      </p>
+                      <p className="inline-flex items-center gap-2 text-sm text-card-foreground">
+                        <Award className="h-4 w-4 text-muted-foreground" />
+                        Certificate of completion
+                      </p>
+                    </>
+                  )}
                 </div>
               </section>
 
@@ -262,9 +295,18 @@ export default async function CoursePage(props: CoursePageProps) {
 
             <aside className="lg:sticky lg:top-[96px] lg:self-start">
               <div className="overflow-hidden rounded-3xl border border-border bg-card text-card-foreground shadow-2xl">
-                <div className="relative aspect-video">
+                <Link
+                  href={`/learn/${course.slug}`}
+                  className="group relative block aspect-video"
+                >
                   <Image src={course.image} alt={course.title} fill className="object-cover" />
-                </div>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/35 transition-colors group-hover:bg-black/45">
+                    <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/95 text-foreground shadow-lg transition-transform group-hover:scale-105">
+                      <PlayCircle className="h-7 w-7" />
+                    </span>
+                    <span className="text-sm font-semibold text-white">Preview this course</span>
+                  </div>
+                </Link>
                 <div className="space-y-5 p-6">
                   <div>
                     <div className="flex items-center gap-2">
@@ -279,41 +321,6 @@ export default async function CoursePage(props: CoursePageProps) {
                   </div>
 
                   <CourseActions courseSlug={course.slug} isPractical={isPractical} />
-
-                  <div className="space-y-3 border-t border-border pt-5 text-sm text-muted-foreground">
-                    <p className="font-semibold text-card-foreground">This course includes</p>
-                    <p className="inline-flex items-center gap-2">
-                      <BookOpenText className="h-4 w-4" />
-                      {course.lectures} {isPractical ? "hands-on" : "guided"} lessons across {course.modules.length} modules
-                    </p>
-                    {course.resources.length > 0 && (
-                      <p className="inline-flex items-center gap-2">
-                        <BookOpenText className="h-4 w-4" />
-                        {course.resources.length} downloadable resources
-                      </p>
-                    )}
-                    {isPractical ? (
-                      <p className="inline-flex items-center gap-2">
-                        <Award className="h-4 w-4" />
-                        In-person, practical skills training
-                      </p>
-                    ) : (
-                      <>
-                        <p className="inline-flex items-center gap-2">
-                          <CheckCircle2 className="h-4 w-4" />
-                          Mock tests & Timed exam simulation
-                        </p>
-                        <p className="inline-flex items-center gap-2">
-                          <Award className="h-4 w-4" />
-                          Completion certificate when lessons and assessment are complete
-                        </p>
-                      </>
-                    )}
-                    <p className="inline-flex items-center gap-2">
-                      <Laptop className="h-4 w-4" />
-                      Full lifetime access on any device
-                    </p>
-                  </div>
                 </div>
               </div>
             </aside>

@@ -218,7 +218,7 @@ export function DrivingCourseNavigation({ course }: DrivingCourseNavigationProps
     <div className="w-full space-y-6">
       {/* Site-header-style nav bar — logo + text links, hidden while a test tab is open */}
       {!isStandaloneTest && (
-        <nav className="flex flex-wrap items-center gap-x-6 gap-y-3 border-b-2 border-foreground bg-background px-4 py-3 sm:px-6">
+        <nav className="flex flex-wrap items-center gap-x-6 gap-y-3 bg-background px-4 py-3 sm:px-6">
           <Link href="/" className="flex shrink-0 items-center">
             <Image src="/logo.png" alt="SurePassIQ" width={96} height={32} className="h-7 w-auto object-contain" />
           </Link>
@@ -296,43 +296,43 @@ export function DrivingCourseNavigation({ course }: DrivingCourseNavigationProps
             </div>
 
             {currentQuestion && (
-              <div className="mx-auto mt-6 max-w-5xl">
-                <div className="mb-5 flex flex-wrap justify-center gap-3">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-sm font-bold text-slate-700 dark:bg-red-950/30 dark:text-red-100">
-                    <span className="h-2.5 w-2.5 rounded-full bg-red-600" />
+              <div className="mx-auto mt-6 max-w-2xl">
+                <div className="mb-4 flex flex-wrap justify-center gap-2">
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1.5 text-xs font-bold text-slate-700 dark:bg-red-950/30 dark:text-red-100">
+                    <span className="h-2 w-2 rounded-full bg-red-600" />
                     {remainingCount} Remaining
                   </div>
-                  <div className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-2 text-sm font-bold text-slate-700 dark:bg-amber-950/30 dark:text-amber-100">
-                    <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-xs font-bold text-slate-700 dark:bg-amber-950/30 dark:text-amber-100">
+                    <span className="h-2 w-2 rounded-full bg-amber-500" />
                     {wrongCount} Wrong
                   </div>
-                  <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-bold text-slate-700 dark:bg-emerald-950/30 dark:text-emerald-100">
-                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-600" />
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-slate-700 dark:bg-emerald-950/30 dark:text-emerald-100">
+                    <span className="h-2 w-2 rounded-full bg-emerald-600" />
                     {correctCount} Correct
                   </div>
                 </div>
 
-                <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950 sm:p-8">
-                  <p className="mb-3 text-sm font-bold text-muted-foreground">
+                <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950 sm:p-6">
+                  <p className="mb-2 text-xs font-bold text-muted-foreground">
                     Question {practiseQuestionIndex + 1} of {questions.length}
                   </p>
-                  <h4 className="text-2xl font-extrabold leading-tight text-slate-950 dark:text-white sm:text-3xl">
+                  <h4 className="text-lg font-extrabold leading-tight text-slate-950 dark:text-white sm:text-xl">
                     {currentQuestion.prompt}
                   </h4>
 
                   {currentQuestion.imageUrl && (
-                    <div className="relative mx-auto mt-5 aspect-square w-full max-w-[240px] overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900">
+                    <div className="relative mx-auto mt-4 aspect-square w-full max-w-[160px] overflow-hidden rounded-xl border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900">
                       <Image
                         src={currentQuestion.imageUrl}
                         alt="Question reference"
                         fill
-                        className="object-contain p-4"
-                        sizes="240px"
+                        className="object-contain p-3"
+                        sizes="160px"
                       />
                     </div>
                   )}
 
-                  <div className="mt-8 space-y-3.5">
+                  <div className="mt-5 space-y-2.5">
                     {currentQuestion.options.map((option, optionIndex) => {
                       const selected = selectedOption === optionIndex;
                       const correct = optionIndex === currentQuestion.correctOption;
@@ -360,10 +360,10 @@ export function DrivingCourseNavigation({ course }: DrivingCourseNavigationProps
                           type="button"
                           disabled={currentRevealed}
                           onClick={() => handleOptionSelect(optionIndex)}
-                          className={`flex min-h-20 w-full items-center gap-4 rounded-[20px] border px-5 py-4 text-left text-base font-bold transition sm:min-h-24 sm:gap-5 sm:px-6 sm:text-lg ${optionClasses}`}
+                          className={`flex min-h-14 w-full items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm font-bold transition sm:min-h-16 sm:text-base ${optionClasses}`}
                         >
                           <span
-                            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-base font-extrabold sm:h-12 sm:w-12 ${letterClasses}`}
+                            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-extrabold sm:h-9 sm:w-9 ${letterClasses}`}
                           >
                             {answerLetters[optionIndex] ?? optionIndex + 1}
                           </span>
@@ -375,49 +375,49 @@ export function DrivingCourseNavigation({ course }: DrivingCourseNavigationProps
 
                   {currentRevealed && (
                     <div
-                      className={`mt-4 rounded-[20px] border p-5 ${
+                      className={`mt-3 rounded-xl border p-4 ${
                         currentCorrect
                           ? "border-emerald-200 bg-emerald-50 text-slate-900 dark:border-emerald-900 dark:bg-emerald-950/30 dark:text-emerald-50"
                           : "border-red-200 bg-red-50 text-slate-900 dark:border-red-900 dark:bg-red-950/30 dark:text-red-50"
                       }`}
                     >
                       <p
-                        className={`flex items-center gap-2 text-base font-extrabold ${
+                        className={`flex items-center gap-2 text-sm font-extrabold ${
                           currentCorrect ? "text-emerald-700" : "text-red-600"
                         }`}
                       >
                         {currentCorrect ? (
                           <>
-                            <CheckCircle2 className="h-5 w-5" />
+                            <CheckCircle2 className="h-4 w-4" />
                             Correct
                           </>
                         ) : (
                           <>
-                            <XCircle className="h-5 w-5" />
+                            <XCircle className="h-4 w-4" />
                             Incorrect
                           </>
                         )}
                       </p>
-                      <p className="mt-3 max-w-3xl text-sm leading-relaxed sm:text-base">
+                      <p className="mt-2 text-sm leading-relaxed">
                         {currentQuestion.explanation}
                       </p>
                     </div>
                   )}
 
-                  <div className="mt-4 rounded-[20px] border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
-                    <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(180px,0.6fr)]">
+                  <div className="mt-3 rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-950">
+                    <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_minmax(140px,0.6fr)]">
                       <Button
                         variant="outline"
                         disabled={!currentRevealed}
-                        className="h-14 justify-start rounded-2xl border-slate-200 px-5 text-left text-base font-bold text-slate-700 dark:border-slate-800 dark:text-slate-200"
+                        className="h-11 justify-start rounded-xl border-slate-200 px-4 text-left text-sm font-bold text-slate-700 dark:border-slate-800 dark:text-slate-200"
                       >
-                        <Sparkles className="h-5 w-5 text-red-600" />
+                        <Sparkles className="h-4 w-4 text-red-600" />
                         Correct Answer Explanation
                       </Button>
                       <Button
                         disabled={!currentRevealed}
                         onClick={handleNext}
-                        className="h-14 rounded-2xl bg-red-600 text-base font-extrabold text-white hover:bg-red-700"
+                        className="h-11 rounded-xl bg-red-600 text-sm font-extrabold text-white hover:bg-red-700"
                       >
                         {remainingCount === 0 ? "Restart" : "Next"}
                       </Button>
@@ -454,9 +454,9 @@ export function DrivingCourseNavigation({ course }: DrivingCourseNavigationProps
               </div>
 
               {isMockTestRunning && (
-                <div className="flex items-center gap-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 px-4 py-2.5 text-amber-600 dark:text-amber-400">
+                <div className="mx-auto flex items-center gap-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 px-4 py-2.5 text-amber-600 dark:text-amber-400 sm:mx-0">
                   <Clock className="h-5 w-5 animate-pulse" />
-                  <div>
+                  <div className="text-center">
                     <p className="text-xs font-medium uppercase tracking-wider">Time Remaining</p>
                     <p className="text-xl font-bold font-mono">{formatTime(timeLeft)}</p>
                   </div>
