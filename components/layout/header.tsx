@@ -14,6 +14,7 @@ import {
   X,
 } from "lucide-react";
 import { categories, navLinks } from "@/constants";
+import { PromoBanner } from "@/components/layout/promo-banner";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -43,7 +44,9 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/95 backdrop-blur-md shadow-xs">
+    <>
+      <PromoBanner />
+      <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/95 backdrop-blur-md shadow-xs">
       <div className="w-full flex h-[72px] items-center gap-3 px-4 sm:px-6 lg:gap-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex shrink-0 items-center h-10" aria-label="SurePassIQ home">
@@ -262,5 +265,6 @@ export function Header() {
         </nav>
       </div>
     </header>
+    </>
   );
 }
