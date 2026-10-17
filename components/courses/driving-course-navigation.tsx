@@ -26,6 +26,13 @@ import {
 import type { Course } from "@/constants";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { CourseCurriculum } from "@/components/courses/course-curriculum";
 import { DrivingRoadSigns } from "@/components/courses/driving-road-signs";
 import { DrivingIntersectionRules } from "@/components/courses/driving-intersection-rules";
@@ -45,8 +52,7 @@ type DrivingTabType =
   | "lessons"
   | "traffic-fines"
   | "practise-test"
-  | "mock-test"
-  | "ask-ai";
+  | "mock-test";
 
 interface NavItem {
   id: DrivingTabType;
@@ -60,9 +66,8 @@ const navItems: NavItem[] = [
   { id: "intersection-rules", label: "Intersection Rules", icon: Milestone },
   { id: "lessons", label: "Lessons", icon: BookOpen },
   { id: "traffic-fines", label: "Traffic Fines", icon: Gavel },
-  { id: "practise-test", label: "Practice Test", icon: HelpCircle },
-  { id: "mock-test", label: "Mocks Test", icon: Clock },
-  { id: "ask-ai", label: "Ask Ai", icon: Sparkles },
+  { id: "practise-test", label: "VID Practice Test", icon: HelpCircle },
+  { id: "mock-test", label: "VID Mocks Test", icon: Clock },
 ];
 
 const answerLetters = ["A", "B", "C", "D", "E", "F"];
@@ -70,6 +75,7 @@ const MOCK_TEST_SECONDS = 8 * 60;
 
 export function DrivingCourseNavigation({ course }: DrivingCourseNavigationProps) {
   const [activeTab, setActiveTab] = useState<DrivingTabType>("driver-license");
+  const [isAskAiOpen, setIsAskAiOpen] = useState(false);
   const { state, enrollInCourse } = useLearner();
   const isEnrolled = Boolean(state.courseStates[course.slug]);
   const isStandaloneTest = useMemo(
@@ -254,9 +260,6 @@ export function DrivingCourseNavigation({ course }: DrivingCourseNavigationProps
 
       {/* TRAFFIC FINES */}
       {activeTab === "traffic-fines" && <DrivingTrafficFines />}
-
-      {/* ASK AI */}
-      {activeTab === "ask-ai" && <DrivingAskAi />}
 
       {/* PRACTISE TEST (untimed, immediate feedback — same UI as before, standalone) */}
       {activeTab === "practise-test" && (
@@ -565,6 +568,30 @@ export function DrivingCourseNavigation({ course }: DrivingCourseNavigationProps
           </div>
         </div>
       )}
+
+      {/* Ask AI — floating button + modal, not a nav link */}
+      {!isStandaloneTest && (
+        <button
+          type="button"
+          onClick={() => setIsAskAiOpen(true)}
+          aria-label="Ask AI"
+          className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-red-700 text-white shadow-lg transition hover:bg-red-800 hover:scale-105"
+        >
+          <Sparkles className="h-6 w-6" />
+        </button>
+      )}
+
+      <Dialog open={isAskAiOpen} onOpenChange={setIsAskAiOpen}>
+        <DialogContent className="max-w-md rounded-xl">
+          <DialogHeader>
+            <DialogTitle>Ask AI</DialogTitle>
+            <DialogDescription>
+              Your AI study assistant for road signs, intersection rules, and driving theory.
+            </DialogDescription>
+          </DialogHeader>
+          <DrivingAskAi />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -17,7 +17,6 @@ import { Header } from "@/components/layout/header";
 import { CourseGrid } from "@/components/courses/course-grid";
 import { CourseActions } from "@/components/courses/course-actions";
 import { CourseNavigationTabs } from "@/components/courses/course-navigation-tabs";
-import { DrivingCourseNavigation } from "@/components/courses/driving-course-navigation";
 import { PracticalCourseSummary } from "@/components/courses/practical-course-summary";
 import { courses } from "@/constants";
 import { getCourseCategorySlug, getRatingDistribution } from "@/lib/catalog";
@@ -114,12 +113,6 @@ export default async function CoursePage(props: CoursePageProps) {
                   </div>
                 </div>
               </div>
-
-              {isDrivingCourse && (
-                <section id="course-navigation">
-                  <DrivingCourseNavigation course={course} />
-                </section>
-              )}
 
               <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
                 <h2 className="text-2xl font-semibold text-card-foreground">

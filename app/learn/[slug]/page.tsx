@@ -3,6 +3,7 @@ import { courses } from "@/constants";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { LearningWorkspace } from "@/components/learning/learning-workspace";
+import { DrivingCourseNavigation } from "@/components/courses/driving-course-navigation";
 
 interface LearnPageProps {
   params: Promise<{ slug: string }>;
@@ -14,6 +15,21 @@ export default async function LearnPage(props: LearnPageProps) {
 
   if (!course) {
     notFound();
+  }
+
+  const isDrivingCourse = course.slug === "driving-theory-hazard-perception";
+
+  if (isDrivingCourse) {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <main className="flex-1 bg-muted/20">
+          <div className="mx-auto max-w-7xl px-4 py-8 lg:px-6">
+            <DrivingCourseNavigation course={course} />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
   }
 
   return (
