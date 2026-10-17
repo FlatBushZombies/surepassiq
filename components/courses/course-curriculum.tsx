@@ -16,9 +16,11 @@ import {
 interface CourseCurriculumProps {
   course: Course;
   isEnrolled: boolean;
+  /** Renders every module's lessons always-expanded, with no accordion chrome. */
+  flat?: boolean;
 }
 
-export function CourseCurriculum({ course, isEnrolled }: CourseCurriculumProps) {
+export function CourseCurriculum({ course, isEnrolled, flat = false }: CourseCurriculumProps) {
   const [expandedModules, setExpandedModules] = useState<Record<string, boolean>>(
     () => (course.modules[0] ? { [course.modules[0].id]: true } : {}),
   );
@@ -65,54 +67,63 @@ export function CourseCurriculum({ course, isEnrolled }: CourseCurriculumProps) 
             : "A few early lessons are open for preview. Enroll to unlock the full curriculum."}
         </p>
 
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
-          <p className="text-sm text-muted-foreground">
-            {course.modules.length} sections • {totalLessons} lectures • {totalLengthLabel} total length
-          </p>
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={toggleAllModules}
-            className="h-8 px-2 text-xs font-semibold text-primary hover:bg-transparent hover:underline"
-          >
-            {allModulesExpanded ? "Collapse all sections" : "Expand all sections"}
-          </Button>
-        </div>
+        {!flat && (
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
+            <p className="text-sm text-muted-foreground">
+              {course.modules.length} sections • {totalLessons} lectures • {totalLengthLabel} total length
+            </p>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={toggleAllModules}
+              className="h-8 px-2 text-xs font-semibold text-primary hover:bg-transparent hover:underline"
+            >
+              {allModulesExpanded ? "Collapse all sections" : "Expand all sections"}
+            </Button>
+          </div>
+        )}
 
         <div className="mt-4 divide-y divide-border overflow-hidden rounded-2xl border border-border">
           {course.modules.map((module, moduleIdx) => {
-            const isExpanded = Boolean(expandedModules[module.id]);
+            const isExpanded = flat || Boolean(expandedModules[module.id]);
             return (
               <div key={module.id} className="bg-background/50">
-                <button
-                  type="button"
-                  onClick={() => toggleModule(module.id)}
-                  aria-expanded={isExpanded}
-                  className="flex w-full items-center justify-between gap-4 p-5 text-left transition hover:bg-muted/40"
-                >
-                  <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-primary">
-                      Module {moduleIdx + 1}
-                    </span>
+                {flat ? (
+                  <div className="p-5">
                     <h4 className="text-lg font-bold text-card-foreground">{module.title}</h4>
                     <p className="mt-1 text-sm text-muted-foreground">{module.summary}</p>
                   </div>
-                  <div className="flex shrink-0 items-center gap-3">
-                    <Badge variant="secondary" className="shrink-0">
-                      {module.lessons.length} Lessons
-                    </Badge>
-                    <ChevronDown
-                      className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 ${
-                        isExpanded ? "rotate-180" : ""
-                      }`}
-                    />
-                  </div>
-                </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => toggleModule(module.id)}
+                    aria-expanded={isExpanded}
+                    className="flex w-full items-center justify-between gap-4 p-5 text-left transition hover:bg-muted/40"
+                  >
+                    <div>
+                      <span className="text-xs font-bold uppercase tracking-wider text-primary">
+                        Module {moduleIdx + 1}
+                      </span>
+                      <h4 className="text-lg font-bold text-card-foreground">{module.title}</h4>
+                      <p className="mt-1 text-sm text-muted-foreground">{module.summary}</p>
+                    </div>
+                    <div className="flex shrink-0 items-center gap-3">
+                      <Badge variant="secondary" className="shrink-0">
+                        {module.lessons.length} Lessons
+                      </Badge>
+                      <ChevronDown
+                        className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 ${
+                          isExpanded ? "rotate-180" : ""
+                        }`}
+                      />
+                    </div>
+                  </button>
+                )}
 
                 {isExpanded && (
                   <div className="space-y-2 px-5 pb-5">
                     {module.lessons.map((lesson, lessonIdx) => {
-                      const isPreview = isFreePreview(moduleIdx, lessonIdx);
+                      const isPreview = !flat && isFreePreview(moduleIdx, lessonIdx);
                       const isLocked = !isEnrolled && !isPreview;
 
                       return (

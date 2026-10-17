@@ -1,14 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import {
   AlertTriangle,
+  ArrowLeft,
   Award,
   BookOpen,
   CheckCircle2,
   Clock,
   HelpCircle,
+  Milestone,
   PlayCircle,
   RotateCcw,
   Signpost,
@@ -21,13 +23,19 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CourseCurriculum } from "@/components/courses/course-curriculum";
 import { DrivingRoadSigns } from "@/components/courses/driving-road-signs";
+import { DrivingIntersectionRules } from "@/components/courses/driving-intersection-rules";
 import { useLearner } from "@/components/learning/learner-provider";
 
 interface DrivingCourseNavigationProps {
   course: Course;
 }
 
-type DrivingTabType = "road-signs" | "lessons" | "practise-test" | "mock-test";
+type DrivingTabType =
+  | "road-signs"
+  | "intersection-rules"
+  | "lessons"
+  | "practise-test"
+  | "mock-test";
 
 const answerLetters = ["A", "B", "C", "D", "E", "F"];
 const MOCK_TEST_SECONDS = 8 * 60;
@@ -36,6 +44,10 @@ export function DrivingCourseNavigation({ course }: DrivingCourseNavigationProps
   const [activeTab, setActiveTab] = useState<DrivingTabType>("road-signs");
   const { state } = useLearner();
   const isEnrolled = Boolean(state.courseStates[course.slug]);
+  const isStandaloneTest = useMemo(
+    () => activeTab === "practise-test" || activeTab === "mock-test",
+    [activeTab],
+  );
 
   // Practise Test state (untimed, immediate feedback)
   const [practiseQuestionIndex, setPractiseQuestionIndex] = useState(0);
@@ -146,8 +158,8 @@ export function DrivingCourseNavigation({ course }: DrivingCourseNavigationProps
 
   return (
     <div className="w-full space-y-6">
-      {/* Tab bar — hidden entirely while a Mock Test is running */}
-      {!isMockTestRunning && (
+      {/* Tab bar — hidden entirely while a test tab is open, for a standalone test experience */}
+      {!isStandaloneTest && (
         <div className="rounded-2xl border border-border bg-card p-2 shadow-sm">
           <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
             <button
@@ -160,6 +172,18 @@ export function DrivingCourseNavigation({ course }: DrivingCourseNavigationProps
             >
               <Signpost className="h-4 w-4" />
               <span>Road Signs</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("intersection-rules")}
+              className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all ${
+                activeTab === "intersection-rules"
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
+            >
+              <Milestone className="h-4 w-4" />
+              <span>Intersection Rules</span>
             </button>
 
             <button
@@ -212,16 +236,31 @@ export function DrivingCourseNavigation({ course }: DrivingCourseNavigationProps
       )}
 
       {/* ROAD SIGNS */}
-      {activeTab === "road-signs" && !isMockTestRunning && <DrivingRoadSigns />}
+      {activeTab === "road-signs" && <DrivingRoadSigns />}
 
-      {/* LESSONS */}
-      {activeTab === "lessons" && !isMockTestRunning && (
-        <CourseCurriculum course={course} isEnrolled={isEnrolled} />
+      {/* INTERSECTION RULES */}
+      {activeTab === "intersection-rules" && <DrivingIntersectionRules />}
+
+      {/* LESSONS — Hazard Perception module only; Road Signs & Intersection Rules now have dedicated tabs */}
+      {activeTab === "lessons" && course.modules[2] && (
+        <CourseCurriculum
+          course={{ ...course, modules: [course.modules[2]] }}
+          isEnrolled={isEnrolled}
+          flat
+        />
       )}
 
-      {/* PRACTISE TEST (untimed, immediate feedback — same UI as before) */}
-      {activeTab === "practise-test" && !isMockTestRunning && (
+      {/* PRACTISE TEST (untimed, immediate feedback — same UI as before, standalone) */}
+      {activeTab === "practise-test" && (
         <div className="space-y-6">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setActiveTab("road-signs")}
+            className="gap-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back to course
+          </Button>
           <div className="rounded-3xl border border-border bg-card p-6 shadow-sm">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-5">
               <div>
@@ -380,9 +419,19 @@ export function DrivingCourseNavigation({ course }: DrivingCourseNavigationProps
         </div>
       )}
 
-      {/* MOCK TEST (timed, 8 minutes — same per-question UI as before) */}
+      {/* MOCK TEST (timed, 8 minutes — same per-question UI as before, standalone) */}
       {activeTab === "mock-test" && (
         <div className="space-y-6">
+          {!isMockTestRunning && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setActiveTab("road-signs")}
+              className="gap-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft className="h-4 w-4" /> Back to course
+            </Button>
+          )}
           <div className="rounded-3xl border border-border bg-card p-6 shadow-sm">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-5">
               <div>
