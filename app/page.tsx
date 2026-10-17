@@ -7,6 +7,8 @@ import { AiEraSection } from "@/components/home/ai-era-section";
 import { SkillsTransformSection } from "@/components/home/skills-transform-section";
 import { PopularSkillsSection } from "@/components/home/popular-skills-section";
 import { StudentCTASection } from "@/components/home/student-cta-section";
+import { HomeGate } from "@/components/home/home-gate";
+import { MemberHome } from "@/components/home/member-home";
 import { courses, trendingCourseSlugs, type Course } from "@/constants";
 
 export default function HomePage() {
@@ -19,26 +21,33 @@ export default function HomePage() {
       <Header />
 
       <main className="flex-1">
-        <HeroSection />
+        <HomeGate
+          memberHome={<MemberHome />}
+          marketingHome={
+            <>
+              <HeroSection />
 
-        <CategoriesSection />
+              <CategoriesSection />
 
-        <div id="trending-courses" className="mx-auto max-w-7xl scroll-mt-20 px-4 lg:px-6">
-          <PopularCoursesCarousel
-            courses={trendingCourses}
-            title="Trending Courses"
-            certifiedLabel
-            availabilityLabel
-          />
-        </div>
+              <div id="trending-courses" className="mx-auto max-w-7xl scroll-mt-20 px-4 lg:px-6">
+                <PopularCoursesCarousel
+                  courses={trendingCourses}
+                  title="Trending Courses"
+                  certifiedLabel
+                  availabilityLabel
+                />
+              </div>
 
-        <AiEraSection />
+              <AiEraSection />
 
-        <SkillsTransformSection />
+              <SkillsTransformSection />
 
-        <PopularSkillsSection />
+              <PopularSkillsSection />
 
-        <StudentCTASection />
+              <StudentCTASection />
+            </>
+          }
+        />
       </main>
 
       <Footer />

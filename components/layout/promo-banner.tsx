@@ -47,9 +47,9 @@ export function PromoBanner() {
     <div className="relative flex items-center justify-center bg-[#5b3df0] px-10 py-2.5 text-center text-xs font-medium text-white sm:text-sm">
       <p className="text-balance">
         <Link href="/categories" className="font-bold underline underline-offset-2">
-          Personal Plan
+          Get access
         </Link>{" "}
-        is your career sidekick: Build, practice, and prove the skills your career actually needs.
+         to top courses for as little as $5.99.
       </p>
       <button
         type="button"

@@ -104,3 +104,22 @@ export function sortCourses(courseList: Course[], sort: CourseSort = "popular") 
 export function getCatalogLevels() {
   return ["All Levels", "Beginner", "Intermediate", "Advanced"] as const;
 }
+
+/**
+ * Deterministic star-distribution (5-star down to 1-star) derived from a
+ * course's average rating, for display only — not based on individual
+ * reviews, since per-review data doesn't exist in the catalog.
+ */
+export function getRatingDistribution(rating: number): { stars: number; percent: number }[] {
+  const clampedRating = Math.min(5, Math.max(1, rating));
+  const weights = [5, 4, 3, 2, 1].map((stars) => {
+    const distance = Math.abs(clampedRating - stars);
+    return Math.max(0, 1 - distance / 2.5) ** 3;
+  });
+  const total = weights.reduce((sum, weight) => sum + weight, 0) || 1;
+
+  return weights.map((weight, index) => ({
+    stars: 5 - index,
+    percent: Math.round((weight / total) * 100),
+  }));
+}

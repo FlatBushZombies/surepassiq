@@ -7,6 +7,7 @@ import {
   CheckCircle2,
   Clock,
   Globe,
+  Laptop,
   Star,
   Users,
 } from "lucide-react";
@@ -16,9 +17,10 @@ import { Header } from "@/components/layout/header";
 import { CourseGrid } from "@/components/courses/course-grid";
 import { CourseActions } from "@/components/courses/course-actions";
 import { CourseNavigationTabs } from "@/components/courses/course-navigation-tabs";
+import { DrivingCourseNavigation } from "@/components/courses/driving-course-navigation";
 import { PracticalCourseSummary } from "@/components/courses/practical-course-summary";
 import { courses } from "@/constants";
-import { getCourseCategorySlug } from "@/lib/catalog";
+import { getCourseCategorySlug, getRatingDistribution } from "@/lib/catalog";
 
 interface CoursePageProps {
   params: Promise<{ slug: string }>;
@@ -36,6 +38,8 @@ export default async function CoursePage(props: CoursePageProps) {
     .filter((item) => item.category === course.category && item.slug !== course.slug)
     .slice(0, 4);
   const isPractical = course.category === "Practical Trades";
+  const isDrivingCourse = course.slug === "driving-theory-hazard-perception";
+  const ratingDistribution = getRatingDistribution(course.rating);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -43,72 +47,226 @@ export default async function CoursePage(props: CoursePageProps) {
 
       <main className="flex-1">
         <section className="border-b border-border bg-foreground text-background">
-          <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:px-6 lg:py-14">
-            <div>
-              <nav className="mb-4 flex items-center gap-2 text-sm text-background/70">
-                <Link href="/" className="hover:text-background">
-                  Home
-                </Link>
-                <span>/</span>
-                <Link
-                  href={`/categories/${getCourseCategorySlug(course.category)}`}
-                  className="hover:text-background"
-                >
-                  {course.category}
-                </Link>
-                <span>/</span>
-                <span className="text-background">{course.subcategory}</span>
-              </nav>
+          <div className="mx-auto max-w-7xl px-4 py-10 lg:px-6 lg:py-14">
+            <nav className="mb-4 flex items-center gap-2 text-sm text-background/70">
+              <Link href="/" className="hover:text-background">
+                Home
+              </Link>
+              <span>/</span>
+              <Link
+                href={`/categories/${getCourseCategorySlug(course.category)}`}
+                className="hover:text-background"
+              >
+                {course.category}
+              </Link>
+              <span>/</span>
+              <span className="text-background">{course.subcategory}</span>
+            </nav>
 
-              <div className="flex flex-wrap gap-2">
-                {course.bestseller && <Badge>Bestseller</Badge>}
-                {course.featured && <Badge variant="secondary">Featured path</Badge>}
-                <Badge variant="outline" className="border-background/20 text-background">
-                  {course.level}
-                </Badge>
-              </div>
-
-              <h1 className="mt-5 text-4xl font-bold leading-tight">{course.title}</h1>
-              <p className="mt-4 max-w-3xl text-lg text-background/75">
-                {course.description}
-              </p>
-
-              <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-background/70">
-                <span className="inline-flex items-center gap-1">
-                  <Star className="h-4 w-4 fill-current text-yellow-400" />
-                  {course.rating.toFixed(1)} ({course.reviewsCount.toLocaleString()} reviews)
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <Users className="h-4 w-4" />
-                  {course.studentsCount.toLocaleString()} learners
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <Clock className="h-4 w-4" />
-                  {course.duration}
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <Globe className="h-4 w-4" />
-                  {course.language}
-                </span>
-              </div>
-
-              <div className="mt-8 flex items-center gap-4">
-                <Image
-                  src={course.instructor.avatar}
-                  alt={course.instructor.name}
-                  width={56}
-                  height={56}
-                  className="rounded-full"
-                />
-                <div>
-                  <p className="text-sm text-background/65">Instructor</p>
-                  <p className="font-semibold text-background">{course.instructor.name}</p>
-                  <p className="text-sm text-background/65">{course.instructor.title}</p>
-                </div>
-              </div>
+            <div className="flex flex-wrap gap-2">
+              {course.bestseller && <Badge>Certified</Badge>}
+              {course.featured && <Badge variant="secondary">Featured path</Badge>}
+              <Badge variant="outline" className="border-background/20 text-background">
+                {course.level}
+              </Badge>
             </div>
 
-            <aside>
+            <h1 className="mt-5 max-w-3xl text-4xl font-bold leading-tight">{course.title}</h1>
+            <p className="mt-4 max-w-3xl text-lg text-background/75">
+              {course.description}
+            </p>
+
+            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-background/70">
+              <span className="inline-flex items-center gap-1">
+                <Star className="h-4 w-4 fill-current text-yellow-400" />
+                {course.rating.toFixed(1)} ({course.reviewsCount.toLocaleString()} reviews)
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <Users className="h-4 w-4" />
+                {course.studentsCount.toLocaleString()} learners
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <Clock className="h-4 w-4" />
+                {course.duration}
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <Globe className="h-4 w-4" />
+                {course.language}
+              </span>
+              <span>Last updated {course.lastUpdated}</span>
+            </div>
+
+            <div className="mt-8 flex items-center gap-4">
+              <Image
+                src={course.instructor.avatar}
+                alt={course.instructor.name}
+                width={56}
+                height={56}
+                className="rounded-full"
+              />
+              <div>
+                <p className="text-sm text-background/65">Instructor</p>
+                <p className="font-semibold text-background">{course.instructor.name}</p>
+                <p className="text-sm text-background/65">{course.instructor.title}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 py-10 lg:px-6 lg:py-12">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
+            <div className="space-y-10">
+              <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
+                <h2 className="text-2xl font-semibold text-card-foreground">
+                  What you&apos;ll learn
+                </h2>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {course.whatYouWillLearn.map((item) => (
+                    <div key={item} className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                      <span className="text-card-foreground">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
+                <h2 className="text-xl font-semibold text-card-foreground">Skills you&apos;ll gain</h2>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {course.skills.map((skill) => (
+                    <Badge key={skill} variant="secondary" className="rounded-full px-3 py-1">
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
+              </section>
+
+              {isPractical ? (
+                <PracticalCourseSummary course={course} />
+              ) : isDrivingCourse ? (
+                <section id="course-navigation">
+                  <DrivingCourseNavigation course={course} />
+                </section>
+              ) : (
+                /* Universal Course Navigation Tabs (Modules, Mock Tests, Timed Test, Practical Labs, Resources) */
+                <section id="course-navigation">
+                  <CourseNavigationTabs course={course} />
+                </section>
+              )}
+
+              <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
+                <h2 className="text-xl font-semibold text-card-foreground">Requirements</h2>
+                <ul className="mt-4 space-y-3">
+                  {course.requirements.map((requirement) => (
+                    <li key={requirement} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                      <span>{requirement}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
+                <h2 className="text-xl font-semibold text-card-foreground">Description</h2>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                  {course.description}
+                </p>
+              </section>
+
+              <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
+                <h2 className="text-xl font-semibold text-card-foreground">Who this course is for</h2>
+                <ul className="mt-4 space-y-3">
+                  {course.targetAudience.map((audience) => (
+                    <li key={audience} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                      <span>{audience}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
+                <h2 className="text-xl font-semibold text-card-foreground">Instructor</h2>
+                <div className="mt-5 flex items-start gap-4">
+                  <Image
+                    src={course.instructor.avatar}
+                    alt={course.instructor.name}
+                    width={80}
+                    height={80}
+                    className="rounded-full"
+                  />
+                  <div>
+                    <p className="text-lg font-bold text-primary">{course.instructor.name}</p>
+                    <p className="text-sm text-muted-foreground">{course.instructor.title}</p>
+                    <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-muted-foreground">
+                      <span className="inline-flex items-center gap-1.5">
+                        <Star className="h-4 w-4 fill-current text-yellow-400" />
+                        {course.rating.toFixed(1)} Instructor Rating
+                      </span>
+                      <span className="inline-flex items-center gap-1.5">
+                        <Users className="h-4 w-4" />
+                        {course.studentsCount.toLocaleString()} Students
+                      </span>
+                      <span className="inline-flex items-center gap-1.5">
+                        <BookOpenText className="h-4 w-4" />
+                        {course.reviewsCount.toLocaleString()} Reviews
+                      </span>
+                    </div>
+                    <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                      {course.instructor.name} teaches {course.title} on SurePass IQ, focused on{" "}
+                      {course.subcategory}.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
+                <h2 className="text-xl font-semibold text-card-foreground">Reviews</h2>
+                <div className="mt-5 flex flex-col gap-8 sm:flex-row sm:items-center">
+                  <div className="shrink-0 text-center sm:text-left">
+                    <p className="text-5xl font-extrabold text-card-foreground">
+                      {course.rating.toFixed(1)}
+                    </p>
+                    <div className="mt-2 flex items-center justify-center gap-1 sm:justify-start">
+                      {[1, 2, 3, 4, 5].map((starIndex) => (
+                        <Star
+                          key={starIndex}
+                          className={`h-4 w-4 ${
+                            starIndex <= Math.round(course.rating)
+                              ? "fill-current text-yellow-400"
+                              : "text-muted-foreground/30"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      {course.reviewsCount.toLocaleString()} reviews
+                    </p>
+                  </div>
+
+                  <div className="flex-1 space-y-2">
+                    {ratingDistribution.map(({ stars, percent }) => (
+                      <div key={stars} className="flex items-center gap-3 text-sm">
+                        <span className="flex w-14 shrink-0 items-center gap-1 text-muted-foreground">
+                          {stars} <Star className="h-3.5 w-3.5 fill-current text-yellow-400" />
+                        </span>
+                        <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+                          <div
+                            className="h-full rounded-full bg-yellow-400"
+                            style={{ width: `${percent}%` }}
+                          />
+                        </div>
+                        <span className="w-10 shrink-0 text-right text-xs text-muted-foreground">
+                          {percent}%
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <aside className="lg:sticky lg:top-[96px] lg:self-start">
               <div className="overflow-hidden rounded-3xl border border-border bg-card text-card-foreground shadow-2xl">
                 <div className="relative aspect-video">
                   <Image src={course.image} alt={course.title} fill className="object-cover" />
@@ -129,11 +287,17 @@ export default async function CoursePage(props: CoursePageProps) {
                   <CourseActions courseSlug={course.slug} isPractical={isPractical} />
 
                   <div className="space-y-3 border-t border-border pt-5 text-sm text-muted-foreground">
-                    <p className="font-semibold text-card-foreground">What this course includes</p>
+                    <p className="font-semibold text-card-foreground">This course includes</p>
                     <p className="inline-flex items-center gap-2">
                       <BookOpenText className="h-4 w-4" />
                       {course.lectures} {isPractical ? "hands-on" : "guided"} lessons across {course.modules.length} modules
                     </p>
+                    {course.resources.length > 0 && (
+                      <p className="inline-flex items-center gap-2">
+                        <BookOpenText className="h-4 w-4" />
+                        {course.resources.length} downloadable resources
+                      </p>
+                    )}
                     {isPractical ? (
                       <p className="inline-flex items-center gap-2">
                         <Award className="h-4 w-4" />
@@ -151,84 +315,24 @@ export default async function CoursePage(props: CoursePageProps) {
                         </p>
                       </>
                     )}
+                    <p className="inline-flex items-center gap-2">
+                      <Laptop className="h-4 w-4" />
+                      Full lifetime access on any device
+                    </p>
                   </div>
                 </div>
               </div>
             </aside>
           </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl space-y-10 px-4 py-10 lg:px-6 lg:py-12">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
-            <div className="space-y-10">
-              <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
-                <h2 className="text-2xl font-semibold text-card-foreground">
-                  What you&apos;ll learn
-                </h2>
-                <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {course.whatYouWillLearn.map((item) => (
-                    <div key={item} className="flex items-start gap-2">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                      <span className="text-card-foreground">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-
-              {isPractical ? (
-                <PracticalCourseSummary course={course} />
-              ) : (
-                /* Universal Course Navigation Tabs (Modules, Mock Tests, Timed Test, Practical Labs, Resources) */
-                <section id="course-navigation">
-                  <CourseNavigationTabs course={course} />
-                </section>
-              )}
-            </div>
-
-            <aside className="space-y-6">
-              <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
-                <h2 className="text-xl font-semibold text-card-foreground">Skills you will build</h2>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {course.skills.map((skill) => (
-                    <Badge key={skill} variant="secondary" className="rounded-full px-3 py-1">
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </section>
-
-              <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
-                <h2 className="text-xl font-semibold text-card-foreground">Requirements</h2>
-                <ul className="mt-4 space-y-3">
-                  {course.requirements.map((requirement) => (
-                    <li key={requirement} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                      <span>{requirement}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-
-              <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
-                <h2 className="text-xl font-semibold text-card-foreground">Best for</h2>
-                <ul className="mt-4 space-y-3">
-                  {course.targetAudience.map((audience) => (
-                    <li key={audience} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                      <span>{audience}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            </aside>
-          </div>
 
           {relatedCourses.length > 0 && (
-            <CourseGrid
-              courses={relatedCourses}
-              title="More in this category"
-              subtitle={`Continue exploring ${course.category.toLowerCase()} courses`}
-            />
+            <div className="mt-10">
+              <CourseGrid
+                courses={relatedCourses}
+                title="More in this category"
+                subtitle={`Continue exploring ${course.category.toLowerCase()} courses`}
+              />
+            </div>
           )}
         </section>
       </main>
