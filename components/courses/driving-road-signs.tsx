@@ -23,6 +23,14 @@ export function DrivingRoadSigns() {
   const visibleSigns = roadSigns.filter(
     (sign) => category === ALL_CATEGORIES || sign.category === category,
   );
+  const categoryCounts = [
+    { label: "All", value: ALL_CATEGORIES, count: roadSigns.length },
+    ...roadSignCategories.map((cat) => ({
+      label: cat,
+      value: cat,
+      count: roadSigns.filter((sign) => sign.category === cat).length,
+    })),
+  ];
 
   const jumpToSign = (signId: string) => {
     setHighlightedSignId(signId);
@@ -42,8 +50,8 @@ export function DrivingRoadSigns() {
           Browse every road sign covered in this course, grouped by official chart and category.
         </p>
 
-        {/* 3 dropdowns: Chart 1 jump, Chart 2 jump, Category filter */}
-        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+        {/* Chart 1 / Chart 2 jump dropdowns */}
+        <div className="mt-5 grid gap-3 sm:grid-cols-2">
           <Select onValueChange={jumpToSign}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Jump to a Chart 1 sign" />
@@ -69,54 +77,64 @@ export function DrivingRoadSigns() {
               ))}
             </SelectContent>
           </Select>
+        </div>
 
-          <Select value={category} onValueChange={setCategory}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={ALL_CATEGORIES}>All categories</SelectItem>
-              {roadSignCategories.map((cat) => (
-                <SelectItem key={cat} value={cat}>
-                  {cat}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        {/* Category filter pills with counts */}
+        <div className="mt-4 flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+          {categoryCounts.map((item) => (
+            <button
+              key={item.value}
+              type="button"
+              onClick={() => setCategory(item.value)}
+              className={`flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${
+                category === item.value
+                  ? "bg-red-700 text-white"
+                  : "bg-muted text-muted-foreground hover:bg-muted/70 hover:text-foreground"
+              }`}
+            >
+              {item.label}
+              <span
+                className={`text-xs ${
+                  category === item.value ? "text-white/80" : "text-muted-foreground/70"
+                }`}
+              >
+                {item.count}
+              </span>
+            </button>
+          ))}
         </div>
       </div>
 
       <div className="rounded-3xl border border-border bg-card p-6 shadow-sm">
         <h4 className="text-lg font-bold text-card-foreground">Road signs library</h4>
-        <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-5 grid gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {visibleSigns.map((sign) => (
             <div
               key={sign.id}
               id={`sign-${sign.id}`}
-              className={`overflow-hidden rounded-2xl border bg-background/50 transition ${
+              className={`overflow-hidden rounded-xl border bg-background/50 transition ${
                 highlightedSignId === sign.id
                   ? "border-primary ring-2 ring-primary"
                   : "border-border"
               }`}
             >
-              <div className="relative aspect-square w-full bg-muted/30 p-6">
+              <div className="relative h-24 w-full bg-muted/30">
                 <Image
                   src={sign.imageUrl}
                   alt={`${sign.name} (${sign.code}) road sign`}
                   fill
-                  className="object-contain p-4"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-contain p-3"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                 />
               </div>
-              <div className="space-y-2 p-4">
-                <div className="flex flex-wrap items-center gap-1.5">
-                  <Badge variant="outline">Chart {sign.chart}</Badge>
-                  <Badge variant="secondary">{sign.category}</Badge>
+              <div className="space-y-1.5 p-3">
+                <div className="flex flex-wrap items-center gap-1">
+                  <Badge variant="outline" className="text-[10px]">Chart {sign.chart}</Badge>
                 </div>
-                <p className="font-bold text-card-foreground">
+                <p className="text-sm font-bold text-card-foreground">
                   {sign.name} <span className="text-muted-foreground">({sign.code})</span>
                 </p>
-                <p className="text-sm text-muted-foreground">{sign.description}</p>
+                <p className="text-xs text-muted-foreground">{sign.description}</p>
               </div>
             </div>
           ))}

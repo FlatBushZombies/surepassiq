@@ -46,76 +46,81 @@ export default async function CoursePage(props: CoursePageProps) {
       <Header />
 
       <main className="flex-1">
-        <section className="border-b border-border bg-foreground text-background">
-          <div className="mx-auto max-w-7xl px-4 py-10 lg:px-6 lg:py-14">
-            <nav className="mb-4 flex items-center gap-2 text-sm text-background/70">
-              <Link href="/" className="hover:text-background">
-                Home
-              </Link>
-              <span>/</span>
-              <Link
-                href={`/categories/${getCourseCategorySlug(course.category)}`}
-                className="hover:text-background"
-              >
-                {course.category}
-              </Link>
-              <span>/</span>
-              <span className="text-background">{course.subcategory}</span>
-            </nav>
-
-            <div className="flex flex-wrap gap-2">
-              {course.bestseller && <Badge>Certified</Badge>}
-              {course.featured && <Badge variant="secondary">Featured path</Badge>}
-              <Badge variant="outline" className="border-background/20 text-background">
-                {course.level}
-              </Badge>
-            </div>
-
-            <h1 className="mt-5 max-w-3xl text-4xl font-bold leading-tight">{course.title}</h1>
-            <p className="mt-4 max-w-3xl text-lg text-background/75">
-              {course.description}
-            </p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-background/70">
-              <span className="inline-flex items-center gap-1">
-                <Star className="h-4 w-4 fill-current text-yellow-400" />
-                {course.rating.toFixed(1)} ({course.reviewsCount.toLocaleString()} reviews)
-              </span>
-              <span className="inline-flex items-center gap-1">
-                <Users className="h-4 w-4" />
-                {course.studentsCount.toLocaleString()} learners
-              </span>
-              <span className="inline-flex items-center gap-1">
-                <Clock className="h-4 w-4" />
-                {course.duration}
-              </span>
-              <span className="inline-flex items-center gap-1">
-                <Globe className="h-4 w-4" />
-                {course.language}
-              </span>
-              <span>Last updated {course.lastUpdated}</span>
-            </div>
-
-            <div className="mt-8 flex items-center gap-4">
-              <Image
-                src={course.instructor.avatar}
-                alt={course.instructor.name}
-                width={56}
-                height={56}
-                className="rounded-full"
-              />
-              <div>
-                <p className="text-sm text-background/65">Instructor</p>
-                <p className="font-semibold text-background">{course.instructor.name}</p>
-                <p className="text-sm text-background/65">{course.instructor.title}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section className="mx-auto max-w-7xl px-4 py-10 lg:px-6 lg:py-12">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
             <div className="space-y-10">
+              {/* Hero panel — same grid row as the enroll card, so the card sits above the fold like Udemy's */}
+              <div className="rounded-3xl bg-foreground p-6 text-background sm:p-8 lg:p-10">
+                <nav className="mb-4 flex items-center gap-2 text-sm text-background/70">
+                  <Link href="/" className="hover:text-background">
+                    Home
+                  </Link>
+                  <span>/</span>
+                  <Link
+                    href={`/categories/${getCourseCategorySlug(course.category)}`}
+                    className="hover:text-background"
+                  >
+                    {course.category}
+                  </Link>
+                  <span>/</span>
+                  <span className="text-background">{course.subcategory}</span>
+                </nav>
+
+                <div className="flex flex-wrap gap-2">
+                  {course.bestseller && <Badge>Certified</Badge>}
+                  {course.featured && <Badge variant="secondary">Featured path</Badge>}
+                  <Badge variant="outline" className="border-background/20 text-background">
+                    {course.level}
+                  </Badge>
+                </div>
+
+                <h1 className="mt-5 text-4xl font-bold leading-tight">{course.title}</h1>
+                <p className="mt-4 text-lg text-background/75">
+                  {course.description}
+                </p>
+
+                <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-background/70">
+                  <span className="inline-flex items-center gap-1">
+                    <Star className="h-4 w-4 fill-current text-yellow-400" />
+                    {course.rating.toFixed(1)} ({course.reviewsCount.toLocaleString()} reviews)
+                  </span>
+                  <span className="inline-flex items-center gap-1">
+                    <Users className="h-4 w-4" />
+                    {course.studentsCount.toLocaleString()} learners
+                  </span>
+                  <span className="inline-flex items-center gap-1">
+                    <Clock className="h-4 w-4" />
+                    {course.duration}
+                  </span>
+                  <span className="inline-flex items-center gap-1">
+                    <Globe className="h-4 w-4" />
+                    {course.language}
+                  </span>
+                  <span>Last updated {course.lastUpdated}</span>
+                </div>
+
+                <div className="mt-8 flex items-center gap-4">
+                  <Image
+                    src={course.instructor.avatar}
+                    alt={course.instructor.name}
+                    width={56}
+                    height={56}
+                    className="rounded-full"
+                  />
+                  <div>
+                    <p className="text-sm text-background/65">Instructor</p>
+                    <p className="font-semibold text-background">{course.instructor.name}</p>
+                    <p className="text-sm text-background/65">{course.instructor.title}</p>
+                  </div>
+                </div>
+              </div>
+
+              {isDrivingCourse && (
+                <section id="course-navigation">
+                  <DrivingCourseNavigation course={course} />
+                </section>
+              )}
+
               <section className="rounded-3xl border border-border bg-card p-6 shadow-sm">
                 <h2 className="text-2xl font-semibold text-card-foreground">
                   What you&apos;ll learn
@@ -141,13 +146,9 @@ export default async function CoursePage(props: CoursePageProps) {
                 </div>
               </section>
 
-              {isPractical ? (
-                <PracticalCourseSummary course={course} />
-              ) : isDrivingCourse ? (
-                <section id="course-navigation">
-                  <DrivingCourseNavigation course={course} />
-                </section>
-              ) : (
+              {isPractical && <PracticalCourseSummary course={course} />}
+
+              {!isPractical && !isDrivingCourse && (
                 /* Universal Course Navigation Tabs (Modules, Mock Tests, Timed Test, Practical Labs, Resources) */
                 <section id="course-navigation">
                   <CourseNavigationTabs course={course} />

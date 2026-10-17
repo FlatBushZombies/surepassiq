@@ -44,7 +44,7 @@ export function PromoBanner() {
   if (!isVisible) return null;
 
   return (
-    <div className="relative flex items-center justify-center bg-[#5b3df0] px-10 py-2.5 text-center text-xs font-medium text-white sm:text-sm">
+    <div className="relative flex items-center justify-center bg-[#E6E6EE] px-10 py-4 text-center text-xs font-medium text-slate-900 sm:text-sm">
       <p className="text-balance">
         <Link href="/categories" className="font-bold underline underline-offset-2">
           Get access
@@ -55,7 +55,7 @@ export function PromoBanner() {
         type="button"
         onClick={handleDismiss}
         aria-label="Dismiss promo banner"
-        className="absolute right-3 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-white/90 transition-colors hover:bg-white/15 hover:text-white"
+        className="absolute right-3 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-slate-900/70 transition-colors hover:bg-black/10 hover:text-slate-900"
       >
         <X className="h-4 w-4" />
       </button>

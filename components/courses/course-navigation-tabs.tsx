@@ -8,10 +8,12 @@ import {
   Clock,
   FileText,
   HelpCircle,
+  Lock,
   PlayCircle,
   RotateCcw,
   Sparkles,
   Trophy,
+  UserPlus,
   Wrench,
   XCircle,
   Save,
@@ -37,7 +39,7 @@ const answerLetters = ["A", "B", "C", "D", "E", "F"];
 
 export function CourseNavigationTabs({ course }: CourseNavigationTabsProps) {
   const [activeTab, setActiveTab] = useState<TabType>("modules");
-  const { state } = useLearner();
+  const { state, enrollInCourse } = useLearner();
   const isEnrolled = Boolean(state.courseStates[course.slug]);
 
   // Mock Test State
@@ -339,21 +341,40 @@ export function CourseNavigationTabs({ course }: CourseNavigationTabsProps) {
                   Test your knowledge with immediate feedback and detailed rationale for every answer.
                 </p>
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  setMockQuestionIndex(0);
-                  setMockAnswers({});
-                  setRevealedAnswers({});
-                }}
-                className="gap-2 shrink-0"
-              >
-                <RotateCcw className="h-4 w-4" /> Reset Practice
-              </Button>
+              {isEnrolled && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setMockQuestionIndex(0);
+                    setMockAnswers({});
+                    setRevealedAnswers({});
+                  }}
+                  className="gap-2 shrink-0"
+                >
+                  <RotateCcw className="h-4 w-4" /> Reset Practice
+                </Button>
+              )}
             </div>
 
-            {currentMockQuestion && (
+            {!isEnrolled && (
+              <div className="mt-8 text-center py-10 rounded-2xl border border-dashed border-border bg-muted/20 space-y-4">
+                <Lock className="mx-auto h-12 w-12 text-primary" />
+                <h4 className="text-xl font-bold text-card-foreground">Enroll to take this test</h4>
+                <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                  Mock tests are available to enrolled students. Enroll for free to start practicing with immediate feedback.
+                </p>
+                <Button
+                  size="lg"
+                  onClick={() => enrollInCourse(course.slug)}
+                  className="px-8 font-bold gap-2"
+                >
+                  <UserPlus className="h-5 w-5" /> Enroll now
+                </Button>
+              </div>
+            )}
+
+            {isEnrolled && currentMockQuestion && (
               <div className="mx-auto mt-6 max-w-5xl">
                 <div className="mb-5 flex flex-wrap justify-center gap-3">
                   <div className="inline-flex items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-sm font-bold text-slate-700 dark:bg-red-950/30 dark:text-red-100">
@@ -514,7 +535,24 @@ export function CourseNavigationTabs({ course }: CourseNavigationTabsProps) {
               )}
             </div>
 
-            {!isTimedRunning && !timedSubmitted && (
+            {!isEnrolled && (
+              <div className="mt-8 text-center py-10 rounded-2xl border border-dashed border-border bg-muted/20 space-y-4">
+                <Lock className="mx-auto h-12 w-12 text-primary" />
+                <h4 className="text-xl font-bold text-card-foreground">Enroll to take this test</h4>
+                <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                  The timed exam simulation is available to enrolled students. Enroll for free to test yourself under exam conditions.
+                </p>
+                <Button
+                  size="lg"
+                  onClick={() => enrollInCourse(course.slug)}
+                  className="px-8 font-bold gap-2"
+                >
+                  <UserPlus className="h-5 w-5" /> Enroll now
+                </Button>
+              </div>
+            )}
+
+            {isEnrolled && !isTimedRunning && !timedSubmitted && (
               <div className="mt-8 text-center py-10 rounded-2xl border border-dashed border-border bg-muted/20 space-y-4">
                 <Trophy className="mx-auto h-12 w-12 text-primary" />
                 <h4 className="text-xl font-bold text-card-foreground">Ready for the Timed Challenge?</h4>
